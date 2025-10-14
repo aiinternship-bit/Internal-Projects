@@ -2,9 +2,13 @@
 __pycache__/
 *.py[codz]
 *$py.class
-
+*.js
 # C extensions
 *.so
+
+#vector db
+*.db
+*.xlsx
 
 # Distribution / packaging
 .Python
