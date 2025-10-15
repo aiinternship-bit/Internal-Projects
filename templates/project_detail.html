@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.name }} - AI-Interns</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="color-scheme" content="light dark">
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-content">
+            <a href="/" class="back-link">← Projects</a>
+            <a href="/" class="nav-logo">AI-Interns</a>
+            <div style="width: 80px;"></div>
+        </div>
+    </nav>
+
+    <section class="detail-hero">
+        <div class="detail-icon">{{ project.icon }}</div>
+        <h1 class="detail-title">{{ project.name }}</h1>
+        <p class="detail-subtitle">{{ project.description }}</p>
+    </section>
+
+    <div class="detail-content">
+        <div class="detail-section">
+            <h2 class="section-title">Project Information</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <span class="info-label">Project ID</span>
+                    <span class="info-value">{{ project.id }}</span>
+                </div>
+                <div class="info-card">
+                    <span class="info-label">Location</span>
+                    <span class="info-value">{{ project.path }}</span>
+                </div>
+            </div>
+        </div>
+
+        {% if project.items %}
+        <div class="detail-section">
+            <h2 class="section-title">Project Contents</h2>
+            <div class="items-grid">
+                {% for item in project.items %}
+                <div class="item-card">
+                    <span class="item-icon">
+                        {% if item.is_dir %}
+                            📁
+                        {% else %}
+                            📄
+                        {% endif %}
+                    </span>
+                    <span class="item-name">{{ item.name }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if project.error %}
+        <div class="error-message">
+            <strong>Error:</strong> {{ project.error }}
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">Built with Flask | AI-Interns Platform</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
