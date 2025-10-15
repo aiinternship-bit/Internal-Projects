@@ -20,7 +20,7 @@ CONTENT_COLLECTION = "excel_vectors"
 # Embedding settings
 # ============================================================================
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
-EMBEDDING_DIM = 384
+EMBEDDING_DIM = 384  # all-MiniLM-L6-v2 produces 384-dim vectors
 
 # ============================================================================
 # Milvus settings
@@ -150,10 +150,10 @@ def get_default_llm_model() -> str:
     """Auto-detect best available LLM model"""
     if is_ollama_configured():
         return OLLAMA_MODEL or "ollama"
-    elif is_openai_key_valid():
-        return "gpt-3.5-turbo"
     elif is_anthropic_key_valid():
         return "claude-3-haiku-20240307"
+    elif is_openai_key_valid():
+        return "gpt-3.5-turbo"
     else:
         return "mock"
 
