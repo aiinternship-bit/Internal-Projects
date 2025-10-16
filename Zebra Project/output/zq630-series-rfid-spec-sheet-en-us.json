@@ -1,0 +1,263 @@
+{
+  "product_info": {
+    "model": "ZQ630 Plus RFID",
+    "title": "ZQ630 Plus RFID Mobile Printer",
+    "tagline": "Premium mobile printing and RFID capabilities for maximum productivity",
+    "url": "www.zebra.com/zq630-plus-rfid",
+    "description": "The ZQ630 Plus RFID Mobile Printer combines premium mobile printing performance with advanced RFID capabilities to deliver maximum productivity, ease of use, and manageability. Designed for demanding enterprise environments, it supports on-demand RFID label and tag printing, features Wi-Fi 6 and Bluetooth 5.3 for fast connectivity, and integrates Zebra’s Print DNA software suite for superior management, security, and reliability."
+  },
+
+  "specifications": {
+    "printer": {
+      "operating_system": "Link-OS™ printer operating system",
+      "resolution": {
+        "raw": "203 dpi / 8 dots per mm",
+        "dpi": 203,
+        "dots_per_mm": 8
+      },
+      "memory": {
+        "ram_total": "256 MB RAM",
+        "flash_total": "512 MB Flash",
+        "flash_user": "128 MB available for user storage"
+      },
+      "maximum_print_width": "4.1 in./104 mm",
+      "maximum_print_speed": "Up to 4.5 in./115 mm per second",
+      "print_length_minimum": "0.5 in./12.7 mm",
+      "print_length_maximum": "32 in./813 mm",
+      "media_sensors": "Black mark sensing using fixed center position sensors; label present sensor for issuing batch labels one at a time"
+    },
+
+    "physical": {
+      "dimensions": {
+        "imperial": "7.35 in. L x 6.5 in. W x 3.25 in. H",
+        "metric": "187 mm L x 165 mm W x 82.5 mm H"
+      },
+      "weight": {
+        "with_battery": "2.45 lbs / 1.1 kg"
+      }
+    },
+
+    "media": {
+      "label_and_liner_length": "0.5 in./12.7 mm to 32 in./813 mm or continuous",
+      "media_width": "2.0 in./51 mm to 4.4 in./112 mm (linered)",
+      "maximum_roll_size": "2.6 in./66 mm O.D. on 0.75 in./19 mm or 1.375 in./34.9 mm inner core",
+      "thickness": "3.2 mil to 5.5 mil tag stock or 7.5 mil label stock",
+      "media_types": [
+        "Die-cut labels and tags",
+        "Receipt paper",
+        "RFID (ZQ630 Plus RFID compatible)",
+        "Black mark media"
+      ]
+    },
+
+    "power": {
+      "battery": "6600 mAh (nominal) 47.5 Wh removable PowerPrecision+ Li-Ion battery"
+    },
+
+    "rfid": {
+      "protocols_supported": [
+        "UHF EPC Gen 2 V2",
+        "ISO/IEC 18000-63",
+        "RAIN RFID"
+      ],
+      "features": [
+        "Adaptive Encoding Technology for simplified RFID setup",
+        "Automatic calibration requiring no recalibration with same media type",
+        "RFID job-monitoring tools for performance tracking",
+        "RFID ZPL command compatibility with existing Zebra RFID printers",
+        "Supports multi-vendor chip-based serialization (MCS)",
+        "Supports all RFID tag data standards including SGTIN-96, DSGTIN+, GS1 TDS 2.0, RAIN ISO CIN",
+        "Integrated RFID reader/encoder",
+        "Prints and encodes tags with minimum pitch of 16 mm"
+      ]
+    },
+
+    "operating_conditions": {
+      "operating_temperature": "-4°F to 122°F / -20°C to 50°C",
+      "operating_humidity": "10% to 90% non-condensing",
+      "storage_temperature": "-13°F to 149°F / -25°C to 65°C",
+      "storage_humidity": "10% to 90% non-condensing"
+    }
+  },
+
+  "features": {
+    "standard": [
+      "Apple iOS, Android, and Windows Mobile connectivity",
+      "Direct thermal printing of barcodes, text, and graphics",
+      "CPCL, EPL, and ZPL programming language support",
+      "Built-in battery charger",
+      "Black mark sensing and label present sensor",
+      "Easy peel-and-present mode",
+      "Large 288x240 pixel color display with customizable WML interface",
+      "5-way navigation keys with two programmable soft keys",
+      "IP54 dust and water resistance rating",
+      "Drop tolerance up to 6 ft./1.83 m",
+      "Power Smart Print Technology™ for optimized energy efficiency",
+      "PowerPrecision+ battery analytics and management",
+      "Zebra Print Touch with NFC pairing",
+      "Zebra Network Connect compatibility",
+      "Mirror, SNMP, WebServer, AirWatch™, SOTI™ MobiControl™, and Ivanti Avalanche™ support"
+    ],
+    "optional": [
+      "Ethernet cradle with remote management",
+      "Vehicle cradle with 15–60V DC power",
+      "1-slot, 3-slot, or 6-slot battery chargers",
+      "Soft or hard carrying cases",
+      "Hand or shoulder straps",
+      "RFID media and inlays (custom options available)"
+    ]
+  },
+
+  "fonts_and_barcodes": {
+    "standard_fonts": "25 bitmapped, 1 smooth scalable (CG Triumvirate Bold Condensed, UFST™ from Agfa Monotype)",
+    "optional_fonts": "Downloadable bitmapped/scalable fonts",
+    "international_character_sets": [
+      "Chinese (traditional/simplified)",
+      "Japanese",
+      "Korean",
+      "Thai",
+      "Vietnamese"
+    ],
+    "barcode_symbologies": {
+      "ratios": ["1.5:1", "2:1", "2.5:1", "3:1", "3.5:1"],
+      "linear": [
+        "Code 39",
+        "Code 93",
+        "UCC/EAN128",
+        "Code 128",
+        "Codabar (NW-7)",
+        "Interleaved 2-of-5",
+        "UPC-A",
+        "UPC-E",
+        "EAN-8",
+        "EAN-13"
+      ],
+      "2d": [
+        "PDF417",
+        "MicroPDF417",
+        "MaxiCode",
+        "QR Code",
+        "GS1/DataBar (RSS) family",
+        "Aztec",
+        "MSI/Plessey",
+        "FIM Postnet",
+        "Data Matrix",
+        "TLC39"
+      ]
+    }
+  },
+
+  "connectivity": [
+    {
+      "type": "Wi-Fi",
+      "standards": ["802.11ax (Wi-Fi 6)", "802.11ac (Wi-Fi 5)"],
+      "details": {
+        "features": [
+          "MIMO antenna design",
+          "Simultaneous Bluetooth (4.2 or 5.3)",
+          "WPA3, WPA2, WPA security",
+          "Fast roaming via 802.11k/v/r",
+          "802.1x EAP support (EAP-FAST, EAP-TTLS, EAP-TLS, PEAP, LEAP)",
+          "TKIP and AES encryption",
+          "Wi-Fi certification"
+        ]
+      }
+    },
+    {
+      "type": "Bluetooth",
+      "version": "4.2 / 5.3 (Classic and BLE)",
+      "details": {
+        "security_modes": ["1–4"],
+        "certifications": ["Made for iPod/iPhone/iPad certified"],
+        "features": ["Key bonding", "Simultaneous operation with Wi-Fi"]
+      }
+    },
+    {
+      "type": "USB",
+      "standard": "USB 2.0 full-speed interface (12 Mbps)",
+      "connector": "Mini-B connector with optional strain relief"
+    },
+    {
+      "type": "Ethernet",
+      "standard": "10/100 Mbps via cradle"
+    },
+    {
+      "type": "Serial",
+      "spec": "14-pin RS-232C port up to 115.2 Kbps"
+    }
+  ],
+
+  "compliance": {
+    "regulatory_standards": [
+      "FCC Part 15, Subpart B",
+      "EN55022 Class-B",
+      "EN60950",
+      "EN55024",
+      "VCCI Class B",
+      "EN61000-4-2, EN61000-4-3, EN61000-4-4, EN61000-4-5"
+    ],
+    "certifications": [
+      "IP54 dust and water resistance",
+      "ENERGY STAR™ certified",
+      "CE, TUV, CSA safety approvals"
+    ],
+    "security": "FIPS support available as a free printer OS download"
+  },
+
+  "warranty": {
+    "duration_years": 1,
+    "coverage": "Warranted against defects in workmanship and materials for 1 year from date of shipment. Batteries warranted for 1 year, printheads for 6 months.",
+    "url": "www.zebra.com/warranty"
+  },
+
+  "additional_information": {
+    "zebra_dna": "Print DNA software suite built into all Link-OS printers, offering advanced management, security, and performance tools.",
+    "printer_profile_manager": "Browser-based remote management for all Zebra Link-OS printers, enabling discovery, configuration, and troubleshooting.",
+    "zebraonecare": "Comprehensive service plans providing technical support, repair coverage, and visibility services.",
+    "services": {
+      "visibility_services": "Real-time insights into printer operational status and utilization.",
+      "technical_support": "24/7 technical support included with Zebra OneCare.",
+      "repair_services": "Comprehensive coverage including accidental damage and defined turnaround times."
+    },
+    "accessories": [
+      "Ethernet Cradle (single or 4-bay)",
+      "Vehicle Cradle with 15–60V DC power",
+      "AC Adapter",
+      "Battery Chargers (1-slot, 3-slot, 6-slot)",
+      "Hand Strap",
+      "Shoulder Strap",
+      "Soft Case",
+      "Hard Case"
+    ],
+    "markets_and_applications": {
+      "retail": [
+        "Mark-down labels",
+        "Replacement tags",
+        "Return labels"
+      ],
+      "manufacturing_warehouse": [
+        "RFID case/pallet labels",
+        "Work-in-progress tagging"
+      ],
+      "transportation_logistics": [
+        "Shipping and receiving labels",
+        "Forklift-mounted printing",
+        "Airline baggage tags",
+        "Freight management"
+      ],
+      "healthcare": [
+        "Specimen/tissue labels",
+        "Hospital pharmacy labeling",
+        "Medical device tagging",
+        "Asset labels"
+      ]
+    }
+  },
+
+  "metadata": {
+    "source_file": "zq630-series-rfid-spec-sheet-en-us.pdf",
+    "document_date": "08/01/2023",
+    "schema_version": "1.0.0",
+    "total_pages": 8
+  }
+}

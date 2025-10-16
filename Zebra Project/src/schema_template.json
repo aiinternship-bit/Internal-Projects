@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Zebra Printer Specification",
+  "type": "object",
+  "required": ["product_info", "specifications"],
+  "properties": {
+    "product_info": {
+      "type": "object",
+      "required": ["model", "title"],
+      "properties": {
+        "model": {"type": "string"},
+        "series": {"type": "string"},
+        "title": {"type": "string"},
+        "category": {"type": "string"},
+        "tagline": {"type": "string"},
+        "description": {"type": "string"},
+        "url": {"type": "string"}
+      }
+    },
+    "specifications": {
+      "type": "object",
+      "properties": {
+        "printer": {"type": "object"},
+        "physical": {"type": "object"},
+        "media": {"type": "object"},
+        "ribbon": {"type": "object"},
+        "operating_conditions": {"type": "object"}
+      }
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "standard": {"type": "array", "items": {"type": "string"}},
+        "optional": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "fonts_graphics_symbologies": {"type": "object"},
+    "connectivity": {"type": "array", "items": {"type": "string"}},
+    "software": {"type": "object"},
+    "compliance": {"type": "object"},
+    "warranty": {"type": "object"},
+    "support_services": {"type": "array"},
+    "supplies": {"type": "object"},
+    "additional_information": {
+      "type": "object",
+      "description": "Any information that doesn't fit into standard categories"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "source_file": {"type": "string"},
+        "extraction_date": {"type": "string"},
+        "schema_version": {"type": "string"}
+      }
+    }
+  }
+}
