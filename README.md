@@ -1,14 +1,16 @@
 # AI-Interns Dashboard
 
-A Flask-based web application that provides a beautiful tile-based interface to navigate between different AI projects.
+A Flask-based web application that provides a beautiful tile-based interface to navigate between different AI projects with an AI-powered chatbot assistant.
 
 ## Features
 
-- Modern, responsive tile-based interface
-- Navigate between AI Initiatives, GEN AI Agent, and AI-Interns projects
-- Dark theme with smooth animations
-- Project detail pages showing directory contents
-- Mobile-friendly design
+- **Modern, responsive tile-based interface** (3 tiles per row on desktop, square-shaped)
+- **AI Chatbot**: Powered by Claude AI (Anthropic) for intelligent project assistance
+- **Add New Projects**: Easy-to-use modal form for adding new projects dynamically
+- **Conversation History**: Maintains context across chat sessions
+- **Dark theme** with smooth animations and glassmorphism effects
+- **Project detail pages** showing directory contents
+- **Mobile-friendly design**
 
 ## Prerequisites
 
@@ -42,6 +44,17 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 
+5. Configure Anthropic API Key:
+   - Get your API key from [Anthropic Console](https://console.anthropic.com/)
+   - Create a `.env` file in the project root:
+     ```bash
+     cp .env.example .env
+     ```
+   - Edit the `.env` file and add your API key:
+     ```
+     ANTHROPIC_API_KEY=your_actual_api_key_here
+     ```
+
 ## Running the Application
 
 1. Make sure you're in the AI-Interns directory with the virtual environment activated
@@ -53,10 +66,10 @@ python app.py
 
 3. Open your web browser and navigate to:
 ```
-http://localhost:5000
+http://localhost:5001
 ```
 
-The application will be accessible on your local network at `http://0.0.0.0:5000`
+The application will be accessible on your local network at `http://0.0.0.0:5001`
 
 ## Project Structure
 
@@ -77,9 +90,32 @@ AI-Interns/
 
 ## Usage
 
-- **Main Dashboard**: View all available projects as interactive tiles
-- **Project Details**: Click on any tile to view project information and directory contents
-- **Navigation**: Use the back button or press ESC to return to the dashboard
+### Main Dashboard
+- View all available projects as interactive square tiles (3 per row on desktop)
+- Click the "Add New Project" tile to create new projects
+
+### AI Chatbot
+1. Click on any project tile to open the AI chatbot
+2. The chatbot has context about the project and its files
+3. Ask questions like:
+   - "What files are in this project?"
+   - "Explain what this project does"
+   - "Help me understand the code structure"
+   - General programming questions
+4. The chatbot maintains conversation history within the session
+
+### Adding New Projects
+1. Click on the "Add New Project" tile
+2. Fill in the project details:
+   - **Project Name**: e.g., "Solution #3"
+   - **Description**: Brief description of your project
+   - **Icon**: An emoji to represent your project (e.g., 🎨)
+   - **Project Path**: Relative path to your project folder (e.g., "../My New Project")
+   - **Theme Color**: Pick a color for your project
+3. Click "Add Project"
+
+### Navigation
+- Use the close button or press ESC to exit the chatbot or modal
 
 ## Customization
 
@@ -101,14 +137,30 @@ PROJECTS = [
 ## Technologies Used
 
 - **Backend**: Flask 3.0.0
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Design**: Custom CSS with animations and responsive grid layout
+- **AI**: Anthropic Claude API (Claude 3.5 Sonnet)
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Design**: Apple-inspired UI with glassmorphism effects and responsive grid layout
 
 ## Troubleshooting
 
-- **Port already in use**: If port 5000 is already in use, modify the port in `app.py`:
+- **Import errors for `anthropic` or `dotenv`**:
+  - Make sure your virtual environment is activated
+  - Run `pip install -r requirements.txt` again
+  - If you get an "externally-managed-environment" error, make sure you're using a virtual environment
+
+- **"ANTHROPIC_API_KEY not found" error**:
+  - Check that your `.env` file exists in the project root
+  - Verify the API key is correctly set in the `.env` file (no quotes needed)
+  - Make sure the `.env` file is in the same directory as `app.py`
+
+- **Chatbot not responding**:
+  - Check the server console for error messages
+  - Verify your API key is valid at [Anthropic Console](https://console.anthropic.com/)
+  - Check your internet connection
+
+- **Port already in use**: The app runs on port 5001. If this port is in use, modify it in `app.py`:
   ```python
-  app.run(debug=True, host='0.0.0.0', port=5001)
+  app.run(debug=True, host='0.0.0.0', port=5002)
   ```
 
 - **Module not found**: Make sure you've activated the virtual environment and installed dependencies:
@@ -116,6 +168,12 @@ PROJECTS = [
   source venv/bin/activate  # or venv\Scripts\activate on Windows
   pip install -r requirements.txt
   ```
+
+## Notes
+
+- Conversation history is stored in memory and will reset when the server restarts
+- Projects added via the UI are temporary and will reset on server restart
+- Maximum of 20 messages are kept in conversation history to manage token usage
 
 ## License
 

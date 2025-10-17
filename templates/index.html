@@ -10,14 +10,14 @@
 <body>
     <nav class="nav-bar">
         <div class="nav-content">
-            <a href="/" class="nav-logo">AI-Interns</a>
+            <a href="/" class="nav-logo">ACL Digital</a>
         </div>
     </nav>
 
     <div class="container">
         <section class="hero">
             <div class="hero-eyebrow">Welcome to</div>
-            <h1 class="hero-title">AI-Interns</h1>
+            <h1 class="hero-title">ACL Digital</h1>
             <p class="hero-subtitle">Explore our AI projects and initiatives</p>
         </section>
 
@@ -35,6 +35,18 @@
                     </div>
                 </a>
                 {% endfor %}
+
+                <!-- Add Project Tile -->
+                <!-- <div class="project-card add-project-card" id="add-project-card">
+                    <div class="card-content">
+                        <div class="card-icon add-icon">+</div>
+                        <h2 class="card-title">Add New Project</h2>
+                        <p class="card-description">Create a new project to showcase your work</p>
+                    </div>
+                    <div class="card-link">
+                        <span class="card-link-text">Get started <span class="arrow">→</span></span>
+                    </div>
+                </div> -->
             </div>
         </section>
     </div>
@@ -45,6 +57,86 @@
         </div>
     </footer>
 
+    <!-- Chatbot Modal -->
+    <div id="chatbot-modal" class="chatbot-modal">
+        <div class="chatbot-container">
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <div class="chatbot-icon" id="chatbot-icon">🤖</div>
+                    <div class="chatbot-header-text">
+                        <h3 class="chatbot-title" id="chatbot-title">AI Assistant</h3>
+                        <p class="chatbot-subtitle" id="chatbot-subtitle">How can I help you today?</p>
+                    </div>
+                </div>
+                <button class="chatbot-close" id="close-chatbot" aria-label="Close chatbot">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="welcome-message">
+                    <p>Welcome! I can help you run and interact with AI programs. What would you like to do?</p>
+                </div>
+            </div>
+
+            <div class="chatbot-input-container">
+                <div class="chatbot-input-wrapper">
+                    <textarea
+                        id="chatbot-input"
+                        class="chatbot-input"
+                        placeholder="Type your message..."
+                        rows="1"
+                    ></textarea>
+                    <button class="chatbot-send" id="chatbot-send" aria-label="Send message">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div id="add-project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Project</h2>
+                <button class="modal-close" id="close-add-project">&times;</button>
+            </div>
+            <form id="add-project-form">
+                <div class="form-group">
+                    <label for="project-name">Project Name</label>
+                    <input type="text" id="project-name" name="name" placeholder="e.g., Solution #3" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Description</label>
+                    <textarea id="project-description" name="description" placeholder="Brief description of your project" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-icon">Icon (Emoji)</label>
+                    <input type="text" id="project-icon" name="icon" placeholder="e.g., 🎨" maxlength="2" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-path">Project Path</label>
+                    <input type="text" id="project-path" name="path" placeholder="e.g., ../My New Project" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-color">Theme Color</label>
+                    <input type="color" id="project-color" name="color" value="#4A90E2" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-add-project">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/add-project.js') }}"></script>
 </body>
 </html>
