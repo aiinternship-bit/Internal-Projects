@@ -9,9 +9,7 @@
     "physical": {
       "weight": "46.3 lbs./21 kg"
     },
-    "media": {
-      "thickness": "24 mil"
-    },
+    "media": {},
     "ribbon": {},
     "operating_conditions": {
       "operating_temperature": {
@@ -75,7 +73,7 @@
   },
   "metadata": {
     "source_file": "zc10l-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-16T13:47:49.275221",
+    "extraction_date": "2025-10-20T14:23:45.804160",
     "schema_version": "1.0.0",
     "total_pages": 4,
     "total_tables": 13

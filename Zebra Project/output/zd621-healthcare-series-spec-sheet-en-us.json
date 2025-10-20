@@ -14,6 +14,11 @@
       },
       "memory": "512 MB Flash; 256 MB SDRAM\n64 MB user available non-volatile memory\n8 MB user available SDRAM",
       "maximum_print_width": "4.09 in./104 mm for 203 dpi\n4.27 in./108 mm for 300 dpi",
+      "print_speed": {
+        "raw": "8 in./203 mm per second (203 dpi)\n6 in./152 mm per second (300 dpi)",
+        "inches_per_second": 8.0,
+        "mm_per_second": 203.0
+      },
       "media_sensors": [
         "Full width, moveable reflective/black mark sensor; multi-position transmissive/gap sensor"
       ],
@@ -30,7 +35,6 @@
       "weight": "Direct Thermal: 3.6 lbs./1.6 kg\nThermal Transfer: 5.5 lbs./2.5 kg"
     },
     "media": {
-      "maximum_label_length": "Minimum: 0.25 in./6.4 mm\nMaximum: 39.0 in./991 mm",
       "media_width": {
         "raw": "Direct Thermal: 0.585 in./15 mm to 4.25 in./\n108 mm\nThermal Transfer: 0.585 in./15 mm to 4.65 in./\n118 mm",
         "min_inches": 0.585,
@@ -102,48 +106,18 @@
     ]
   },
   "fonts_and_barcodes": {
-    "fonts": [
-      "16 resident expandable ZPL II bitmap fonts, two resident scalable ZPL fonts, five resident",
-      "expandable EPL2 fonts, native open-type font",
-      "support, Unicode compliant. China units",
-      "include SimSun simplified Chinese font"
-    ],
+    "fonts": [],
     "barcode_ratios": [
       "2:1",
       "3:1"
     ],
-    "barcodes_1d": [
-      "Code 11",
-      "Code 39",
-      "Code 93",
-      "Code 128",
-      "ISBT-128",
-      "UPC-A",
-      "UPC-E",
-      "EAN-8",
-      "EAN-13",
-      "UPC and EAN 2-or 5-digit extensions",
-      "Plessey",
-      "Postnet",
-      "Standard 2-of- 5",
-      "Industrial 2-of-5",
-      "Interleaved 2-of-5",
-      "Logmars",
-      "MSI",
-      "Codabar and Planet Code"
-    ],
-    "barcodes_2d": [
-      "Codablock",
-      "PDF417",
-      "Code 49",
-      "DataMatrix",
-      "MaxiCode",
-      "QR Code",
-      "MicroPDF",
-      "Aztec"
-    ],
+    "barcodes_1d": [],
+    "barcodes_2d": [],
     "graphics_memory": ""
   },
+  "firmware": [
+    "ZPL II; EPL 2; XML; ZBI; PDF Direct"
+  ],
   "connectivity": [
     "Ethernet",
     "Wi-Fi",
@@ -155,11 +129,13 @@
       "IEC 60950-1",
       "IEC 62368-1",
       "EN55022 Class B",
+      "EN55022",
       "EN55024",
+      "EN55035",
+      "EN61000",
       "EN61000-3-3",
       "EN 300 328",
       "EN 301 893",
-      "EN 62311",
       "FCC Class B",
       "FCC 15.209",
       "ICES-003",
@@ -207,7 +183,7 @@
   },
   "metadata": {
     "source_file": "zd621-healthcare-series-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-16T13:47:51.372499",
+    "extraction_date": "2025-10-20T14:23:48.397098",
     "schema_version": "1.0.0",
     "total_pages": 4,
     "total_tables": 17

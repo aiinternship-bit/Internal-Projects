@@ -22,7 +22,7 @@
       },
       "media_sensors": [
         "Movable black mark sensor, limited range from center to left side",
-        "Fixedoff-center gap sensor"
+        "Fixed off-center gap sensor"
       ],
       "firmware": [
         "ZPL II",
@@ -35,14 +35,12 @@
       "weight": "Thermal Transfer:\n3.7 lbs./1.7 kg\nDirect Thermal:\n2.5 lbs./1.1 kg"
     },
     "media": {
-      "maximum_label_length": "39.0 in./991 mm",
       "media_width": {
         "raw": "1.00 in./25.4 mm to 4.4 in./112 mm",
         "min_inches": 1.0,
         "max_inches": 4.4
       },
       "media_roll_size": "5.00 in./127 mm outer diameter\nCore inner diameter: 0.5 in. (12.7 mm) and 1.0\nin. (25.4 mm) standard, 1.5 in. (38.1 mm)\nusing optional adapters",
-      "thickness": "0.003 in. (0.08 mm) min.; 0.0075 in. (.1905\nmm) max. (tear-off mode only)",
       "media_types": [
         "Roll-fed or fan-fold",
         "Die cut or continuous with or without black mark",
@@ -110,49 +108,18 @@
     ]
   },
   "fonts_and_barcodes": {
-    "fonts": [
-      "16 resident expandable ZPL II bitmap fonts",
-      "Two resident scalable ZPL fonts",
-      "Five resident expandable EPL2 fonts",
-      "Native open-type font support",
-      "Unicode compliant for multi-language, on demand thermal printing"
-    ],
+    "fonts": [],
     "barcode_ratios": [
       "2:1",
       "3:1"
     ],
-    "barcodes_1d": [
-      "Code 11",
-      "Code 39",
-      "Code 93",
-      "Code 128",
-      "ISBT-128",
-      "UPC-A",
-      "UPC-E",
-      "EAN-8",
-      "EAN-13",
-      "UPC and EAN 2-or 5-digit extensions",
-      "Plessey",
-      "Postnet",
-      "Standard 2-of-5",
-      "Industrial 2-of-5",
-      "Interleaved 2-of-5",
-      "Logmars",
-      "MSI",
-      "Codabar and Planet Code"
-    ],
-    "barcodes_2d": [
-      "Codablock",
-      "PDF417",
-      "Code 49",
-      "DataMatrix",
-      "MaxiCode",
-      "QR Code",
-      "MicroPDF",
-      "Aztec"
-    ],
-    "graphics_memory": "50 MB user available non-volatile memory, 8 MB user available SDRAM"
+    "barcodes_1d": [],
+    "barcodes_2d": [],
+    "graphics_memory": ""
   },
+  "firmware": [
+    "ZPL II; EPL 2; XML"
+  ],
   "connectivity": [
     "USB"
   ],
@@ -160,12 +127,12 @@
     "regulatory_standards": [
       "IEC 60950-1",
       "EN55022 Class B",
+      "EN55022",
       "EN55024",
       "EN61000-3-2",
       "EN61000-3-3",
       "EN 300 328",
       "EN 301 893",
-      "EN 62311",
       "FCC Class B",
       "FCC 15.209",
       "ICES-003",
@@ -214,7 +181,7 @@
   },
   "metadata": {
     "source_file": "zd220-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-16T13:47:49.590324",
+    "extraction_date": "2025-10-20T14:23:46.173749",
     "schema_version": "1.0.0",
     "total_pages": 3,
     "total_tables": 15

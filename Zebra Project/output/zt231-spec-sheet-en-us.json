@@ -15,6 +15,9 @@
       },
       "memory": "256 MB SDRAM memory\n256 MB on-board linear Flash memory",
       "maximum_print_width": "4.09 in./104 mm",
+      "print_speed": {
+        "raw": "12 ips (203 dpi)\n8 ips (300 dpi)"
+      },
       "media_sensors": [
         "Moveable transmissive and reflective sensors"
       ]
@@ -24,7 +27,7 @@
       "weight": "ZT231: 20 lbs./9.1 kg\nZT231 with Liner Takeup Unit: 24 lbs./10.9 kg"
     },
     "media": {
-      "maximum_label_length": "Tear mode: 0.7 in/18 mm\nCutter mode: 1 in/25 mm\nPeel mode: 0.5 in/13 mm",
+      "minimum_label_length": "Tear mode: 0.7 in/18 mm\nCutter mode: 1 in/25 mm\nPeel mode: 0.5 in/13 mm",
       "media_width": {
         "raw": "0.75 in./19.4 mm to 4.50 in./114 mm",
         "min_inches": 0.75,
@@ -33,10 +36,13 @@
       "media_roll_size": "8.0 in./203 mm O.D. on a 3.0 in./76 mm I.D.\ncore\n6.0 in./152 mm O.D. on a 1.0 in./25 mm I.D.\ncore",
       "thickness": "0.003 in./0.076 mm to 0.010 in./0.25 mm",
       "media_types": [
+        "Die cut or continuous with or without black mark",
         "Continuous, die-cut, notch, black mark"
       ]
     },
-    "ribbon": {},
+    "ribbon": {
+      "maximum_ribbon_length": "1,476 ft./450 m"
+    },
     "operating_conditions": {
       "operating_temperature": {
         "raw": "Thermal transfer: 40ºF to 105ºF/5º to 40ºC\nDirect thermal: 32ºF to 105ºF/0º to 40ºC"
@@ -56,7 +62,8 @@
         "max_percent": 85,
         "condition": "non-condensing"
       },
-      "electrical": "Universal auto-ranging (PFC-compliant)\npower supply 100-240 VAC; 50-60 Hz\nENERGY STAR certified"
+      "electrical": "Universal auto-ranging (PFC-compliant)\npower supply 100-240 VAC; 50-60 Hz\nENERGY STAR certified",
+      "agency_approvals": "IEC 62368-1, EN55022 Class B, EN55024,\nEN55035, EN61000-3-2, EN61000-3-3, FCC\nClass B, ICES-003, FCC 15.209; 15.247(d), IC\nRSS 247, EN 300 328, EN 301 893, EN 62311,\ncTUVus, CE Marking, UKCA, VCCI, RCM, S-\nMark, CCC, CU EAC, BSMI, KCC, and BIS"
     }
   },
   "features": {
@@ -77,12 +84,50 @@
     "optional": []
   },
   "fonts_and_barcodes": {
-    "fonts": [],
+    "fonts": [
+      "Z7 bitmapped, 1 smooth-scalable (CG Triumvirate™ Bold\nCondensed) Pre-loaded Unicode™-compliant scalable fonts for\nEMEA character sets International character sets supporting the\nfollowing code page:"
+    ],
     "barcode_ratios": [],
-    "barcodes_1d": [],
-    "barcodes_2d": [],
-    "graphics_memory": ""
+    "barcodes_1d": [
+      "Code 11",
+      "Code 39",
+      "Code 93",
+      "Code 128 with\nsubsets A/B/C and UCC Case Codes",
+      "ISBT-128",
+      "UPC-A",
+      "UPC-E",
+      "EAN-8",
+      "EAN-13",
+      "UPC and EAN with\n2 or 5 digit extensions",
+      "Plessey",
+      "Postnet",
+      "Standard 2-of-5",
+      "Industrial 2-of-5",
+      "Interleaved 2-of-5",
+      "Logmars",
+      "MSI",
+      "Codabar",
+      "Planet Code"
+    ],
+    "barcodes_2d": [
+      "Aztec",
+      "Codablock",
+      "PDF417",
+      "Code 49",
+      "Data Matrix",
+      "MaxiCode",
+      "QR Code",
+      "MicroPDF417",
+      "TLC 39",
+      "RSS-14 (and\ncomposite)"
+    ],
+    "graphics_memory": "IBM™ Code Page 850\nSupports user-defined fonts and graphics, including custom\nlogos ZPL II drawing commands including boxes and lines 64 MB\nuser available Flash memory storage for downloadable objects;\n32 MB user-available SDRAM"
   },
+  "firmware": [
+    "ZBI 2.0™ — Optional powerful programming language that lets printers run stand-alone applications, connect to peripherals, and much more. ZPL and ZPL II™ — Zebra Programming Language provides sophisticated label formatting and printer control and is compatible with all Zebra printers. EPL and EPL2™— Eltron Programming Language simplifies label formatting and enables format compatibility with legacy applications. (EPL available on 203 dpi models only.)",
+    "ZPL and ZPL II™ — Zebra Programming Language provides sophisticated label formatting and printer control and is compatible with all Zebra printers. EPL and EPL2™— Eltron Programming Language simplifies label formatting and enables format compatibility with legacy applications. (EPL available on 203 dpi models only.)",
+    "EPL and EPL2™— Eltron Programming Language simplifies label formatting and enables format compatibility with legacy applications. (EPL available on 203 dpi models only.)"
+  ],
   "connectivity": [
     "Ethernet",
     "Wi-Fi",
@@ -96,7 +141,7 @@
   },
   "warranty": {},
   "additional_information": {
-    "Print DNA": "suite, your Zebra MPS provider can Length Peel mode: 0.5 in/13 mm remotely manage and optimize your printers, track and automate supplies replenishment and ensure security. For more information, please visit Media Width 0.75 in./19.4 mm to 4.50 in./114 mm www.zebra.com/managed-print-services Media Roll Size 8.0 in./203 mm O.D. on a 3.0 in./76 mm I.D. core 6.0 in./152 mm O.D. on a 1.0 in./25 mm I.D. core Media Thickness 0.003 in./0.076 mm to 0.010 in./0.25 mm Media Types Continuous, die-cut, notch, black mark --- Page 4 --- Ribbon Characteristics (Thermal-transfer option only) Standard 1,476 ft./450 m Length Width 2 in./51 mm to 4.33 in./110 mm Core 1.0 in./25.4 mm Operating Characteristics Operating Thermal transfer: 40ºF to 105ºF/5º to 40ºC Temp. Direct thermal: 32ºF to 105ºF/0º to 40ºC Storage/Transp -40ºF to 140ºF/-40º to 60ºC ortation Temperature Operating 20% to 85% non-condensing Humidity Storage 5% to 85% non-condensing Humidity Electrical Universal auto-ranging (PFC-compliant) power supply 100-240 VAC; 50-60 Hz ENERGY STAR certified Agency IEC 62368-1, EN55022 Class B, EN55024, Approvals EN55035, EN61000-3-2, EN61000-3-3, FCC Class B, ICES-003, FCC 15.209; 15.247(d), IC RSS 247, EN 300 328, EN 301 893, EN 62311, cTUVus, CE Marking, UKCA, VCCI, RCM, S- Mark, CCC, CU EAC, BSMI, KCC, and BIS Print DNA Software This printer is supported by our Print DNA suite of software capabilities to get your printer up and running quickly and securely, and enable your printer to evolve with your business needs. Print DNA features may vary by model, and some features may require a license. For more information, please visit www.zebra.com/printdna The Zebra wordmark and logo are trademarks of Zebra Technologies Corp., registered in many jurisdictions worldwide. Android is a trademark of Google LLC. All other trademarks are the property of their respective owners. ©2025 Zebra Technologies Corp. and/or its affiliates. 08/14/2023 HTML",
+    "Print DNA": "suite, your Zebra MPS provider can Length Peel mode: 0.5 in/13 mm remotely manage and optimize your printers, track and automate supplies replenishment and ensure security. For more information, please visit Media Width 0.75 in./19.4 mm to 4.50 in./114 mm www.zebra.com/managed-print-services Media Roll Size 8.0 in./203 mm O.D. on a 3.0 in./76 mm I.D. core 6.0 in./152 mm O.D. on a 1.0 in./25 mm I.D. core Media Thickness 0.003 in./0.076 mm to 0.010 in./0.25 mm Media Types Continuous, die-cut, notch, black mark --- Page 4 --- Ribbon Characteristics (Thermal-transfer option only) Standard 1,476 ft./450 m Length Width 2 in./51 mm to 4.33 in./110 mm Core 1.0 in./25.4 mm Operating Characteristics Operating Thermal transfer: 40ºF to 105ºF/5º to 40ºC Temp. Direct thermal: 32ºF to 105ºF/0º to 40ºC Storage/Transp -40ºF to 140ºF/-40º to 60ºC ortation Temperature Operating 20% to 85% non-condensing Humidity Storage 5% to 85% non-condensing Humidity Electrical Universal auto-ranging (PFC-compliant) power supply 100-240 VAC; 50-60 Hz ENERGY STAR certified Agency IEC 62368-1, EN55022 Class B, EN55024, Approvals EN55035, EN61000-3-2, EN61000-3-3, FCC Class B, ICES-003, FCC 15.209; 15.247(d), IC RSS 247, EN 300 328, EN 301 893, EN 62311, cTUVus, CE Marking, UKCA, VCCI, RCM, S- Mark, CCC, CU EAC, BSMI, KCC, and BIS Print DNA Software This printer is supported by our Print DNA suite of software capabilities to get your printer up and running quickly and securely, and enable your printer to evolve with your business needs. Print DNA features may vary by model, and some features may require a license. For more information, please visit www.zebra.com/printdna",
     "Print DNA Components": {},
     "copyright": "©2025 Zebra Technologies Corp. and/or its",
     "trademark": "The Zebra wordmark and logo are trademarks of Zebra Technologies Corp.",
@@ -104,7 +149,7 @@
   },
   "metadata": {
     "source_file": "zt231-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-16T13:47:53.757185",
+    "extraction_date": "2025-10-20T14:23:51.335811",
     "schema_version": "1.0.0",
     "total_pages": 4,
     "total_tables": 12

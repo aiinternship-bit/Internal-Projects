@@ -14,6 +14,10 @@
       },
       "memory": "256 MB SDRAM memory\n512 MB on-board linear Flash memory",
       "maximum_print_width": "ZT411: 4.09 in./104 mm\nZT421: 6.6 in./168 mm",
+      "print_speed": {
+        "raw": "ZT411: 14 ips/356 mm per second\nZT421: 12 ips/305 mm per second",
+        "mm_per_second": 356.0
+      },
       "media_sensors": [
         "Adjustable dual media sensors: transmissive and reflective"
       ]
@@ -29,12 +33,14 @@
         "max_inches": 4.5
       },
       "media_roll_size": "core",
-      "thickness": "0.0023 in./0.058 mm to 0.010 in./0.25 mm",
       "media_types": [
+        "Die cut or continuous with or without black mark",
         "Continuous, die-cut, notch, black-mark, linerless media**For use only with linerless printer model"
       ]
     },
-    "ribbon": {},
+    "ribbon": {
+      "maximum_ribbon_length": "1476 ft./450 M"
+    },
     "operating_conditions": {
       "operating_temperature": {
         "raw": "Thermal transfer: 40º F to 104º F/5º C to 40º C\nDirect thermal: 32º F to 104º F/0º C to 40º C"
@@ -78,11 +84,13 @@
     ]
   },
   "fonts_and_barcodes": {
-    "fonts": [],
+    "fonts": [
+      "16 resident expandable ZPL II bitmap and two resident scalable\nZPL fonts\nAsian and other international scalable and smooth bitmapped\nfonts\nUnicode™:"
+    ],
     "barcode_ratios": [],
     "barcodes_1d": [],
     "barcodes_2d": [],
-    "graphics_memory": ""
+    "graphics_memory": "For multi-language printing\nDownloadable objects include graphics, scalable and bitmap\nfonts, label templates and formats\nIBM Code Page 850 international character sets are available in\nthe fonts A, B, C, D, E, F, G and 0 through software control\nCode Page 1250, 1252, 1253, 1254, 1255 Support with font 0\n64 MB user-available non-volatile memory storage for\ndownloadable objects\n8 MB user-available SDRAM"
   },
   "connectivity": [
     "Ethernet",
@@ -92,8 +100,25 @@
     "Parallel"
   ],
   "compliance": {
-    "regulatory_standards": [],
-    "certifications": [],
+    "regulatory_standards": [
+      "IEC 62368",
+      "ICES-003",
+      "cTUVus",
+      "VCCI",
+      "RCM",
+      "S-Mark",
+      "CCC",
+      "BSMI",
+      "KCC",
+      "SABS",
+      "In-Metro",
+      "BIS",
+      "NOM"
+    ],
+    "certifications": [
+      "cTUVus",
+      "ENERGY STAR"
+    ],
     "energy_star": true
   },
   "warranty": {},
@@ -110,7 +135,7 @@
   },
   "metadata": {
     "source_file": "zt400-series-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-16T13:47:54.284152",
+    "extraction_date": "2025-10-20T14:23:51.972744",
     "schema_version": "1.0.0",
     "total_pages": 4,
     "total_tables": 15

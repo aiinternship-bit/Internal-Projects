@@ -14,6 +14,11 @@
       },
       "memory": "512 MB Flash; 256 MB SDRAM",
       "maximum_print_width": "ZD411: 2.2 in./56 mm for 203 dpi\n2.13 in./54 mm for 300 dpi\nZD421: 4.09 in./104 mm for 203 dpi\n4.16 in./106 mm for 300 dpi\nZD421 Thermal Transfer Cartridge: 4.09\nin./104 mm for 203 and 300 dpi",
+      "print_speed": {
+        "raw": "6 in./152 mm per second (203 dpi)\n4 in./102 mm per second (300 dpi)",
+        "inches_per_second": 6.0,
+        "mm_per_second": 152.0
+      },
       "media_sensors": [
         "Full width, moveable reflective/black mark sensor; multi-position transmissive/gap sensor"
       ]
@@ -23,7 +28,6 @@
       "weight": "ZD411 Direct Thermal:\n2.2 lb./1.0 kg\nZD411 Thermal Transfer:\n3.59 lb./1.629 kg\nZD421 Direct Thermal:\n2.98 lbs./1.35 kg\nZD421 Thermal Transfer Roll:\n4.52 lbs./2.05 kg\nZD421 Thermal Transfer Cartridge:\n5.0 lbs./2.3 kg"
     },
     "media": {
-      "maximum_label_length": "Minimum: 0.25 in./6.35 mm\nMaximum: 39.0 in./991 mm",
       "media_width": {
         "raw": "ZD411:\n0.585 in./15 mm to 2.36 in./60 mm\nZD421 Direct Thermal: 0.585 in./15 mm to\n4.25 in./108 mm\nZD421 Thermal Transfer Roll: 0.585 in./15 mm\nto 4.41 in./112 mm\nZD421 Thermal Transfer Cartridge: 0.585\nin./15 mm to 4.65 in./118 mm",
         "min_inches": 0.585,
@@ -105,16 +109,14 @@
     ]
   },
   "fonts_and_barcodes": {
-    "fonts": [
-      "16 resident expandable ZPL II bitmap fonts, two resident scalable ZPL fonts, five resident",
-      "expandable EPL2 fonts, native open-type font",
-      "support, Unicode compliant. China units",
-      "include SimSun simplified Chinese font"
+    "fonts": [],
+    "barcode_ratios": [
+      "2:1",
+      "3:1"
     ],
-    "barcode_ratios": [],
     "barcodes_1d": [],
     "barcodes_2d": [],
-    "graphics_memory": "64 MB user available non-volatile memory, 8 MB user available SDRAM"
+    "graphics_memory": ""
   },
   "connectivity": [
     "Ethernet",
@@ -127,12 +129,13 @@
       "IEC 60950-1",
       "IEC 62368-1",
       "EN55022 Class B",
+      "EN55022",
       "EN55024",
+      "EN55035",
       "EN61000-3-2",
       "EN61000-3-3",
       "EN 300 328",
       "EN 301 893",
-      "EN 62311",
       "FCC Class B",
       "FCC 15.209",
       "ICES-003",
@@ -176,7 +179,7 @@
   },
   "metadata": {
     "source_file": "zd400-series-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-16T13:47:49.853600",
+    "extraction_date": "2025-10-20T14:23:46.519613",
     "schema_version": "1.0.0",
     "total_pages": 5,
     "total_tables": 15

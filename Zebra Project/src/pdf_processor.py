@@ -95,30 +95,36 @@ class PDFProcessor:
                 # Printer specifications
                 if any(term in key_lower for term in ["resolution", "dpi", "dots per mm"]):
                     specs["printer"]["resolution"] = self._parse_resolution(key, value)
-                elif "memory" in key_lower and "user available" not in key_lower:
+                elif "memory" in key_lower and "user available" not in key_lower and "flash" not in key_lower and "sdram" not in key_lower.split():
                     specs["printer"]["memory"] = value
-                elif "maximum print width" in key_lower or "print width" in key_lower:
+                elif "maximum print" in key_lower and "width" in key_lower:
                     specs["printer"]["maximum_print_width"] = value
-                elif "print speed" in key_lower:
+                elif ("maximum print" in key_lower and "speed" in key_lower) or ("print speed" in key_lower and "maximum" not in key_lower):
                     specs["printer"]["print_speed"] = self._parse_speed(value)
                 elif "media sensor" in key_lower:
                     if "media_sensors" not in specs["printer"]:
                         specs["printer"]["media_sensors"] = []
-                    
+
                     # Clean and split by logical sensor descriptions
                     value_clean = re.sub(r'\s+', ' ', value)  # First normalize whitespace
-                    
-                    # Split by "Fixed" which indicates a new sensor
-                    if "Fixed" in value_clean:
+
+                    # Split by "Fixed" which indicates a new sensor - add space after "Fixed"
+                    if "Fixed" in value_clean and "Fixedoff" not in value_clean:
                         parts = value_clean.split("Fixed")
                         specs["printer"]["media_sensors"].append(parts[0].strip())
-                        specs["printer"]["media_sensors"].append("Fixed" + parts[1].strip())
+                        specs["printer"]["media_sensors"].append("Fixed " + parts[1].strip())
+                    elif "Fixedoff" in value_clean:
+                        # Handle the case where "Fixed" is concatenated
+                        parts = value_clean.split("Fixed")
+                        if parts[0].strip():
+                            specs["printer"]["media_sensors"].append(parts[0].strip())
+                        specs["printer"]["media_sensors"].append("Fixed " + parts[1].strip())
                     else:
                         specs["printer"]["media_sensors"].append(value_clean)
                 elif "firmware" in key_lower:
                     specs["printer"]["firmware"] = [f.strip() for f in value.split(';')]
-                elif "maximum print" in key_lower and "width" in key_lower:
-                    specs["printer"]["maximum_print_width"] = value
+                elif "maximum print length" in key_lower:
+                    specs["printer"]["maximum_print_length"] = value
 
                 # Physical specifications
                 elif "dimension" in key_lower:
@@ -127,42 +133,46 @@ class PDFProcessor:
                     specs["physical"]["weight"] = value
 
                 # Media specifications
-                elif "maximum label length" in key_lower or ("label" in key_lower and "length" in key_lower):
-                    specs["media"]["maximum_label_length"] = value
+                elif ("minimum label" in key_lower and "length" in key_lower) or ("label and liner" in key_lower and "length" in key_lower):
+                    specs["media"]["minimum_label_length"] = value
                 elif "media width" in key_lower:
                     specs["media"]["media_width"] = self._parse_range(value)
                 elif "media roll" in key_lower or "roll size" in key_lower:
                     specs["media"]["media_roll_size"] = value
-                elif "thickness" in key_lower and "ribbon" not in key_lower:
+                elif "thickness" in key_lower and "ribbon" not in key_lower and "media" in key_lower:
                     specs["media"]["thickness"] = value
                 elif "media type" in key_lower:
                     # Clean up media types - consolidate logical groups
                     raw_types = value.replace('\n', ' ')
                     # Split more intelligently
                     types_list = []
-                    
+
                     if "roll-fed" in raw_types.lower() or "fan-fold" in raw_types.lower():
                         types_list.append("Roll-fed or fan-fold")
-                    
-                    if "die cut" in raw_types.lower():
+
+                    if "die cut" in raw_types.lower() or "die-cut" in raw_types.lower():
                         types_list.append("Die cut or continuous with or without black mark")
-                    
+
                     if "tag stock" in raw_types.lower():
                         types_list.append("Tag stock")
-                    
+
                     if "receipt paper" in raw_types.lower():
                         types_list.append("Continuous receipt paper")
-                    
+
                     if "wristband" in raw_types.lower():
                         types_list.append("Wristbands")
-                    
+
+                    if "notch" in raw_types.lower() or "black mark" in raw_types.lower():
+                        if "die cut" not in raw_types.lower():
+                            types_list.append(raw_types)
+
                     specs["media"]["media_types"] = types_list if types_list else [raw_types]
 
                 # Ribbon specifications
-                elif "ribbon" in key_lower:
+                elif "ribbon" in key_lower or ("standard" in key_lower and "length" in key_lower and table_info.get("page", 0) > 2):
                     if "outside diameter" in key_lower or ("diameter" in key_lower and "ribbon" in key_lower):
                         specs["ribbon"]["outside_diameter"] = self._parse_measurement(value)
-                    elif "length" in key_lower:
+                    elif ("length" in key_lower and "ribbon" in key_lower) or ("standard" in key_lower and "length" in key_lower):
                         specs["ribbon"]["maximum_ribbon_length"] = value
                     elif "ratio" in key_lower:
                         specs["ribbon"]["ribbon_ratio"] = value
@@ -174,14 +184,16 @@ class PDFProcessor:
                 # Operating conditions
                 elif "operating" in key_lower and "temp" in key_lower:
                     specs["operating_conditions"]["operating_temperature"] = self._parse_temperature(value)
-                elif "storage" in key_lower and "temp" in key_lower:
+                elif ("storage" in key_lower or "transportation" in key_lower) and "temp" in key_lower:
                     specs["operating_conditions"]["storage_temperature"] = self._parse_temperature(value)
                 elif "operating" in key_lower and "humidity" in key_lower:
                     specs["operating_conditions"]["operating_humidity"] = self._parse_humidity(value)
                 elif "storage" in key_lower and "humidity" in key_lower:
                     specs["operating_conditions"]["storage_humidity"] = self._parse_humidity(value)
-                elif "electrical" in key_lower:
+                elif "electrical" in key_lower or "power supply" in key_lower:
                     specs["operating_conditions"]["electrical"] = value
+                elif "agency" in key_lower and "approval" in key_lower:
+                    specs["operating_conditions"]["agency_approvals"] = value
 
         return specs
     
@@ -242,78 +254,77 @@ class PDFProcessor:
             "barcodes_2d": [],
             "graphics_memory": ""
         }
-        
+
         for table_info in tables:
             table = table_info["data"]
-            
+
+            # Check for single-column tables (like Firmware, Barcodes, Fonts)
+            if table and len(table) > 0:
+                # Check if this is a single-column table with header
+                first_row = table[0] if table[0] else []
+                header = str(first_row[0]).strip() if first_row and first_row[0] else ""
+
+                # Handle Barcode Symbologies table (single column)
+                if "barcode symbolog" in header.lower():
+                    if len(table) > 1 and table[1] and table[1][0]:
+                        content = str(table[1][0])
+
+                        # Extract Linear/1D Barcodes
+                        linear_match = re.search(r'Linear Barcodes:\s*(.*?)(?=2D Barcodes:|$)', content, re.DOTALL)
+                        if linear_match:
+                            linear_text = linear_match.group(1).strip()
+                            barcodes = re.split(r',\s*(?=[A-Z])', linear_text)
+                            fonts_barcodes["barcodes_1d"] = [bc.strip() for bc in barcodes if bc.strip()]
+
+                        # Extract 2D Barcodes
+                        barcode_2d_match = re.search(r'2D Barcodes:\s*(.*?)$', content, re.DOTALL)
+                        if barcode_2d_match:
+                            barcode_2d_text = barcode_2d_match.group(1).strip()
+                            barcodes = re.split(r',\s*(?=[A-Z])', barcode_2d_text)
+                            fonts_barcodes["barcodes_2d"] = [bc.strip() for bc in barcodes if bc.strip()]
+                    continue
+
+                # Handle Fonts and Graphics table (single column)
+                if "fonts and graphics" in header.lower():
+                    if len(table) > 1 and table[1] and table[1][0]:
+                        content = str(table[1][0])
+
+                        # Split by sentences/logical groups
+                        parts = re.split(r'(?<=[.:])\s+(?=[A-Z])', content)
+
+                        for part in parts:
+                            part = part.strip()
+                            if not part:
+                                continue
+
+                            # Check if it's memory info
+                            if ('MB' in part and 'available' in part) or ('Flash memory' in part or 'SDRAM' in part):
+                                fonts_barcodes["graphics_memory"] = part
+                            # Otherwise it's a font description
+                            elif part:
+                                fonts_barcodes["fonts"].append(part)
+                    continue
+
+            # Handle standard two-column tables
             for row in table:
                 if not row or len(row) < 2:
                     continue
-                    
+
                 key = str(row[0]).strip() if row[0] else ""
                 value = str(row[1]).strip() if row[1] else ""
-                
+
                 if not key or not value:
                     continue
-                    
+
                 key_lower = key.lower()
-                
+
                 # Clean newlines from value
                 value_clean = re.sub(r'\s*\n\s*', ' ', value)
-                
-                # Font and Graphics information
-                if "fonts and" in key_lower or "graphics" in key_lower:
-                    # Split by newlines to get individual items
-                    font_items = value.split('\n')
-                    
-                    for item in font_items:
-                        item = item.strip()
-                        
-                        # Check if it's memory info
-                        if 'MB' in item and 'available' in item:
-                            if fonts_barcodes["graphics_memory"]:
-                                fonts_barcodes["graphics_memory"] += " " + item
-                            else:
-                                fonts_barcodes["graphics_memory"] = item
-                        # Otherwise it's a font
-                        elif item and item not in fonts_barcodes["fonts"]:
-                            fonts_barcodes["fonts"].append(item)
-                
+
                 # Barcode ratios
-                elif "bar code ratio" in key_lower:
+                if "bar code ratio" in key_lower or "barcode ratio" in key_lower:
                     fonts_barcodes["barcode_ratios"] = [r.strip() for r in re.split(r'\band\b', value_clean)]
-                
-                # 1D Barcodes
-                elif "1d bar code" in key_lower:
-                    barcodes = re.split(r',\s*(?=[A-Z])', value_clean)
-                    fonts_barcodes["barcodes_1d"] = [bc.strip() for bc in barcodes if bc.strip()]
-                
-                # 2D Barcodes
-                elif "2d bar code" in key_lower:
-                    barcodes = re.split(r',\s*(?=[A-Z])', value_clean)
-                    fonts_barcodes["barcodes_2d"] = [bc.strip() for bc in barcodes if bc.strip()]
-        
-        # POST-PROCESSING: Merge split font items (like "Unicode compliant..." split across lines)
-        merged_fonts = []
-        i = 0
-        while i < len(fonts_barcodes["fonts"]):
-            current = fonts_barcodes["fonts"][i]
-            
-            # Check if this item seems incomplete (ends with comma or preposition)
-            if i + 1 < len(fonts_barcodes["fonts"]):
-                next_item = fonts_barcodes["fonts"][i + 1]
-                
-                # Merge if current ends with "on" or "," and next starts with lowercase
-                if (current.endswith('on') or current.endswith(',')) and next_item[0].islower():
-                    merged_fonts.append(current + ' ' + next_item)
-                    i += 2  # Skip next item since we merged it
-                    continue
-            
-            merged_fonts.append(current)
-            i += 1
-        
-        fonts_barcodes["fonts"] = merged_fonts
-        
+
         return fonts_barcodes
     
     def parse_features(self, text: str, tables: List[Dict]) -> Dict[str, List[str]]:
@@ -447,41 +458,39 @@ class PDFProcessor:
             "energy_star": False
         }
 
-        # Look for regulatory section
+        # Look for regulatory section or agency approvals section
         regulatory_match = re.search(
-            r'Regulatory\s*(.*?)(?=\n\n|Recommended Services|$)', 
-            text, 
+            r'(?:Regulatory|Agency\s+Approvals)\s*(.*?)(?=\n\n|Recommended Services|Print DNA|$)',
+            text,
             re.DOTALL | re.IGNORECASE
         )
-        
+
         if regulatory_match:
             reg_text = regulatory_match.group(1)
-            
+
             # Clean up the text first
             reg_text = re.sub(r'\s+', ' ', reg_text)
 
             # Extract specific complete standards with better patterns
             standard_patterns = [
                 r'IEC\s+[\d\-]+',
-                r'EN55022\s+Class\s+B',
-                r'EN55024',
-                r'EN61000-3-2',
-                r'EN61000-3-3',
-                r'EN\s+300\s+328',      # More specific
-                r'EN\s+301\s+893',      # More specific
-                r'EN\s+62311',
+                r'EN\d+\s+Class\s+B',  # EN55022 Class B, EN55024, etc
+                r'EN\d{5}(?:-\d-\d)?',  # EN55022, EN61000-3-2, etc
+                r'EN\s+\d{3}\s+\d{3}',  # EN 300 328, EN 301 893
                 r'FCC\s+Class\s+B',
-                r'FCC\s+15\.209',
-                r'FCC\s+15\.247\([a-z]\)',
+                r'FCC\s+15\.\d+(?:\([a-z]\))?',  # FCC 15.209, FCC 15.247(d)
                 r'ICES-\d+',
                 r'IC\s+RSS\s+\d+',
                 r'CE\s+Marking',
                 r'cTUVus',
                 r'VCCI',
                 r'C-Tick',
+                r'RCM',
                 r'S-Mark',
+                r'UKCA',
                 r'\bCCC\b',
-                r'\bCU\b',
+                r'\bCU\s+EAC\b',
+                r'\bCU\b(?!\s+EAC)',
                 r'BSMI',
                 r'KCC',
                 r'SABS',
@@ -489,7 +498,7 @@ class PDFProcessor:
                 r'BIS',
                 r'\bNOM\b'
             ]
-            
+
             for pattern in standard_patterns:
                 matches = re.findall(pattern, reg_text, re.IGNORECASE)
                 for match in matches:
@@ -540,6 +549,111 @@ class PDFProcessor:
 
         return warranty
 
+    def parse_firmware(self, text: str, tables: List[Dict]) -> List[str]:
+        """Extract firmware information from tables or text."""
+        firmware_list = []
+
+        for table_info in tables:
+            table = table_info["data"]
+
+            # Check for single-column Firmware table
+            if table and len(table) > 0:
+                first_row = table[0] if table[0] else []
+                header = str(first_row[0]).strip() if first_row and first_row[0] else ""
+
+                # Handle single-column Firmware table
+                if "firmware" in header.lower() and len(first_row) == 1:
+                    if len(table) > 1 and table[1] and table[1][0]:
+                        content = str(table[1][0])
+
+                        # Split by firmware names (lines starting with known firmware names)
+                        firmware_patterns = [
+                            r'(ZBI[^\n]+—[^\n]+(?:\n[^\n]+(?!—))*)',
+                            r'(ZPL[^\n]+—[^\n]+(?:\n[^\n]+(?!—))*)',
+                            r'(EPL[^\n]+—[^\n]+(?:\n[^\n]+(?!—))*)'
+                        ]
+
+                        for pattern in firmware_patterns:
+                            matches = re.findall(pattern, content, re.MULTILINE)
+                            for match in matches:
+                                entry = re.sub(r'\s+', ' ', match.strip())
+                                if entry and entry not in firmware_list:
+                                    firmware_list.append(entry)
+                    continue
+
+            # Handle standard two-column tables
+            for row in table:
+                if not row or len(row) < 2:
+                    continue
+
+                key = str(row[0]).strip() if row[0] else ""
+                value = str(row[1]).strip() if row[1] else ""
+
+                if not key or not value:
+                    continue
+
+                key_lower = key.lower()
+
+                if "firmware" in key_lower:
+                    # Parse firmware entries
+                    firmware_entries = re.split(r'\n(?=[A-Z])', value)
+                    for entry in firmware_entries:
+                        entry = entry.strip()
+                        if entry and entry not in firmware_list:
+                            firmware_list.append(entry)
+
+        return firmware_list
+
+    def parse_markets_applications(self, tables: List[Dict]) -> Dict[str, List[str]]:
+        """Extract markets and applications information from tables."""
+        markets = {}
+
+        for table_info in tables:
+            table = table_info["data"]
+
+            # Look for single-column table with "Markets and Applications" header
+            if table and len(table) > 0:
+                first_row = table[0] if table[0] else []
+                header = str(first_row[0]).strip() if first_row and first_row[0] else ""
+
+                # Skip this table - it's usually part of page header/layout
+                if "markets and" in header.lower() and "applications" in header.lower():
+                    if len(table) > 1 and table[1] and table[1][0]:
+                        content = str(table[1][0])
+
+                        # Define market categories
+                        categories = [
+                            ("Manufacturing", r'Manufacturing\s+(.*?)(?=Transportation and Logistics|Healthcare|Retail|$)'),
+                            ("Transportation and Logistics", r'Transportation and Logistics\s+(.*?)(?=Healthcare|Retail|$)'),
+                            ("Healthcare", r'Healthcare\s+(.*?)(?=Retail|$)'),
+                            ("Retail", r'Retail\s+(.*?)$')
+                        ]
+
+                        for category_name, pattern in categories:
+                            category_match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+
+                            if category_match:
+                                apps_text = category_match.group(1)
+                                # Extract bullet points
+                                apps = re.findall(r'•\s*([^\n•]+)', apps_text)
+                                if apps:
+                                    # Filter out junk - only keep items that are relevant application descriptions
+                                    filtered_apps = []
+                                    for app in apps:
+                                        app = app.strip()
+                                        # Skip if it's too long (probably merged data) or contains technical specs
+                                        if len(app) > 100 or 'mm' in app.lower() or 'in.' in app or 'lbs' in app:
+                                            continue
+                                        # Skip if it has firmware/technical keywords
+                                        if any(keyword in app.lower() for keyword in ['firmware', 'communications:', 'energy star', 'bluetooth', 'printer specifications']):
+                                            continue
+                                        filtered_apps.append(app)
+
+                                    if filtered_apps:
+                                        markets[category_name] = filtered_apps
+
+        return markets
+
     def extract_additional_info(self, text: str) -> Dict[str, Any]:
         """
         Extract any additional information not captured in standard categories.
@@ -551,7 +665,7 @@ class PDFProcessor:
         sections_patterns = {
             "Recommended Services": r'Recommended Services\s*(.*?)(?=\n\s*\n[A-Z][a-z]+\s+[A-Z]|Operating System|$)',
             "ZebraOneCare": r'ZebraOneCare\s*(.*?)(?=\n\s*\n[A-Z][a-z]+\s+[A-Z]|Note:|$)',
-            "Print DNA": r'Print DNA\s+Software\s*(.*?)(?=\n\s*\n[A-Z][a-z]+\s+[A-Z]|Product Warranty|$)',
+            "Print DNA": r'Print DNA\s+Software\s*(.*?)(?=\n\s*\n[A-Z][a-z]+\s+[A-Z]|Product Warranty|The Zebra|$)',
             "Operating System": r'Operating System\s*(.*?)(?=\n\s*\n[A-Z][a-z]+\s+[A-Z]|Print DNA|$)',
             "Printer Supplies": r'Printers?\s+Supplies\s*(.*?)(?=\n\s*\n[A-Z][a-z]+\s+[A-Z]|Regulatory|$)',
         }
@@ -567,14 +681,14 @@ class PDFProcessor:
         # Parse Print DNA components if found
         if "Print DNA" in additional:
             additional["Print DNA Components"] = {}
-            
+
             # Look for specific components
             components = {
                 "Zebra Setup Utilities": r'Zebra Setup\s+Utilities\s*(.*?)(?=ZebraDesigner|Emulations|For more|$)',
                 "ZebraDesigner Essentials": r'ZebraDesigner\s+Essentials\s*(.*?)(?=Emulations|For more|$)',
                 "Emulations": r'Emulations\s*(.*?)(?=For more|$)'
             }
-            
+
             for comp_name, comp_pattern in components.items():
                 comp_match = re.search(comp_pattern, additional["Print DNA"], re.DOTALL | re.IGNORECASE)
                 if comp_match:
@@ -726,9 +840,19 @@ class PDFProcessor:
 
         # Features
         data["features"] = self.parse_features(text, tables)
-        
-        # Fonts and Barcodes - NEW
+
+        # Fonts and Barcodes
         data["fonts_and_barcodes"] = self.parse_fonts_and_barcodes(text, tables)
+
+        # Firmware
+        firmware = self.parse_firmware(text, tables)
+        if firmware:
+            data["firmware"] = firmware
+
+        # Markets and Applications
+        markets = self.parse_markets_applications(tables)
+        if markets:
+            data["markets_and_applications"] = markets
 
         # Connectivity
         data["connectivity"] = self.parse_connectivity(text)

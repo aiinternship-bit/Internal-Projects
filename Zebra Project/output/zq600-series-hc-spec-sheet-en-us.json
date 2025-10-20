@@ -14,6 +14,11 @@
       },
       "memory": "256 MB RAM; 512 MB Flash (standard)",
       "maximum_print_width": "ZQ610 Plus: 1.9 in./48 mm\nZQ620 Plus: 2.8 in./72 mm",
+      "print_speed": {
+        "raw": "Up to 4.5 in./115 mm per second",
+        "inches_per_second": 4.5,
+        "mm_per_second": 115.0
+      },
       "media_sensors": [
         "Black mark and gap media sensing using fixed center position sensors; label present sensor for issuing batch labels one at a time"
       ]
@@ -23,20 +28,22 @@
       "weight": "ZQ610 Plus: 1.33 lbs/0.6 kg\nZQ620 Plus: 1.6 lbs/0.73 kg"
     },
     "media": {
-      "maximum_label_length": "0.5 in./12.7 mm to 32 in./813 mm or\ncontinuous",
+      "minimum_label_length": "0.5 in./12.7 mm to 32 in./813 mm or\ncontinuous",
       "media_width": {
         "raw": "ZQ610 Plus: 1.0 in./25mm to 2.18 in./55.4 mm\nZQ620 Plus: 1.0 in./25 mm to 3.125 in./79 mm",
         "min_inches": 1.0,
         "max_inches": 2.18
       },
       "media_roll_size": "ZQ610 Plus: 2.2 in./55.9 mm OD on a 0.75\nin./19 mm or 1.375 in./34.9 mm inner core\nZQ620 Plus: 2.6 in./66 mm OD on a 0.75 in./19\nmm or 1.375 in./34.9 mm inner core",
-      "thickness": "2.3 mil to 5.5 mil tag stock or 6.5 mil label\nstock",
       "media_types": [
+        "Die cut or continuous with or without black mark",
         "Continuous receipt paper"
       ]
     },
     "ribbon": {},
-    "operating_conditions": {}
+    "operating_conditions": {
+      "agency_approvals": "Emissions: FCC Part 15, Subpart B, EN55022\nClass-B, EN60950, EN55024 and VCCI class B\nSusceptibility: EN55024, EN61000-4-2,\nEN61000-4-3, EN61000-4-4, and EN61000-4-5\nSafety: CE, TUV, CSA\nENERGY STAR™ certified"
+    }
   },
   "features": {
     "standard": [
@@ -76,10 +83,35 @@
   "fonts_and_barcodes": {
     "fonts": [],
     "barcode_ratios": [],
-    "barcodes_1d": [],
+    "barcodes_1d": [
+      "Code 39",
+      "Code 93",
+      "UCC/EAN128",
+      "Code 128",
+      "Codabar (NW-7)",
+      "Interleaved 2-of-5",
+      "UPC-A",
+      "UPC-E, 2 and 5 digit\nadd-on",
+      "EAN-8",
+      "EAN-13, 2 and 5 digit add-on\n• PDF417",
+      "MicroPDF417",
+      "MaxiCode",
+      "QR Code",
+      "GS1/DataBar™ (RSS)\nfamily",
+      "Aztec",
+      "MSI/ Plessey",
+      "FIM Postnet",
+      "Data Matrix",
+      "TLC39"
+    ],
     "barcodes_2d": [],
     "graphics_memory": ""
   },
+  "firmware": [
+    "ZBI 2.x™—powerful programming language that lets printers run standalone applications, connect to peripherals, and much more",
+    "ZPL programming languagesZBI 2.x™—powerful programming language that lets printers run standalone applications, connect to peripherals, and much more",
+    "EPL and ZPL programming languagesZBI 2.x™—powerful programming language that lets printers run standalone applications, connect to peripherals, and much more"
+  ],
   "connectivity": [
     "Ethernet",
     "Wi-Fi",
@@ -99,7 +131,7 @@
   "additional_information": {
     "Recommended Services": "Operating Humidity: 10% to 90% non-condensing Storage/Transportation Temp.: Zebra OneCare Essential and Select Services maximize the -13°F to 149°F/-25°C to 65°C1 availability and productivity of your devices. Key features include Storage Humidity: 24/7 technical support, comprehensive coverage, advance 10% to 90% non-condensing replacement and software updates. Optional Visibility Services are available. For more information go to www.zebra.com/zebraonecare Agency Emissions: FCC Part 15, Subpart B, EN55022 (Note: Service availability may vary by region.) Approvals Class-B, EN60950, EN55024 and VCCI class B Susceptibility: EN55024, EN61000-4-2, EN61000-4-3, EN61000-4-4, and EN61000-4-5 Safety: CE, TUV, CSA Print DNA Software ENERGY STAR™ certified Durable printers are essential, but it's the software inside them Security FIPS support is available at no cost as a that will keep them in action. That's why we built Zebra Print DNA printer OS download. Please contact your into our printers. It's a suite of software capabilities that give you Zebra Sales Representative for further the ability to optimize printer performance over their entire information. lifecycle even as your business needs evolve. For more information, please visit www.zebra.com/printdna Firmware Footnotes CPCL, EPL and ZPL programming languagesZBI 2.x™—powerful programming language that lets printers run standalone applications, connect to peripherals, and much more 1. Contains UFST™ from Agfa Monotype Corporation Features are subject to availability. Specifications are subject to change without notice. The Zebra wordmark and logo are trademarks of Zebra Technologies Corp., registered in many jurisdictions worldwide. All other trademarks are the property of their respective owners. ©2025 Zebra Technologies Corp. and/or its affiliates. 08/01/2023 HTML",
     "ZebraOneCare": "Agency Emissions: FCC Part 15, Subpart B, EN55022 (",
-    "Print DNA": "ENERGY STAR™ certified Durable printers are essential, but it's the software inside them Security FIPS support is available at no cost as a that will keep them in action. That's why we built Zebra Print DNA printer OS download. Please contact your into our printers. It's a suite of software capabilities that give you Zebra Sales Representative for further the ability to optimize printer performance over their entire information. lifecycle even as your business needs evolve. For more information, please visit www.zebra.com/printdna Firmware Footnotes CPCL, EPL and ZPL programming languagesZBI 2.x™—powerful programming language that lets printers run standalone applications, connect to peripherals, and much more 1. Contains UFST™ from Agfa Monotype Corporation Features are subject to availability. Specifications are subject to change without notice. The Zebra wordmark and logo are trademarks of Zebra Technologies Corp., registered in many jurisdictions worldwide. All other trademarks are the property of their respective owners. ©2025 Zebra Technologies Corp. and/or its affiliates. 08/01/2023 HTML",
+    "Print DNA": "ENERGY STAR™ certified Durable printers are essential, but it's the software inside them Security FIPS support is available at no cost as a that will keep them in action. That's why we built Zebra Print DNA printer OS download. Please contact your into our printers. It's a suite of software capabilities that give you Zebra Sales Representative for further the ability to optimize printer performance over their entire information. lifecycle even as your business needs evolve. For more information, please visit www.zebra.com/printdna Firmware Footnotes CPCL, EPL and ZPL programming languagesZBI 2.x™—powerful programming language that lets printers run standalone applications, connect to peripherals, and much more 1. Contains UFST™ from Agfa Monotype Corporation Features are subject to availability. Specifications are subject to change without notice.",
     "Print DNA Components": {},
     "notes": [
       "Service availability may vary by region.) Approvals Class-B, EN60950, EN55024 and VCCI class B Susceptibility: EN55024, EN61000-4-2, EN61000-4-3, EN61000-4-4, and EN61000-4-5 Safety: CE, TUV, CSA Print DNA Software ENERGY STAR™ certified Durable printers are essential, but it's the software inside them Security FIPS support is available at no cost as a that will keep them in action. That's why we built Zebra Print DNA printer OS download. Please contact your into our printers. It's a suite of software capabilities that give you Zebra Sales Representative for further the ability to optimize printer performance over their entire information. lifecycle even as your business needs evolve. For more information, please visit www.zebra.com/printdna Firmware Footnotes CPCL, EPL and ZPL programming languagesZBI 2.x™—powerful programming language that lets printers run standalone applications, connect to peripherals, and much more 1. Contains UFST™ from Agfa Monotype Corporation Features are subject to availability. Specifications are subject to change without notice. The Zebra wordmark and logo are trademarks of Zebra Technologies Corp., registered in many jurisdictions worldwide. All other trademarks are the property of their respective owners. ©2025 Zebra Technologies Corp. and/or its affiliates. 08/01/2023 HTML"
@@ -110,7 +142,7 @@
   },
   "metadata": {
     "source_file": "zq600-series-hc-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-16T13:47:52.774156",
+    "extraction_date": "2025-10-20T14:23:50.128669",
     "schema_version": "1.0.0",
     "total_pages": 7,
     "total_tables": 20
