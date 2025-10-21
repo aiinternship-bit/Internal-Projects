@@ -1,52 +1,190 @@
-# Legacy Code Modernization - Vertex AI Agent Engine
+# Dynamic Multi-Agent Development System - Vertex AI Agent Engine
 
-An autonomous, multi-agent system for re-engineering legacy codebases using **Vertex AI Agent Engine** with **Agent-to-Agent (A2A) communication protocol**.
+An intelligent, multi-agent system for software development with **dynamic agent detection**, **multimodal inputs**, and **parallel execution** using **Vertex AI Agent Engine** with **Agent-to-Agent (A2A) communication protocol**.
+
+**New Features:**
+- **Dynamic Agent Detection** - Automatically selects required agents based on task analysis
+- **Multimodal Inputs** - Supports images, PDFs, design files, videos for comprehensive requirements
+- **Expanded Agent Teams** - Frontend, backend, mobile, infrastructure, and legacy modernization engineers
+- **Intelligent Orchestration** - AI-powered task decomposition and parallel execution
 
 ## Overview
 
-This system leverages Google Cloud's Vertex AI Agent Engine to deploy specialized agents that communicate asynchronously via Pub/Sub, orchestrated by a central coordinator. The architecture uses:
+This system leverages Google Cloud's Vertex AI Agent Engine to deploy specialized agents that communicate asynchronously via Pub/Sub, orchestrated by an **intelligent dynamic coordinator**. The architecture uses:
 
 - **Vertex AI Agent Engine** (Reasoning Engine) for agent deployment
 - **Vertex AI Vector Search** (Matching Engine) for knowledge storage
 - **Google Cloud Pub/Sub** for A2A communication
-- **Gemini 2.0** for code generation and analysis (by default, use the low cost option, can switch to claude for more coding oriented roles)
+- **Gemini 2.0 Flash (multimodal)** for code generation, analysis, and vision tasks
+- **Dynamic Orchestration** with AI-powered agent selection
+
+## System Capabilities
+
+### 1. Dynamic Task Understanding
+
+The system intelligently analyzes tasks from multiple input types:
+
+- **Text Requirements** - Natural language descriptions, user stories
+- **Visual Designs** - UI mockups (PNG/JPG), wireframes, Figma/Sketch files
+- **Documents** - PDFs with requirements, architecture diagrams, specifications
+- **Video** - App demos, user flow recordings
+- **Audio** - Stakeholder interviews, requirements discussions
+- **Code** - Existing implementations, examples
+
+### 2. Intelligent Agent Selection
+
+Instead of predefined workflows, the orchestrator:
+
+1. **Analyzes task requirements** using LLM reasoning
+2. **Matches capabilities** against available agent pool
+3. **Assembles optimal team** based on task needs
+4. **Creates execution plan** with parallel workflows
+
+### 3. Comprehensive Agent Teams
+
+**Frontend Engineering (7 agents)**
+- UI/UX Designer - Design systems, wireframes, component specs
+- React Developer - React/Next.js applications
+- Vue Developer - Vue/Nuxt applications
+- Angular Developer - Angular applications
+- Mobile Developer - React Native, Flutter apps
+- CSS/Styling Agent - Tailwind, styled-components
+- Accessibility Agent - WCAG compliance, a11y testing
+
+**Backend Engineering (5 agents)**
+- API Developer - REST/GraphQL/gRPC APIs
+- Database Engineer - Schema design, migrations, optimization
+- Microservices Architect - Service decomposition, patterns
+- Data Engineer - ETL pipelines, data warehousing
+- Message Queue Agent - Kafka, RabbitMQ, Pub/Sub setup
+
+**Infrastructure & DevOps (3 agents)**
+- Cloud Infrastructure - Terraform, CloudFormation, GCP DM
+- Kubernetes Agent - Manifests, Helm charts, service mesh
+- Observability Agent - Prometheus, Grafana, tracing
+
+**Quality & Security (3 agents)**
+- Performance Testing - Load testing, profiling
+- Security Auditor - Penetration testing, vulnerability scanning
+- Compliance Agent - GDPR, HIPAA, SOC2 validation
+
+**Legacy Modernization (26 agents)**
+- All existing COBOL/legacy modernization agents
+- Organized in discovery, ETL, development, CI/CD stages
+
+**Total: 44+ Specialized Agents**
+
+### 4. Example Use Cases
+
+**Use Case 1: Build Dashboard from Design Mockup**
+- Input: PNG mockup + requirements PDF
+- Agents activated: UI Designer → React Developer → API Developer → Database Engineer
+- Output: Full-stack dashboard with real-time data
+
+**Use Case 2: Microservices from Architecture Diagram**
+- Input: PDF with architecture diagram + text description
+- Agents activated: Microservices Architect → API Developers × N → Database Engineer → Kubernetes Agent
+- Output: Complete microservices deployment
+
+**Use Case 3: Mobile App from Competitor Demo**
+- Input: Video of competitor app
+- Agents activated: Video Analyzer → UI Designer → Mobile Developer → API Developer
+- Output: React Native app with similar features
 
 ### Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Vertex AI Agent Engine                    │
-├─────────────────────────────────────────────────────────────┤
-│                                                               │
-│  ┌──────────────┐         Pub/Sub A2A          ┌──────────┐ │
-│  │ Orchestrator │◄────────Messages──────────────►│Developer│ │
-│  │    Agent     │                                │  Agent  │ │
-│  └──────────────┘                                └──────────┘ │
-│         │                                              │      │
-│         │                                              │      │
-│         ▼                                              ▼      │
-│  ┌──────────────┐                              ┌──────────┐  │
-│  │  Discovery   │                              │    QA    │  │
-│  │    Agent     │                              │  Agent   │  │
-│  └──────────────┘                              └──────────┘  │
-│                                                               │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │          Vertex AI Vector Search (Matching Engine)    │  │
-│  │          Legacy Code Knowledge Base                   │  │
-│  └───────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────────────┐
+│                    Dynamic Multi-Agent System                          │
+│                    (Vertex AI Agent Engine)                            │
+├───────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐  │
+│  │              Multimodal Input Processing Layer                  │  │
+│  ├─────────────────────────────────────────────────────────────────┤  │
+│  │  Images → Vision Model  │  PDFs → Doc Parser  │  Video → Frames │  │
+│  │  Audio → Speech-to-Text │  Design Files → API │  Code → AST    │  │
+│  └─────────────────────────────────────────────────────────────────┘  │
+│                                ↓                                        │
+│  ┌─────────────────────────────────────────────────────────────────┐  │
+│  │           Dynamic Orchestrator (AI-Powered)                     │  │
+│  │  • Task Analysis  • Agent Selection  • Execution Planning      │  │
+│  └─────────────────────────────────────────────────────────────────┘  │
+│                                ↓                                        │
+│          ┌─────────────────Pub/Sub A2A Messages───────────────┐        │
+│          │                                                     │        │
+│  ┌───────────────┐  ┌───────────────┐  ┌────────────────┐   │        │
+│  │  Frontend     │  │   Backend     │  │ Infrastructure │   │        │
+│  │  Team (7)     │  │   Team (5)    │  │   Team (3)     │   │        │
+│  └───────────────┘  └───────────────┘  └────────────────┘   │        │
+│          │                   │                   │            │        │
+│  ┌───────────────┐  ┌───────────────┐  ┌────────────────┐   │        │
+│  │ Legacy Mod    │  │   Quality &   │  │   Validation   │   │        │
+│  │  Team (26)    │  │  Security (3) │  │   Agents       │   │        │
+│  └───────────────┘  └───────────────┘  └────────────────┘   │        │
+│                                ↓                              │        │
+│  ┌─────────────────────────────────────────────────────────────────┐  │
+│  │          Vertex AI Vector Search (Knowledge Base)               │  │
+│  │  • Legacy Code  • Design Patterns  • Best Practices            │  │
+│  └─────────────────────────────────────────────────────────────────┘  │
+└───────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Key Features
 
-### Vertex AI Integration
+### 1. Dynamic Orchestration (NEW)
+
+**Intelligent Task Analysis:**
+- LLM-powered understanding of task requirements from any input type
+- Automatic capability extraction and complexity estimation
+- Dependency graph generation
+
+**AI-Powered Agent Selection:**
+- Capability-based matching instead of hardcoded routing
+- Performance-aware selection (historical success rates)
+- Cost optimization (use cheaper models for simpler tasks)
+- Load balancing across available agents
+
+**Parallel Execution:**
+- Automatic parallelization of independent tasks
+- Up to 20 agents executing concurrently
+- Dependency-aware scheduling
+
+### 2. Multimodal Input Processing (NEW)
+
+**Vision Understanding:**
+- UI mockups → Component specifications
+- Architecture diagrams → Service designs
+- Wireframes → HTML/CSS layouts
+- Powered by Gemini 2.0 Flash (multimodal)
+
+**Document Parsing:**
+- PDFs → Structured requirements extraction
+- Embedded diagrams → Visual analysis
+- Tables → Data model specifications
+
+**Design File Integration:**
+- Figma API → Component extraction
+- Design tokens → CSS variables
+- Auto-layout → Flexbox/Grid specs
+
+**Video Analysis:**
+- Frame extraction for UI screens
+- Audio transcription for requirements
+- User flow identification
+
+**Audio Processing:**
+- Stakeholder interviews → Requirements docs
+- Meeting notes → User stories
+
+### 3. Vertex AI Integration
 
 - **Reasoning Engine**: All agents deployed as Vertex AI Reasoning Engines
-- **Vector Search**: Legacy code knowledge stored in Vertex AI Matching Engine
+- **Vector Search**: Knowledge stored in Vertex AI Matching Engine
 - **A2A Protocol**: Native agent-to-agent communication via Pub/Sub
-- **Gemini 2.0**: Powered by latest Gemini models for code generation
+- **Gemini 2.0 Flash**: Multimodal model for code, vision, and reasoning tasks
 
-### Agent Communication
+### 4. Agent Communication
 
 Agents communicate asynchronously using Google Cloud Pub/Sub:
 - Each agent has a dedicated subscription filtered by agent ID
@@ -655,8 +793,72 @@ stage2_development:
     model: "gemini-1.5-pro"  # More reasoning for architecture
 ```
 
-## Docs
-- **Design Doc**: [Design](https://github.com/dharvpat/Agentic-Dev-Team/blob/main/Agentic%20Dev%20Team%20Design%20Doc.pdf)
+## Quick Start Examples
+
+### Example 1: Build Frontend from Design Mockup
+
+```bash
+# Upload design mockup and requirements
+python scripts/run_dynamic_pipeline.py \
+  --inputs design_mockup.png requirements.pdf \
+  --task "Build analytics dashboard" \
+  --output ./dashboard_output
+
+# System automatically:
+# 1. Analyzes mockup with vision model → extracts components, colors, layout
+# 2. Parses PDF → functional requirements, NFRs
+# 3. Selects agents: UI Designer, React Developer, API Developer, Database Engineer
+# 4. Executes in parallel: Frontend + Backend development
+# 5. Outputs: Full-stack application
+```
+
+### Example 2: API from Architecture Diagram
+
+```bash
+# Upload architecture PDF
+python scripts/run_dynamic_pipeline.py \
+  --inputs architecture.pdf \
+  --task "Implement microservices for e-commerce" \
+  --output ./services_output
+
+# System automatically:
+# 1. Parses diagram → identifies services, communication patterns
+# 2. Selects agents: Microservices Architect, API Developers × N, Kubernetes Agent
+# 3. Generates: Service implementations, Docker files, K8s manifests
+```
+
+### Example 3: Mobile App from Competitor Demo Video
+
+```bash
+# Upload video demo
+python scripts/run_dynamic_pipeline.py \
+  --inputs competitor_app_demo.mp4 \
+  --task "Build similar mobile app" \
+  --output ./mobile_app_output
+
+# System automatically:
+# 1. Analyzes video → extracts UI screens, features, user flows
+# 2. Selects agents: UI Designer, Mobile Developer, API Developer
+# 3. Generates: React Native app + backend API
+```
+
+## Documentation
+
+### Architecture & Design
+- **Dynamic Architecture**: [DYNAMIC-ARCHITECTURE.md](DYNAMIC-ARCHITECTURE.md) - Complete dynamic orchestration guide
+- **Original Design**: [Design Doc PDF](https://github.com/dharvpat/Agentic-Dev-Team/blob/main/Agentic%20Dev%20Team%20Design%20Doc.pdf)
+- **Project Organization**: [PROJECT-DIR-ORGANIZATION.md](PROJECT-DIR-ORGANIZATION.md)
+
+### Implementation Guides
+- **A2A Communication**: [A2A-IMPLEMENTATION-GUIDE.md](A2A-IMPLEMENTATION-GUIDE.md)
+- **Agent Testing**: [AGENT-TESTING-GUIDE.md](AGENT-TESTING-GUIDE.md)
+- **LLM Testing**: [LLM-TESTING-GUIDE.md](LLM-TESTING-GUIDE.md)
+- **Quick Start**: [QUICKSTART.md](QUICKSTART.md)
+- **Testing Quick Start**: [TESTING-QUICK-START.md](TESTING-QUICK-START.md)
+
+### Project Info
+- **Project Summary**: [PROJECT-SUMMARY.md](PROJECT-SUMMARY.md)
+- **Main README**: You are here
 
 ## Support
 
