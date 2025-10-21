@@ -1,0 +1,35 @@
+# requirements.txt
+# Dependencies for Vertex AI Agent Engine Legacy Modernization System
+
+# Core Vertex AI and Google Cloud
+google-cloud-aiplatform>=1.38.0
+vertexai>=1.0.0
+google-cloud-pubsub>=2.18.0
+google-cloud-storage>=2.10.0
+google-cloud-logging>=3.5.0
+
+# Reasoning Engine dependencies
+langchain>=0.1.0
+langchain-google-vertexai>=0.0.6
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+pyyaml>=6.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+tqdm>=4.66.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.21.0
+black>=23.7.0
+flake8>=6.1.0
+mypy>=1.5.0
+
+# Documentation
+pydantic>=2.0.0
+python-dateutil>=2.8.2

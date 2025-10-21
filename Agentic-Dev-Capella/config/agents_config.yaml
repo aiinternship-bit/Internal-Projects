@@ -1,0 +1,267 @@
+# config/agents_config.yaml
+# Configuration for all agents in the legacy modernization pipeline
+
+# Global settings
+global:
+  model: "gemini-2.0-flash"
+  max_retries: 3
+  timeout_seconds: 300
+  enable_telemetry: true
+  enable_human_oversight: true
+
+# Orchestration Layer
+orchestration:
+  orchestrator:
+    name: "orchestrator_agent"
+    model: "gemini-2.0-flash"
+    escalation_threshold: 3
+    max_concurrent_tasks: 10
+    priority_weights:
+      critical: 1.0
+      high: 0.7
+      medium: 0.4
+      low: 0.2
+    
+  escalation:
+    name: "escalation_agent"
+    model: "gemini-2.0-flash"
+    human_intervention_threshold: 5
+    auto_resolution_enabled: true
+    
+  telemetry:
+    name: "telemetry_audit_agent"
+    model: "gemini-2.0-flash"
+    log_level: "INFO"
+    audit_trail_retention_days: 365
+    compliance_mode: true
+
+# Stage 0: Discovery
+stage0_discovery:
+  discovery:
+    name: "discovery_agent"
+    model: "gemini-2.0-flash"
+    scan_depth: "recursive"
+    include_hidden_files: false
+    file_size_limit_mb: 100
+    supported_extensions:
+      - ".cobol"
+      - ".cbl"
+      - ".java"
+      - ".py"
+      - ".cpp"
+      - ".sql"
+      - ".ddl"
+      - ".yaml"
+      - ".json"
+      - ".xml"
+      - ".tf"
+      
+  domain_expert:
+    name: "domain_expert_agent"
+    model: "gemini-2.0-flash"
+    inference_confidence_threshold: 0.7
+    use_pattern_matching: true
+
+# Stage 1: ETL & Knowledge Assembly
+stage1_etl:
+  code_ingestion:
+    name: "code_ingestion_agent"
+    model: "gemini-2.0-flash"
+    batch_size: 100
+    enable_delta_processing: true
+    version_tracking: true
+    
+  static_analysis:
+    name: "static_analysis_agent"
+    model: "gemini-2.0-flash"
+    generate_ast: true
+    complexity_analysis: true
+    security_scan: true
+    max_complexity_threshold: 15
+    
+  documentation_mining:
+    name: "documentation_mining_agent"
+    model: "gemini-2.0-flash"
+    parse_inline_comments: true
+    extract_docstrings: true
+    minimum_doc_quality_score: 0.5
+    
+  knowledge_synthesis:
+    name: "knowledge_synthesis_agent"
+    model: "gemini-2.0-flash"
+    embedding_model: "text-embedding-004"
+    vector_dimensions: 768
+    knowledge_graph_enabled: true
+    
+  delta_monitoring:
+    name: "delta_monitoring_agent"
+    model: "gemini-2.0-flash"
+    polling_interval_seconds: 300
+    enable_webhooks: true
+
+# Stage 2: Development Team
+stage2_development:
+  architecture:
+    architect:
+      name: "technical_architect_agent"
+      model: "gemini-2.0-flash"
+      design_patterns_library: "enterprise"
+      enforce_nfr_coverage: true
+      security_by_design: true
+      
+    validator:
+      name: "architecture_validator_agent"
+      model: "gemini-2.0-flash"
+      validation_checklist:
+        - "completeness"
+        - "nfr_coverage"
+        - "security"
+        - "scalability"
+        - "maintainability"
+      rejection_provides_feedback: true
+      
+  developer:
+    name: "developer_agent"
+    model: "gemini-2.0-flash"
+    supported_languages:
+      - "python"
+      - "cpp"
+      - "typescript"
+      - "java"
+      - "go"
+    code_style: "pep8"  # For Python
+    test_coverage_target: 85
+    generate_docstrings: true
+    
+  validation:
+    code_validator:
+      name: "code_validator_agent"
+      model: "gemini-2.0-flash"
+      check_functional_correctness: true
+      check_security: true
+      check_error_handling: true
+      
+    quality_attribute:
+      name: "quality_attribute_agent"
+      model: "gemini-2.0-flash"
+      enforce_style_guide: true
+      max_function_length: 50
+      max_cyclomatic_complexity: 10
+      check_code_smells: true
+      
+  build:
+    builder:
+      name: "build_agent"
+      model: "gemini-2.0-flash"
+      parallel_builds: true
+      run_security_scans: true
+      generate_sbom: true
+      
+    validator:
+      name: "build_validator_agent"
+      model: "gemini-2.0-flash"
+      require_all_tests_pass: true
+      max_critical_vulnerabilities: 0
+      min_code_coverage: 80
+      
+  qa:
+    tester:
+      name: "qa_agent"
+      model: "gemini-2.0-flash"
+      test_types:
+        - "functional"
+        - "regression"
+        - "security"
+        - "performance"
+        - "fuzz"
+      use_production_data: true
+      anonymize_data: true
+      
+    validator:
+      name: "qa_validator_agent"
+      model: "gemini-2.0-flash"
+      min_coverage: 85
+      require_edge_case_tests: true
+      require_security_tests: true
+      
+  integration:
+    validator:
+      name: "integration_validator_agent"
+      model: "gemini-2.0-flash"
+      test_against_production_db: true
+      compare_with_legacy: true
+      performance_baseline_check: true
+      
+    coordinator:
+      name: "multi_service_coordinator_agent"
+      model: "gemini-2.0-flash"
+      max_parallel_components: 5
+      dependency_resolution: true
+
+# Stage 3: CI/CD & Operations
+stage3_cicd:
+  deployment:
+    deployer:
+      name: "deployment_agent"
+      model: "gemini-2.0-flash"
+      strategies:
+        - "blue_green"
+        - "canary"
+        - "progressive"
+      default_strategy: "canary"
+      canary_percentage: 10
+      rollback_on_error: true
+      
+    validator:
+      name: "deployment_validator_agent"
+      model: "gemini-2.0-flash"
+      smoke_tests_required: true
+      health_check_retries: 3
+      canary_success_threshold: 0.99
+      
+  monitoring:
+    monitor:
+      name: "monitoring_agent"
+      model: "gemini-2.0-flash"
+      metrics_collection_interval: 60
+      anomaly_detection: true
+      compare_with_legacy_baseline: true
+      alert_thresholds:
+        error_rate: 0.01
+        latency_p95_ms: 500
+        
+    root_cause:
+      name: "root_cause_analysis_agent"
+      model: "gemini-2.0-flash"
+      correlation_window_minutes: 15
+      generate_postmortem: true
+      
+  security:
+    supply_chain:
+      name: "supply_chain_security_agent"
+      model: "gemini-2.0-flash"
+      generate_sbom: true
+      vulnerability_scanning: true
+      artifact_signing: true
+      max_age_days_for_deps: 365
+
+# Human Oversight
+human_oversight:
+  enabled: true
+  require_approval_for:
+    - "architecture_major_changes"
+    - "deployment_production"
+    - "escalated_tasks"
+  notification_channels:
+    - "email"
+    - "slack"
+  approval_timeout_hours: 24
+
+# Vector DB Configuration
+vector_db:
+  provider: "chroma"  # or pinecone, weaviate
+  host: "localhost"
+  port: 6333
+  collection_name: "legacy_modernization"
+  embedding_model: "text-embedding-004"
+  similarity_metric: "cosine"
