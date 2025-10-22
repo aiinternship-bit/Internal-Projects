@@ -7,15 +7,11 @@
   },
   "specifications": {
     "printer": {
+      "maximum_print_width": "0.75 in./19.05 mm, 1 in./25.4 mm, 1.1875\nin./30.16 mm",
       "resolution": {
         "raw": "300 dpi/12 dots per mm",
         "dpi": 300,
         "dots_per_mm": 12
-      },
-      "print_speed": {
-        "raw": "Healthcare: 2 in./51 mm per second\nZ-Band Fun and Z-Band Splash: 4 in./102\nmm per second",
-        "inches_per_second": 2.0,
-        "mm_per_second": 51.0
       }
     },
     "physical": {
@@ -37,8 +33,7 @@
       "storage_humidity": {
         "raw": "5%-85% non-condensing R.H.",
         "condition": "non-condensing"
-      },
-      "electrical": "IEC 60601-1:2012"
+      }
     }
   },
   "features": {
@@ -68,12 +63,7 @@
     "optional": []
   },
   "fonts_and_barcodes": {
-    "fonts": [
-      "• Character fonts:",
-      "Standard bitmapped Zebra fonts:",
-      "A, B, C, D, E\n(OCR-B), F, G, H (OCR-A), GS, P, Q, R, S, T, U, V & Ø Smooth font\n(CG Triumvirate™ Bold Condensed)\n• Supports user-defined fonts and graphics — including custom\nlogos\n• Bitmap fonts are expandable up to 10 times, height- and\nwidth-independent.",
-      "Fonts E and H (OCR-B and OCR-A), however,\nare not considered in spec when expanded\n• Smooth-scalable font Ø (CG Triumvirate Bold Condensed) is\nexpandable dot-by-dot, height-and width-independent, while\nmaintaining edges to a max. 1500 x 1500 dots"
-    ],
+    "fonts": [],
     "barcode_ratios": [],
     "barcodes_1d": [],
     "barcodes_2d": [],
@@ -85,16 +75,8 @@
     "Bluetooth"
   ],
   "compliance": {
-    "regulatory_standards": [
-      "IEC 60950-1",
-      "IEC 62368-1",
-      "IEC 60601-1",
-      "VCCI",
-      "RCM"
-    ],
-    "certifications": [
-      "ENERGY STAR"
-    ],
+    "regulatory_standards": [],
+    "certifications": [],
     "energy_star": true
   },
   "warranty": {
@@ -113,7 +95,7 @@
   },
   "metadata": {
     "source_file": "zd510-hc-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-20T14:23:47.123872",
+    "extraction_date": "2025-10-16T13:47:50.332327",
     "schema_version": "1.0.0",
     "total_pages": 4,
     "total_tables": 17

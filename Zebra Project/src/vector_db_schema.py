@@ -227,6 +227,11 @@ class PrinterVectorSchema:
         else:
             print_speed = 0
 
+        # Extract URLs
+        product_url = product_info.get("url", "")
+        warranty_info = json_data.get("warranty", {})
+        warranty_url = warranty_info.get("url", "") if isinstance(warranty_info, dict) else ""
+
         metadata = {
             "model": product_info.get("model", ""),
             "series": product_info.get("series", ""),
@@ -247,6 +252,10 @@ class PrinterVectorSchema:
 
             # Compliance
             "energy_star": compliance.get("energy_star", False),
+
+            # URLs
+            "product_url": product_url,
+            "warranty_url": warranty_url,
 
             # Source
             "source_file": json_data.get("metadata", {}).get("source_file", ""),

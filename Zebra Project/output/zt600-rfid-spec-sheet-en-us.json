@@ -14,6 +14,10 @@
       },
       "memory": "1 GB RAM memory\n2 GB on-board linear Flash memory",
       "maximum_print_width": "ZT610: 4.09 in./104 mm\nZT620: 6.6 in./168 mm",
+      "print_speed": {
+        "raw": "ZT610: 14 ips/356 mm per second\nZT620: 12 ips/305 mm per second",
+        "mm_per_second": 356.0
+      },
       "media_sensors": [
         "Dual media sensors: transmissive and reflective"
       ]
@@ -29,14 +33,12 @@
         "max_inches": 4.5
       },
       "media_roll_size": "8.0 in./203 mm O.D. on a 3 in./76 mm I.D.\ncore",
+      "thickness": "0.0023 in./0.058 mm to 0.010 in./0.25 mm",
       "media_types": [
-        "Die cut or continuous with or without black mark",
         "Continuous, die-cut, notch, black-mark"
       ]
     },
-    "ribbon": {
-      "maximum_ribbon_length": "1476 ft./450 m"
-    },
+    "ribbon": {},
     "operating_conditions": {
       "operating_temperature": {
         "raw": "Thermal transfer: 40 °F to 104 °F/5 °C to 40 °C\nDirect thermal: 32 °F to 104 °F/0 °C to 40 °C"
@@ -56,8 +58,7 @@
         "max_percent": 85,
         "condition": "non-condensing"
       },
-      "electrical": "Auto-detectable (PFC Compliant) 90-265 VAC,\n47-63Hz, rated at 250 Watts\nENERGY STAR qualified",
-      "agency_approvals": "IEC 60950, EN 55022 Class B, EN 55024, EN\n61000-3-2, EN 61000-3-3\ncTUVus, CE Marking, FCC-B, ICES-003, VCCI,\nC-Tick, NOM, S-Mark (Arg), CCC, CU, BSMI,\nKCC, SABS, IN-Metro"
+      "electrical": "Auto-detectable (PFC Compliant) 90-265 VAC,\n47-63Hz, rated at 250 Watts\nENERGY STAR qualified"
     }
   },
   "features": {
@@ -76,44 +77,11 @@
     ]
   },
   "fonts_and_barcodes": {
-    "fonts": [
-      "16 resident expandable ZPL II bitmap and two resident scalable\nZPL fonts\nAsian and other international scalable and smooth bitmapped\nfonts\nUnicode™:"
-    ],
+    "fonts": [],
     "barcode_ratios": [],
-    "barcodes_1d": [
-      "Code 11",
-      "Code 39",
-      "Code 93",
-      "Code 128 with\nsubsets A/B/C\nand UCC Case Codes",
-      "ISBT-128",
-      "UPC-A",
-      "UPC-E",
-      "EAN-8",
-      "EAN-13",
-      "UPC and EAN 2- or 5-digit extensions",
-      "Plessey",
-      "Postnet",
-      "Standard\n2-of-5",
-      "Industrial 2-of-5",
-      "Interleaved 2-of-5",
-      "Logmars",
-      "MSI",
-      "Codabar",
-      "Planet Code"
-    ],
-    "barcodes_2d": [
-      "Codablock",
-      "PDF417",
-      "Code 49",
-      "DataMatrix",
-      "MaxiCode",
-      "QR Code",
-      "TLC 39",
-      "MicroPDF",
-      "RSS-14 (and composite)",
-      "Aztec"
-    ],
-    "graphics_memory": "For multi-language printing\nDownloadable objects include graphics, scalable and bitmap\nfonts, label templates and formats\nIBM Code Page 850 international character sets are available in\nthe fonts A, B, C, D, E, F, G and 0 through software control\nCode Page 1250, 1252, 1253, 1254, 1255 Support with font 0\n32 MB user available DRAM\n512 MB user available on-board Flash"
+    "barcodes_1d": [],
+    "barcodes_2d": [],
+    "graphics_memory": ""
   },
   "connectivity": [
     "Ethernet",
@@ -140,7 +108,7 @@
   },
   "metadata": {
     "source_file": "zt600-rfid-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-20T14:23:52.416517",
+    "extraction_date": "2025-10-16T13:47:54.629032",
     "schema_version": "1.0.0",
     "total_pages": 4,
     "total_tables": 13

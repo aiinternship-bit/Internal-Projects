@@ -11,6 +11,8 @@ from pathlib import Path
 import re
 import os
 import anthropic
+import ollama
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,7 +28,9 @@ class PrinterRAG:
         db_path: str = "./chroma_db",
         collection_name: str = "printer_specs",
         use_llm: bool = True,
-        anthropic_api_key: Optional[str] = None
+        llm_provider: str = "claude",
+        anthropic_api_key: Optional[str] = None,
+        ollama_model: str = "llama3.2:1b"
     ):
         """
         Initialize RAG system.
@@ -34,12 +38,16 @@ class PrinterRAG:
         Args:
             db_path: Path to ChromaDB storage directory
             collection_name: Name of the collection to query
-            use_llm: Whether to use Anthropic LLM for enhanced responses (default: True)
+            use_llm: Whether to use LLM for enhanced responses (default: True)
+            llm_provider: LLM provider to use - 'claude' or 'ollama' (default: 'claude')
             anthropic_api_key: Anthropic API key (or set ANTHROPIC_API_KEY env var)
+            ollama_model: Ollama model name (default: 'llama3.2:1b')
         """
         self.db_path = db_path
         self.collection_name = collection_name
         self.use_llm = use_llm
+        self.llm_provider = llm_provider.lower()
+        self.ollama_model = ollama_model
 
         # Initialize ChromaDB client
         self.client = chromadb.PersistentClient(path=db_path)
@@ -60,22 +68,37 @@ class PrinterRAG:
             print(f"Error: Collection '{collection_name}' not found. Please run ingestion first.")
             raise
 
-        # Initialize Anthropic client if using LLM
+        # Initialize LLM client based on provider
         self.anthropic_client = None
+        self.ollama_client = None
+
         if self.use_llm:
-            api_key = anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY")
-            if api_key:
-                self.anthropic_client = anthropic.Anthropic(api_key=api_key)
-                print("LLM-enhanced responses enabled (Claude)")
+            if self.llm_provider == "claude":
+                api_key = anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY")
+                if api_key:
+                    self.anthropic_client = anthropic.Anthropic(api_key=api_key)
+                    print("LLM-enhanced responses enabled (Claude)")
+                else:
+                    print("Warning: ANTHROPIC_API_KEY not found. Falling back to basic responses.")
+                    self.use_llm = False
+            elif self.llm_provider == "ollama":
+                # Ollama client doesn't require initialization, just verify it's accessible
+                try:
+                    # Test if Ollama is available
+                    ollama.list()
+                    print(f"LLM-enhanced responses enabled (Ollama - {self.ollama_model})")
+                except Exception as e:
+                    print(f"Warning: Ollama not accessible. Falling back to basic responses. Error: {e}")
+                    self.use_llm = False
             else:
-                print("Warning: ANTHROPIC_API_KEY not found. Falling back to basic responses.")
+                print(f"Warning: Unknown LLM provider '{self.llm_provider}'. Falling back to basic responses.")
                 self.use_llm = False
 
     def recommend_printer(
         self,
         requirements: str,
         filters: Optional[Dict[str, Any]] = None,
-        n_results: int = 5
+        n_results: int = 10
     ) -> Dict[str, Any]:
         """
         Recommend printers based on natural language requirements.
@@ -106,6 +129,8 @@ class PrinterRAG:
         if auto_filters:
             where_clause = self._build_where_clause(auto_filters)
 
+        #Time Vector Search
+        start = time.perf_counter()
         # Query vector database
         results = self.collection.query(
             query_texts=[requirements],
@@ -114,7 +139,9 @@ class PrinterRAG:
         )
 
         # Process and rank results
-        recommendations = self._process_results(results, requirements, n_results)
+        recommendations = self._process_results(results, requirements, 20)
+        end = time.perf_counter()
+        print(f"Vector search and processing took {end - start:.2f} seconds")
 
         response = {
             "query": requirements,
@@ -122,10 +149,12 @@ class PrinterRAG:
             "recommendations": recommendations
         }
 
+        LLM_start = time.perf_counter()
         # Generate LLM-enhanced response if enabled
-        if self.use_llm and self.anthropic_client and recommendations:
+        if self.use_llm and recommendations:
             response["llm_response"] = self._generate_llm_response(requirements, recommendations)
-
+        LLM_end = time.perf_counter()
+        print(f"LLM response generation took {LLM_end - LLM_start:.2f} seconds")
         return response
 
     def _extract_filters_from_query(self, query: str) -> Dict[str, Any]:
@@ -363,14 +392,14 @@ class PrinterRAG:
         recommendations: List[Dict[str, Any]]
     ) -> str:
         """
-        Generate a natural language response using Claude based on RAG results.
+        Generate a natural language response using LLM (Claude or Ollama) based on RAG results.
 
         Args:
             user_query: Original user query
             recommendations: List of printer recommendations from vector DB
 
         Returns:
-            Natural language response from Claude
+            Natural language response from the configured LLM
         """
         # Build comprehensive context from ALL search results
         context_parts = []
@@ -417,6 +446,12 @@ class PrinterRAG:
                 if conn:
                     context += f"Connectivity: {', '.join(conn)}\n"
 
+                # URLs
+                if metadata.get('product_url'):
+                    context += f"\nProduct Page URL: {metadata['product_url']}\n"
+                if metadata.get('warranty_url'):
+                    context += f"Warranty Information URL: {metadata['warranty_url']}\n"
+
             if specs:
                 context += f"\nAdditional Specs:\n"
                 for key, value in specs.items():
@@ -460,21 +495,43 @@ INSTRUCTIONS:
 9. Include relevant technical specifications to support your recommendations
 10. If there are trade-offs between options, explain them clearly
 
-IMPORTANT: Use the COMPLETE information provided above. Reference specific details from the matching sections to give authoritative, detailed answers.
+CRITICAL - URL EMBEDDING:
+11. For each printer you recommend, you MUST include clickable markdown links to:
+    - Product Page URL (if provided)
+    - Warranty Information URL (if provided)
+12. Format links as markdown: [Link Text](https://url)
+13. Add "https://" prefix to URLs that don't already have it (e.g., "www.zebra.com/zd200" becomes "https://www.zebra.com/zd200")
+14. Place the product page link prominently near the printer name/model in your recommendation
+15. Include the warranty link in a relevant section about warranty or support
+
+IMPORTANT: Use the COMPLETE information provided above. Reference specific details from the matching sections to give authoritative, detailed answers. Use Markdown formatting in your response for clarity.
 
 Your comprehensive recommendation:"""
 
         try:
-            # Call Claude API with increased token limit for detailed responses
-            message = self.anthropic_client.messages.create(
-                model="claude-sonnet-4-20250514",
-                max_tokens=4000,  # Increased from 1500 to allow detailed responses
-                messages=[
-                    {"role": "user", "content": prompt}
-                ]
-            )
+            if self.llm_provider == "claude" and self.anthropic_client:
+                # Call Claude API with increased token limit for detailed responses
+                message = self.anthropic_client.messages.create(
+                    model="claude-3-5-haiku-20241022",
+                    max_tokens=4000,  # Increased from 1500 to allow detailed responses
+                    messages=[
+                        {"role": "user", "content": prompt}
+                    ]
+                )
+                return message.content[0].text
 
-            return message.content[0].text
+            elif self.llm_provider == "ollama":
+                # Call Ollama API
+                response = ollama.chat(
+                    model=self.ollama_model,
+                    messages=[
+                        {"role": "user", "content": prompt}
+                    ]
+                )
+                return response['message']['content']
+
+            else:
+                return "Error: No LLM client configured."
 
         except Exception as e:
             print(f"Error generating LLM response: {e}")
@@ -527,8 +584,19 @@ def main():
         help="Disable LLM-enhanced responses (use basic vector search only)"
     )
     parser.add_argument(
+        "--llm",
+        choices=["claude", "ollama"],
+        default="claude",
+        help="LLM provider to use: 'claude' (default) or 'ollama'"
+    )
+    parser.add_argument(
         "--api-key",
         help="Anthropic API key (or set ANTHROPIC_API_KEY environment variable)"
+    )
+    parser.add_argument(
+        "--ollama-model",
+        default="llama3.2:1b",
+        help="Ollama model name (default: llama3.2:1b)"
     )
 
     args = parser.parse_args()
@@ -539,7 +607,9 @@ def main():
             db_path=args.db_path,
             collection_name=args.collection,
             use_llm=not args.no_llm,
-            anthropic_api_key=args.api_key
+            llm_provider=args.llm,
+            anthropic_api_key=args.api_key,
+            ollama_model=args.ollama_model
         )
     except Exception as e:
         print(f"Error initializing RAG system: {e}")

@@ -14,10 +14,6 @@
       },
       "memory": "64 MB Flash; 16 MB RAM",
       "maximum_print_width": "8.5\"/216 mm",
-      "print_speed": {
-        "raw": "10\"/254 mm per second (203 dpi)\n6\"/152.4 mm per second (300 dpi)",
-        "mm_per_second": 254.0
-      },
       "media_sensors": [
         "Transmissive and reflective"
       ]
@@ -30,17 +26,15 @@
         "raw": "4.25\" (108 mm) to 8.8\" (224 mm)"
       },
       "media_roll_size": "8.0\" (203 mm) outside diameter on a 3\" (76\nmm) inside diameter core",
+      "thickness": "0.003\"/0.076 mm to 0.012\"/0.305 mm",
       "media_types": [
-        "Die cut or continuous with or without black mark",
         "Continuous, die-cut gap, black mark, notch or hole"
-      ]
+      ],
+      "maximum_label_length": "0.25\"/6 mm (Rewind mode)\n0.5\"/13 mm (Peel mode)\n0.7\"/18 mm (Tear-off mode)\n1.5\"/38 mm (Cutter mode)"
     },
-    "ribbon": {
-      "maximum_ribbon_length": "1476'/450 M\n984'/300 M"
-    },
+    "ribbon": {},
     "operating_conditions": {
-      "electrical": "90-264VAC; 48-62Hz\nENERGY STAR qualified (140Xi4, 170Xi4,\n220Xi4)",
-      "agency_approvals": "IEC 60950-1, EN 55022 Class B, EN 55024, EN\n61000-3-2, EN 61000-3-3\nProduct Markings: cTUVus, CE, FCC-B,\nICES-003, VCCI, C-Tick, NOM, S-Mark(Arg),\nCCC, GOST-R, BSMI, KCC, STB, and UkrSEPRO"
+      "electrical": "90-264VAC; 48-62Hz\nENERGY STAR qualified (140Xi4, 170Xi4,\n220Xi4)"
     }
   },
   "features": {
@@ -66,43 +60,10 @@
   "fonts_and_barcodes": {
     "fonts": [],
     "barcode_ratios": [],
-    "barcodes_1d": [
-      "Code 11",
-      "Code 39",
-      "Code 93",
-      "Code 128 with\nsubsets A/B/C and UCC Case C Codes",
-      "ISBT-128",
-      "UPC-A",
-      "UPC-E",
-      "EAN-8",
-      "EAN-13",
-      "UPC and EAN 2-or 5-digit extensions",
-      "Plessey",
-      "Postnet",
-      "Standard 2-of-5",
-      "Industrial 2-of-5",
-      "Interleaved 2-of-5",
-      "Logmars",
-      "MSI",
-      "Codabar and Planet Code"
-    ],
-    "barcodes_2d": [
-      "Codablock",
-      "PDF417",
-      "Code 49",
-      "DataMatrix",
-      "MaxiCode",
-      "QR Code",
-      "TLC 39",
-      "GS1 DataBar (RSS)",
-      "Aztec"
-    ],
-    "graphics_memory": "Unicode™-compliant Global Printing\nBitmap fonts A through H and GS symbols are expandable up to\n10 times, height and width independent\nSmooth scalable font Ø (CG Triumvirate™ Bold Condensed*) is\nexpandable dot-by-dot, height and width independent\nIBM™ Code Page 850 International Characters\nSupports user-defined fonts and graphics — including custom\nlogos\n61 MB user-available non-volatile memory storage for\ndownloadable objects 12 MB user-available SDRAM\nBitmap fonts A through H and GS symbols are\n*Contains UFST™ from Agfa Monotype Corporation"
+    "barcodes_1d": [],
+    "barcodes_2d": [],
+    "graphics_memory": ""
   },
-  "firmware": [
-    "ZBI 2.0 — Optional powerful programming language that lets printers run stand-alone applications, connect to peripherals, and much more. ZPL™ & ZPL II™ — Zebra Programming Language provides sophisticated label formatting and printer control and is compatible with all Zebra printers.",
-    "ZPL™ & ZPL II™ — Zebra Programming Language provides sophisticated label formatting and printer control and is compatible with all Zebra printers."
-  ],
   "connectivity": [
     "Ethernet",
     "Serial",
@@ -120,7 +81,7 @@
   },
   "metadata": {
     "source_file": "220xi4-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-20T14:23:45.438782",
+    "extraction_date": "2025-10-16T13:47:48.985904",
     "schema_version": "1.0.0",
     "total_pages": 4,
     "total_tables": 12

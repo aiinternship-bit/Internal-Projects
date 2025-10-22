@@ -14,11 +14,6 @@
       },
       "memory": "256MB RAM; 512MB Flash (standard)\n8MB RAM; 64MB Flash (user available)",
       "maximum_print_width": "ZQ511: 2.83 in./72mm\nZQ521: 4.09 in./104mm",
-      "print_speed": {
-        "raw": "Up to 5 in./127 mm per second (with Draft\nMode enabled)",
-        "inches_per_second": 5.0,
-        "mm_per_second": 127.0
-      },
       "media_sensors": [
         "Black mark media sensing using fixed center position sensors"
       ]
@@ -40,9 +35,7 @@
       ]
     },
     "ribbon": {},
-    "operating_conditions": {
-      "agency_approvals": "Emissions: FCC Part 15, Subpart B, EN55022\nClass-B, EN55024, ICES- 003, EN55032, and\nEN301489\nENERGY STAR™ certified"
-    }
+    "operating_conditions": {}
   },
   "features": {
     "standard": [
@@ -80,56 +73,8 @@
   "fonts_and_barcodes": {
     "fonts": [],
     "barcode_ratios": [],
-    "barcodes_1d": [
-      "Code 39",
-      "Code 93",
-      "UCC/EAN128",
-      "Code 128",
-      "Codabar (NW-7)",
-      "Interleaved 2-of-5",
-      "UPC-A",
-      "UPC-E, 2 and 5 digit\nadd-on",
-      "EAN-8",
-      "EAN-13, 2 and 5 digit add-on\n•"
-    ],
-    "barcodes_2d": [
-      "PDF417",
-      "MicroPDF417",
-      "MaxiCode",
-      "QR Code",
-      "GS1/DataBar™ (RSS) family",
-      "Aztec",
-      "MSI/Plessey",
-      "FIM Postnet",
-      "Data\nMatrix",
-      "TLC39ZPL Barcode Symbologies\n• Barcode Ratios: 2:1, 3:1, 5:2, 7:3\n• Linear Barcodes: Code 11",
-      "Code 39",
-      "Code 93",
-      "Code 128",
-      "ISBT-128",
-      "UPC-A",
-      "UPC-E",
-      "EAN-8",
-      "EAN-13",
-      "UPC-A and UPC-E with\nEAN 2 or 5 digit extensions",
-      "Planet Code",
-      "Plessey",
-      "POSTNET",
-      "Standard 2 of 5",
-      "Industrial 2 of 5",
-      "Interleaved 2 of 5",
-      "LOGMARS",
-      "MSI",
-      "Codabar, and GS1 DataBar (RSS)\n• 2D Barcodes: PDF417",
-      "MicroPDF-417",
-      "Code 49",
-      "TLC39",
-      "Maxicode",
-      "Codablock",
-      "Data Matrix",
-      "QR code",
-      "Aztec"
-    ],
+    "barcodes_1d": [],
+    "barcodes_2d": [],
     "graphics_memory": ""
   },
   "connectivity": [
@@ -161,7 +106,7 @@
   },
   "metadata": {
     "source_file": "zq511-zq521-rfid-spec-sheet-en-us.pdf",
-    "extraction_date": "2025-10-20T14:23:49.373251",
+    "extraction_date": "2025-10-16T13:47:52.150648",
     "schema_version": "1.0.0",
     "total_pages": 8,
     "total_tables": 23
