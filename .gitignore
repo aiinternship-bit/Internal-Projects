@@ -9,9 +9,19 @@ __pycache__/
 # C extensions
 *.so
 
-#vector db
+# Vector databases and all database files
 *.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
 *.xlsx
+*.xls
+chroma_db/
+**/chroma_db/
+milvus_edelivery.db
+**/*.db
+.milvus_edelivery.db.lock
 
 # Large archives
 *.zip

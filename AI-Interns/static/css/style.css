@@ -627,6 +627,27 @@ body {
     color: #000000;
 }
 
+.message-content .chat-link {
+    color: #007AFF;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.message-content .chat-link:hover {
+    color: #0051D5;
+    border-bottom-color: #0051D5;
+}
+
+.message-content .chat-link:visited {
+    color: #5856D6;
+}
+
+.message-content .chat-link:active {
+    color: #0040A8;
+}
+
 .typing-indicator {
     display: flex;
     gap: 4px;

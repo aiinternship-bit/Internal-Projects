@@ -34,6 +34,24 @@ except Exception as e:
     archive_query_engine = None
     archive_llm = None
 
+# Add Zebra Project to Python path for importing RAG system
+zebra_path = Path(__file__).resolve().parents[1] / 'Zebra Project'
+sys.path.insert(0, str(zebra_path / 'src'))
+
+# Import Zebra Project RAG
+try:
+    from printer_rag import PrinterRAG
+
+    # Initialize Zebra RAG with ChromaDB path
+    zebra_db_path = str(zebra_path / 'chroma_db')
+    zebra_rag = PrinterRAG(db_path=zebra_db_path, collection_name='printer_specs')
+    zebra_enabled = True
+    print(f"✓ Zebra Project RAG initialized successfully (DB: {zebra_db_path})")
+except Exception as e:
+    print(f"✗ Could not initialize Zebra Project RAG: {e}")
+    zebra_enabled = False
+    zebra_rag = None
+
 app = Flask(__name__)
 
 # Initialize Anthropic client
@@ -62,8 +80,16 @@ PROJECTS = [
         'name': 'Solution #2',
         'description': 'Generative AI agent projects and implementations',
         'icon': '🤖',
-        'path': '../GEN AI Agent/Internal-Projects/Archive', 
+        'path': '../GEN AI Agent/Internal-Projects/Archive',
         'color': '#7B68EE'
+    },
+    {
+        'id': 'zebra-project',
+        'name': 'Solution #3',
+        'description': 'Zebra printer specifications RAG system with PDF processing',
+        'icon': '🖨️',
+        'path': '../Zebra Project',
+        'color': '#E74C3C'
     }
 ]
 
@@ -216,6 +242,55 @@ def chat():
             return jsonify({
                 'response': 'Project not found. Please select a valid project.'
             })
+
+        # Check if this is the Zebra Project and RAG is available
+        if project_id == 'zebra-project':
+            if not zebra_enabled:
+                return jsonify({
+                    'response': 'Zebra Project RAG system is not available. Please check the server logs for initialization errors.'
+                }), 500
+
+            try:
+                print(f"Using Zebra RAG for query: {message}")
+
+                # Query the Zebra RAG system
+                recommendation = zebra_rag.recommend_printer(
+                    requirements=message,
+                    n_results=5
+                )
+
+                # Extract response text
+                if 'llm_response' in recommendation:
+                    response_text = recommendation['llm_response']
+                elif 'explanation' in recommendation:
+                    response_text = recommendation['explanation']
+                else:
+                    # Fallback: format results manually
+                    results = recommendation.get('results', [])
+                    if results:
+                        response_text = f"Found {len(results)} printer(s):\n\n"
+                        for i, printer in enumerate(results[:3], 1):
+                            response_text += f"{i}. {printer.get('model', 'Unknown')}\n"
+                            response_text += f"   {printer.get('text', '')[:200]}...\n\n"
+                    else:
+                        response_text = "No printers found matching your requirements."
+
+                return jsonify({
+                    'response': response_text,
+                    'session_id': session_id,
+                    'zebra_query': True,
+                    'metadata': {
+                        'printers_found': len(recommendation.get('results', []))
+                    }
+                })
+
+            except Exception as e:
+                print(f"Error querying Zebra RAG: {str(e)}")
+                import traceback
+                traceback.print_exc()
+                return jsonify({
+                    'response': f'Error querying Zebra printer database: {str(e)}'
+                }), 500
 
         # Check if this is the Archive project and query engine is available
         print(f"[DEBUG] project_id={project_id}, archive_enabled={archive_enabled}")
