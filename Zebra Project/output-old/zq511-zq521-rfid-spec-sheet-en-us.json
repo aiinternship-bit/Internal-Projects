@@ -1,0 +1,352 @@
+{
+  "product_info": {
+    "model": "ZQ511/ZQ521 RFID",
+    "title": "ZQ511/ZQ521 RFID MOBILE PRINTERS",
+    "tagline": "On-demand, on-the-go UHF RFID printing engineered for the toughest environments",
+    "url": "www.zebra.com/zq500",
+    "description": "Zebra's ZQ500 Series just got tougher. The premium ZQ511 and ZQ521 printers — both available in RFID models — pair best-in-class mobile printing with a military-grade design that is rugged to the max. Print and encode Ultra High Frequency (UHF) RFID labels on-demand, anywhere. Experience extreme durability. Engineered for tough, demanding indoor and outdoor conditions, these printers can withstand significant drops, tumbles, accidents and environmental extremes that are common in mobile workplaces. Additional features, enhanced durability and unmatched battery capacity mean this printer will work as hard and long as you do."
+  },
+  "specifications": {
+    "printer": {
+      "resolution": {
+        "raw": "203 dpi resolution (8 dots per mm)",
+        "dpi": 203,
+        "dots_per_mm": 8
+      },
+      "memory": "256MB RAM; 512MB Flash (standard), 8MB RAM; 64MB Flash (user available)",
+      "maximum_print_width": {
+        "ZQ511": "2.83 in./72mm",
+        "ZQ521": "4.09 in./104mm"
+      },
+      "print_speed": {
+        "raw": "Up to 5 in./127 mm per second (with Draft Mode enabled)",
+        "inches_per_second": 5.0,
+        "mm_per_second": 127.0
+      },
+      "media_sensors": [
+        "Black mark media sensing using fixed center position sensors"
+      ],
+      "firmware": [
+        "CPCL",
+        "ZPL",
+        "ZBI 2.x"
+      ],
+      "print_length_maximum": "39 in.",
+      "operating_system": "Link-OS printer operating system"
+    },
+    "physical": {
+      "dimensions": {
+        "ZQ511": "5.9 in. L x 4.7 in. W x 2.4 in. H / 150 mm L x 120 mm W x 62 mm H",
+        "ZQ521": "6.2 in. L x 6.1 in. W x 2.6 in. H / 158 mm L x 155 mm W x 67 mm H"
+      },
+      "weight": {
+        "with_standard_battery": {
+          "ZQ511": "1.39 lbs/0.63 kgs",
+          "ZQ521": "1.73 lbs/0.79 kgs"
+        },
+        "with_extended_battery": {
+          "ZQ511": "1.62 lbs/0.72 kgs",
+          "ZQ521": "1.96 lbs/0.89 kgs"
+        }
+      }
+    },
+    "media": {
+      "media_width": {
+        "ZQ511": "1.38 in./35 mm to 3.15 in./80 mm+1 mm",
+        "ZQ521": "2.0 in./50.8 mm to 4.45 in./113 mm+1mm"
+      },
+      "maximum_media_roll_size": {
+        "ZQ511": "2.0 in./51 mm",
+        "ZQ521": "2.24 in./57 mm"
+      },
+      "maximum_media_thickness": "0.0063 in. (0.1600 mm) for labels and 0.0055 in. (0.1397 mm) for tag/receipt",
+      "minimum_media_thickness": "0.05842mm (0.0023 in.) for all media",
+      "media_types": [
+        "Black-mark RFID Label",
+        "Receipt",
+        "Tag"
+      ]
+    },
+    "power": {
+      "battery": "3250 mAh (nominal), removable, rechargeable PowerPrecision+ Li-Ion battery",
+      "extended_battery": "6500 mAh PowerPrecision+ Extended Battery (retrievable, rechargeable Li-Ion)"
+    },
+    "operating_conditions": {
+      "operating_temperature": {
+        "raw": "-4°F to 131°F/-20°C to 55°C",
+        "min_f": -4,
+        "max_f": 131,
+        "min_c": -20,
+        "max_c": 55
+      },
+      "operating_humidity": {
+        "raw": "10% to 90% non-condensing",
+        "min_percent": 10,
+        "max_percent": 90,
+        "condition": "non-condensing"
+      },
+      "charging_temperature": {
+        "raw": "32°F to 104°F/0°C to 40°C",
+        "min_f": 32,
+        "max_f": 104,
+        "min_c": 0,
+        "max_c": 40
+      },
+      "cradle_temperature": {
+        "raw": "32°F to 122°F/0°C to 50°C",
+        "min_f": 32,
+        "max_f": 122,
+        "min_c": 0,
+        "max_c": 50
+      },
+      "storage_temperature": {
+        "raw": "-22°F to 150°F/-30°C to 66°C",
+        "min_f": -22,
+        "max_f": 150,
+        "min_c": -30,
+        "max_c": 66
+      },
+      "storage_humidity": {
+        "raw": "10% to 90% non-condensing",
+        "min_percent": 10,
+        "max_percent": 90,
+        "condition": "non-condensing"
+      }
+    }
+  },
+  "features": {
+    "rfid": [
+      "Supports tags compatible with UHF EPC Gen 2 V2, ISO/IEC 18000-63 and RAIN RFID protocols",
+      "Adaptive Encoding Technology simplifies RFID setup and eliminates complex RFID placement guidelines",
+      "RFID job-monitoring tools track RFID performance",
+      "RFID ZPL commands provide compatibility with existing Zebra RFID printers",
+      "Support for industry standard multi-vendor chip-based serialization (MCS)",
+      "Supports encoding any RFID tag data standard, including SGTIN-96, GS1 TDS 2.0, RAIN ISO CIN, etc.",
+      "Integrated RFID Reader/Encoder",
+      "Prints and encodes tags with a minimum pitch of 16 mm"
+    ],
+    "standard": [
+      "Android, Apple iOS, Windows Mobile connectivity",
+      "Bluetooth specification 4.1 EDR + LE",
+      "Fast roaming 802.11r supported",
+      "3250 mAh PowerPrecision+ Battery (retrievable, rechargeable Li-Ion)",
+      "USB On-The-Go ports (with optional strain relief)",
+      "Power Smart Print Technology—anticipates upcoming printing to optimize battery consumption and print speed",
+      "Direct thermal printing of barcodes, text and graphics",
+      "IP54 rated for protection against solid and liquid ingress",
+      "MIL-STD 810G certified for drop and shock",
+      "Tolerance of multiple drops from 6.6 ft./2 m to concrete",
+      "Tumble testing per the IEC68-2-32 spec with 1300 free falls from 3.3 ft./1 m",
+      "Simple easy-to-read LCD with large icons for battery and wireless status",
+      "Dual-sided tear bar which allows for clean tears in either direction",
+      "Supports vertical and horizontal printing",
+      "Printer can be used in any orientation",
+      "Center loading, adjustable for variable roll widths",
+      "Clamshell design for easy media loading",
+      "Label odometer",
+      "XML support",
+      "Resident fixed and scalable fonts",
+      "Mark media sensing using fixed center position sensors",
+      "Cold Temperature Compensation mode",
+      "PPME, Mirror, SNMP, WebServer, AirWatch and Soti Connect and Wavelink Avalanche",
+      "NTP (Network Time Protocol) support via Wi-Fi",
+      "Sleep mode supported. Wake on Bluetooth, Wi-Fi and Touch",
+      "Real time clock (RTC) supported for time stamp certificates in WLAN SKUs only",
+      "QR code links to web-based help pages",
+      "Zebra Print Touch simplifies Bluetooth pairing and launches web-based pages with Near Field Communication (NFC) enabled devices"
+    ],
+    "optional": [
+      "Standard printing (non-RFID encoding)",
+      "6500 mAh PowerPrecision+ Extended Battery (retrievable, rechargeable Li-Ion)",
+      "Exoskeleton case (increases drop specification to 3m/10', seals off ports, and increases to IP65 rating)"
+    ]
+  },
+  "fonts_and_barcodes": {
+    "fonts": [
+      "25 bitmapped, 1 smooth, scalable (CG Triumvirate Bold Condensed, contains UFST from Agfa Monotype Corporation)",
+      "Scalable Fonts: Swiss721 (supporting Latin, Cyrillic, Hebrew and Arabic characters)",
+      "Additional Asian Fonts Supported for various regions including Chinese, Korean, Thai, Vietnamese, Japanese characters"
+    ],
+    "barcode_ratios": {
+      "CPCL": [
+        "1.5:1",
+        "2:1",
+        "2.5:1",
+        "3:1",
+        "3.5:1"
+      ],
+      "ZPL": [
+        "2:1",
+        "3:1",
+        "5:2",
+        "7:3"
+      ]
+    },
+    "barcodes_1d": {
+      "CPCL": [
+        "Code 39",
+        "Code 93",
+        "UCC/EAN128",
+        "Code 128",
+        "Codabar (NW-7)",
+        "Interleaved 2-of-5",
+        "UPC-A",
+        "UPC-E",
+        "2 and 5 digit add-on",
+        "EAN-8",
+        "EAN-13",
+        "MSI/Plessey",
+        "FIM Postnet"
+      ],
+      "ZPL": [
+        "Code 11",
+        "Code 39",
+        "Code 93",
+        "Code 128",
+        "ISBT-128",
+        "UPC-A",
+        "UPC-E",
+        "EAN-8",
+        "EAN-13",
+        "UPC-A and UPC-E with EAN 2 or 5 digit extensions",
+        "Planet Code",
+        "Plessey",
+        "POSTNET",
+        "Standard 2 of 5",
+        "Industrial 2 of 5",
+        "Interleaved 2 of 5",
+        "LOGMARS",
+        "MSI",
+        "Codabar",
+        "GS1 DataBar (RSS)"
+      ]
+    },
+    "barcodes_2d": {
+      "CPCL": [
+        "PDF417",
+        "MicroPDF417",
+        "MaxiCode",
+        "QR Code",
+        "GS1/DataBar (RSS) family",
+        "Aztec",
+        "Data Matrix",
+        "TLC39"
+      ],
+      "ZPL": [
+        "PDF417",
+        "MicroPDF-417",
+        "Code 49",
+        "TLC39",
+        "Maxicode",
+        "Codablock",
+        "Data Matrix",
+        "QR code",
+        "Aztec"
+      ]
+    }
+  },
+  "connectivity": [
+    "802.11ac Wi-Fi (2.4 GHz and 5GHz frequency bands)",
+    "Bluetooth 4.1 (Classic and BLE)",
+    "USB 2.0 full-speed on-the-go interface (12 Mbps)",
+    "Micro-AB Connector with optional strain relief",
+    "NFC (Near Field Communication)"
+  ],
+  "compliance": {
+    "regulatory_standards": [
+      "FCC Part 15, Subpart B",
+      "EN55022 Class-B",
+      "EN55024",
+      "ICES-003",
+      "EN55032",
+      "EN301489",
+      "MIL-STD 810G",
+      "IEC68-2-32"
+    ],
+    "certifications": [
+      "ENERGY STAR certified",
+      "Wi-Fi Certification",
+      "Made for iPod/iPhone/iPad certified",
+      "IP54 rating (IP65 with exoskeleton)",
+      "MIL-STD 810G certified for drop and shock"
+    ],
+    "energy_star": true,
+    "security": [
+      "WPA and WPA2 with AES encryption",
+      "802.1x (with WEP, WPA, or WPA2)",
+      "EAP-FAST, EAP-TTLS, EAP-TLS, PEAP, LEAP",
+      "FIPS support available at no cost as a printer OS download"
+    ]
+  },
+  "warranty": {
+    "duration_years": 2,
+    "coverage": "The ZQ511 and ZQ521 printers are warranted against defects in workmanship and materials for a period of 2 (two) years from the date of shipment. Batteries and printheads are considered consumables. Zebra batteries are warranted for one year from the date of shipment and printheads for 6 months from the date of shipment.",
+    "url": "www.zebra.com/warranty"
+  },
+  "additional_information": {
+    "ZebraOneCare": "Your printers are crucial for smooth business operations. Unexpected failures can disrupt workflow. Zebra OneCare maintenance plans offer protection against such issues with certified repairs and timely support. Choose from a variety of plans based on printer type, contract length, coverage level and repair turnaround time.",
+    "Zebra_DNA": "Zebra DNA is a suite of software tools that enable Zebra printers to deliver a full lifecycle of exceptional experiences for every kind of user through built-in applications, utilities and tools to get your printer up and running quickly and securely.",
+    "Zebra_Certified_Supplies": "A successful RFID solution requires a high-performing thermal label and inlay. Zebra is your trusted expert in all things RFID. We offer end-to-end RFID solutions – including pre-tested RFID labels and tags made with the right materials and adhesives, along with the highest-performing inlays and chips – customized for your application.",
+    "Printer_Profile_Manager_Enterprise": "Zebra's Printer Profile Manager Enterprise is a full featured remote printer management solution. It gives you real-time visibility of your networked mobile printers, and the ability to easily manage them from anywhere, at any time, no matter where they are in the world.",
+    "accessories": [
+      "AC Adapter",
+      "Dual Charging Vehicle Adapter",
+      "Vehicle Cradle",
+      "4-Slot Power Station",
+      "12-24V DC Power Supply",
+      "Extended Spare Smart Battery 6500 mAh",
+      "3-slot Battery Charger",
+      "Single Battery Charger",
+      "Exoskeleton"
+    ],
+    "markets_and_applications": {
+      "Transportation_and_Logistics": [
+        "Pallet-level tagging",
+        "Field service",
+        "Direct store delivery",
+        "Airline baggage tagging",
+        "Post and parcel"
+      ],
+      "Healthcare": [
+        "Asset management",
+        "Specimen tracking",
+        "Pharmacy inventory"
+      ],
+      "Manufacturing_Warehouse": [
+        "Asset tagging",
+        "Field service",
+        "Direct store delivery",
+        "Pallet-level tagging",
+        "Packing/staging/cross-docking labeling"
+      ],
+      "Government": [
+        "Parts tracking",
+        "Asset management",
+        "Defense logistics",
+        "Cannabis regulatory compliance"
+      ],
+      "Retail_and_Hospitality": [
+        "In-store RFID exception tagging",
+        "Click and collect label printing",
+        "Food supply chain traceability"
+      ]
+    },
+    "notes": [
+      "Service availability may vary by region",
+      "Supports errata fixes for Bluetooth Version 5.2 only. Future upgrades and updates will not support additional functionality",
+      "For optimum print quality and printer performance, use genuine Zebra supplies",
+      "Specifications subject to change without notice",
+      "ZQ511R/ZQ521R require black mark RFID media and do not support gap sensing"
+    ],
+    "copyright": "©2025 Zebra Technologies Corp. and/or its affiliates.",
+    "trademark": "The Zebra wordmark and logo are trademarks of Zebra Technologies Corp., registered in many jurisdictions worldwide. Android is a trademark of Google LLC.",
+    "document_date": "12/05/2024"
+  },
+  "metadata": {
+    "source_file": "zq511-zq521-rfid-spec-sheet.pdf",
+    "extraction_date": "2025-10-16",
+    "schema_version": "1.0.0",
+    "total_pages": 8,
+    "product_family": "ZQ500 Series RFID Mobile Printers"
+  }
+}

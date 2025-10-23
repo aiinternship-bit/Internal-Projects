@@ -1,0 +1,50 @@
+# API Key Validation Feature
+
+## What It Does
+
+Automatically validates API keys for:
+- ✓ Ollama (checks server is running)
+- ✓ OpenAI (validates key with /v1/models endpoint)
+- ✓ Anthropic (validates key with minimal API call)
+
+## How To Use
+
+Run the checker:
+```bash
+python check_env.py
+```
+
+Output shows:
+- ✓ Valid - Key works
+- ⚠ Set but invalid - Key present but doesn't work
+- ✗ Not set/configured - Not configured
+
+## Programmatic Access
+
+```python
+from src.config import (
+    is_ollama_configured,
+    is_openai_key_valid,
+    is_anthropic_key_valid,
+    get_api_key_status
+)
+
+# Check individual services
+if is_openai_key_valid():
+    print("OpenAI is ready!")
+
+# Get all statuses
+status = get_api_key_status()
+# {'ollama': '✗ Not configured', 'openai': '✓ Valid', ...}
+```
+
+## Implementation
+
+See `src/config.py`:
+- is_ollama_configured() - HTTP GET to /api/tags
+- is_openai_key_valid() - HTTP GET to /v1/models
+- is_anthropic_key_valid() - HTTP POST to /v1/messages (1 token)
+
+All validation is safe (won't crash), fast (3s timeout), and minimal (no significant cost).
+
+For full details, see: API_KEY_VALIDATION.md

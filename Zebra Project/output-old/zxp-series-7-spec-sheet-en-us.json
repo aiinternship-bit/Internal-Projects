@@ -1,0 +1,272 @@
+{
+  "product_info": {
+    "model": "ZXP Series 7",
+    "title": "ZXP SERIES 7 CARD PRINTERS",
+    "tagline": "Fast and Reliable Card Printing with Photo-like Images",
+    "url": "www.zebra.com/zxpseries7",
+    "description": "Print outstanding, high-quality cards using the latest in card-printing technology with Zebra's ZXP Series 7™ card printer. Get fast and reliable performance along with exceptional value with printer's lower total cost of ownership. Time after time, it prints sharp vivid cards with precise color control. The ZXP Series 7 printer has an innovative design. It automatically adjusts to the thickness of the card, and ribbon loading is easy. With color-coded guides and a clear LCD control panel, it's simple for anyone to use. Locking mechanisms protect the printer and media, and software provides further security by tracking and restricting activities as required."
+  },
+  "specifications": {
+    "printer": {
+      "resolution": {
+        "raw": "300 dpi/11.8 dots per mm",
+        "dpi": 300,
+        "dots_per_mm": 11.8
+      },
+      "print_method": "Color dye sublimation or monochrome thermal-transfer printing",
+      "print_modes": [
+        "Single-sided printing",
+        "Dual-sided printing"
+      ],
+      "print_quality": "Near photographic print quality",
+      "edge_to_edge": true,
+      "card_format": "CR-80, ISO 7810 format, Type ID-1",
+      "throughput": {
+        "monochrome_single_sided": "1375 cards/hour",
+        "monochrome_dual_sided": "555 cards/hour",
+        "full_color_ymcko_single_sided": "300 cards/hour",
+        "full_color_ymckok_dual_sided": "225 cards/hour",
+        "full_color_ymcko_with_lamination": "270 cards/hour"
+      },
+      "capabilities": "Simultaneous printing, encoding, and laminating capability",
+      "lamination": "One-pass single- and dual-sided wasteless lamination",
+      "display": "21-character x 6-line LCD operator display with configurable soft keys"
+    },
+    "physical": {
+      "dimensions": "ZXP Series 7:\nPrinter only: 12 in. H x 10.9 in. L x 27.5 in. W (306 mm H x 277 mm D x 699 mm W)\nPrinter with laminator: 12 in. H x 10.9 in. L x 38 in. W (306 mm H x 277 mm D x 964 mm W)\nZXP Series 7 Pro:\nPrinter only: 13.75 in. H x 10.9 in. L x 28.25 in. W (349 mm H x 277 mm D x 718 mm W)",
+      "weight": "ZXP Series 7:\nPrinter only: 26.9 lbs/12.2 kg\nPrinter with laminator: 39.5 lbs/17.9 kg\nZXP Series 7 Pro:\nPrinter only: 31.7 lbs/14.4 kg\nPrinter with laminator: 44.3 lbs/20.1 kg"
+    },
+    "card_specifications": {
+      "card_thickness": {
+        "raw": "10 – 50 mil (0.25 – 1.27 mm)",
+        "min_mil": 10,
+        "max_mil": 50,
+        "min_mm": 0.25,
+        "max_mm": 1.27
+      },
+      "card_thickness_lamination": "30 mil (0.76 mm)",
+      "card_size": "CR-80, ISO 7810 format, Type ID-1",
+      "card_materials": [
+        "PVC and composite",
+        "ABS cards",
+        "PET",
+        "PET-G",
+        "PET-F",
+        "PETix",
+        "Teslin composite"
+      ],
+      "technology_cards": [
+        "Contact smart cards",
+        "Contactless smart cards"
+      ],
+      "specialty_cards": [
+        "Adhesive backed",
+        "Signature panel",
+        "Transparent cards with IR-blocker"
+      ]
+    },
+    "media_specifications": {
+      "ribbons": {
+        "type": "True Colours ix Series Ribbons",
+        "intelligent_technology": "RFID tags authenticate and automate ix Series ribbons",
+        "options": [
+          "YMCKO: 250 or 750 images/roll",
+          "YMCUvK: 750 images/roll",
+          "YMCKOK: 250 or 750 images/roll",
+          "½-panel YMC, full KO: 1250 images/roll",
+          "KdO and KrO: 2000 images/roll",
+          "WrKr: 2000 images/roll",
+          "Blue, red, gold, silver monochrome: 5000 images/roll",
+          "Black monochrome: 2500 or 5000 images/roll",
+          "White monochrome: 4000 images/roll",
+          "Scratch-off gray: 3250 images/roll",
+          "Other colors available on request"
+        ],
+        "cleaning": "Card cleaning rollers included with each ribbon carton"
+      },
+      "laminates": {
+        "type": "True Secure i Series Laminates",
+        "specification": "Linerless waste-free 1.0 mil top and bottom laminate: 750 images/roll",
+        "types": [
+          "Clear",
+          "Magnetic stripe",
+          "Smart card",
+          "Holographic wallpaper designs"
+        ],
+        "custom": "Custom laminates with registered or wallpaper holographic images available on request",
+        "intelligent_technology": "RFID tags authenticate and automate i Series laminates"
+      }
+    },
+    "operating_conditions": {
+      "operating_temperature": {
+        "raw": "59ºF to 95ºF/15ºC to 35ºC",
+        "min_f": 59,
+        "max_f": 95,
+        "min_c": 15,
+        "max_c": 35
+      },
+      "operating_humidity": {
+        "raw": "20% to 80% non-condensing",
+        "min_percent": 20,
+        "max_percent": 80,
+        "condition": "non-condensing"
+      },
+      "storage_temperature": {
+        "raw": "23ºF to 158ºF/-5ºC to 70ºC",
+        "min_f": 23,
+        "max_f": 158,
+        "min_c": -5,
+        "max_c": 70
+      },
+      "storage_humidity": {
+        "raw": "10% to 90% non-condensing",
+        "min_percent": 10,
+        "max_percent": 90,
+        "condition": "non-condensing"
+      },
+      "media_storage": {
+        "temperature": "41ºF to 86ºF/5ºC to 30ºC",
+        "humidity": "30% to 50% non-condensing",
+        "note": "Do not store in direct sunlight"
+      },
+      "electrical": "Auto-switching single-phase AC power 90V – 264V AC and 47 – 63Hz (50 – 60Hz nominal)"
+    }
+  },
+  "features": {
+    "standard": [
+      "300 dpi/11.8 dots per mm print resolution",
+      "USB 2.0 and Ethernet 10/100 connectivity",
+      "Microsoft Windows Certified drivers",
+      "15-card reject hopper (30 mil)",
+      "ZXP Series 7 and Series 7 Pro: 250-card input capacity feeder (30 mil)",
+      "ZXP Series 7: 100-card output hopper (30 mil)",
+      "ZXP Series 7 Pro: 250 First-in, First-out mechanical output hopper",
+      "Single-card feed capability",
+      "ix Series intelligent media technology",
+      "21-character x 6-line LCD operator display with configurable soft keys",
+      "Kensington physical lock slot",
+      "Two-year limited warranty on printer and printhead",
+      "Near photographic print quality",
+      "Edge-to-edge printing on standard CR-80 media",
+      "Simultaneous printing, encoding, and laminating capability",
+      "One-pass single- and dual-sided wasteless lamination"
+    ],
+    "optional": [
+      "Single and dual-sided laminator",
+      "Optional contact/contactless SmartCard encoding option module",
+      "FIPS 201 compliant dual-sided laminator (only for North America)",
+      "Lockable enclosures and card feeder",
+      "Extended product warranty programs",
+      "802.11b/g wireless connectivity",
+      "1D barcode scanner",
+      "Duo-Print upgrade kit"
+    ]
+  },
+  "connectivity": [
+    "USB 2.0",
+    "USB supports plug-and-play printer identification",
+    "10/100 Ethernet",
+    "802.11b/g wireless option"
+  ],
+  "encoding_options": [
+    {
+      "type": "Magnetic stripe encoder",
+      "specifications": "AAMVA and ISO 7811 (new and pre-encoded, tracks 1, 2, and 3, high and low coercivity)"
+    },
+    {
+      "type": "ISO 7816 Smart Card Contact Station",
+      "specifications": "For third-party external contact encoders"
+    },
+    {
+      "type": "Combined MIFARE ISO 14443 A and B contactless and ISO 7816 Contact Encoder",
+      "specifications": "13.56MHz with EMV level 1 certification, and PC/SC compliance"
+    },
+    {
+      "type": "EPCglobal Gen 2 UHF RFID encoder",
+      "specifications": ""
+    }
+  ],
+  "software": {
+    "operating_system": "Windows drivers",
+    "supported_systems": [
+      "Windows 7 (32 and 64 bit)",
+      "Windows Server 2008 (32 and 64 bit)",
+      "Windows 8 (32 and 64 bit)",
+      "Windows 8.1 (32 and 64 bit)",
+      "Windows Server 2012 (64 bit)",
+      "Windows 10 (32 and 64 bit)"
+    ],
+    "sdk": "ZMotif SDK support and sample code available",
+    "card_design": "CardStudio card design and issuance software",
+    "tools": [
+      "ZXP Toolbox allows advanced control over the printer, driver and software setup – as well as administration and diagnostics"
+    ]
+  },
+  "compliance": {
+    "regulatory_standards": [
+      "FCC Class A"
+    ],
+    "certifications": []
+  },
+  "warranty": {
+    "duration_years": 2,
+    "coverage": "The ZXP Series 7 is warranted against defects in workmanship and materials for a period of 2 (two) years from the date of shipment.",
+    "url": "www.zebra.com/warranty"
+  },
+  "additional_information": {
+    "models": [
+      "ZXP Series 7",
+      "ZXP Series 7 Pro"
+    ],
+    "pro_model_description": "The ZXP Series 7 Pro is specifically designed for service bureaus and governments to quickly issue large quantities of secure identification cards with photo-quality images. It offers larger card hoppers, synchronized supplies and cards and allows you to produce more cards in less time. And, it's less expensive to own than any other printer in its category.",
+    "zebra_supplies": "Genuine Zebra supplies meet stringent quality standards, and are recommended for optimal printing quality and proper printer performance. The ZXP Series 7 printer is designed to work only with Zebra True Colours ix Series ribbons and Zebra True Secure i Series laminates.",
+    "cardstudio": "Create sophisticated cards the easy way with Zebra's CardStudio. Whether you're printing a handful of single-side monochrome cards or thousands of double-side cards with MIFARE contactless encoding, full color, specialty security effects or dynamic data, our highly intuitive interface makes you a pro with virtually no technical expertise or training.",
+    "synchronized_supplies": {
+      "color_print_operations": {
+        "ribbon": "750 Images per ribbon",
+        "media": "250 Card Capacity Input and Output Hopper",
+        "synchronization": "3X synchronized card input and output: 250 cards (x3) = 750 = 3 full card feeder cassettes per YMCKO ribbon"
+      },
+      "mono_print_operations": {
+        "ribbon": "5,000 Images per ribbon",
+        "media": "250 Card Capacity Input and Output Hopper",
+        "synchronization": "20X synchronized card input and output: 250 cards (x20) = 5,000 = 20 full card feeder cassettes per black mono ribbon"
+      }
+    },
+    "recommended_services": "The Zebra OneCare Service portfolio of Essential, Select and Premier maximizes the availability and productivity of your devices. Key features include 24/7 technical support, comprehensive coverage, advance replacement and software updates. Optional Visibility Services are available. For more information go to www.zebra.com/zebraonecare",
+    "markets_and_applications": {
+      "healthcare_and_education": [
+        "Employee and student ID cards",
+        "Employee access control cards"
+      ],
+      "hospitality_and_retail": [
+        "Gaming, loyalty / membership / gift cards",
+        "Sports and entertainment"
+      ],
+      "high_security": [
+        "Government credentials",
+        "Secure access control",
+        "Financial services"
+      ]
+    },
+    "notes": [
+      "The ZXP Series 7 Pro is not available in APAC.",
+      "Our laminates are also in increments of 750 images per roll.",
+      "For optimum print quality and printer performance, use genuine Zebra supplies.",
+      "Specifications subject to change without notice.",
+      "Printing throughput (cards per hour) based on batch printing with USB connectivity. Times may vary depending on the computer configuration.",
+      "Specially designed cleaning supplies simplify preventative maintenance"
+    ],
+    "copyright": "©2025 Zebra Technologies Corp. and/or its affiliates.",
+    "trademark": "The Zebra wordmark and logo are trademarks of Zebra Technologies Corp., registered in many jurisdictions worldwide. All other trademarks are the property of their respective owners.",
+    "document_date": "11/03/2021",
+    "part_number": "SS-ZXP Series 7"
+  },
+  "metadata": {
+    "source_file": "zxp-series-7-spec-sheet.pdf",
+    "extraction_date": "2025-10-16",
+    "schema_version": "1.0.0",
+    "total_pages": 4,
+    "total_tables": 0
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "product_info": {
+    "model": "220Xi4",
+    "title": "220Xi4 High-Performance Printer",
+    "tagline": "Legendary rugged durability, print quality and longevity",
+    "url": "www.zebra.com/xiseries",
+    "description": "Zebra’s built-to-last 220Xi4 printer is renowned for its incredible durability, consistently outstanding print quality, fast print speed, long life and reliability in demanding applications. Designed for printing labels up to 8 inches wide for chemical drum or other wide-label uses. Ideal for high-volume industrial printing with a strong return on investment and rugged dependability."
+  },
+  "specifications": {
+    "printer": {
+      "resolution": {
+        "raw": "203 dpi/8 dots per mm; 300 dpi/12 dots per mm",
+        "dpi_options": [203, 300],
+        "dots_per_mm": [8, 12]
+      },
+      "memory": "64 MB Flash; 16 MB RAM",
+      "maximum_print_width": "8.5 in./216 mm",
+      "print_speed": {
+        "raw": "10 in./254 mm per second (203 dpi); 6 in./152.4 mm per second (300 dpi)",
+        "speeds": {
+          "203_dpi": {"in_per_sec": 10, "mm_per_sec": 254},
+          "300_dpi": {"in_per_sec": 6, "mm_per_sec": 152.4}
+        }
+      },
+      "media_sensors": [
+        "Transmissive",
+        "Reflective"
+      ],
+      "firmware": [
+        "ZBI 2.0",
+        "ZPL",
+        "ZPL II"
+      ]
+    },
+    "media": {
+      "media_width": {
+        "raw": "4.25 in. (108 mm) to 8.8 in. (224 mm)",
+        "min_inches": 4.25,
+        "max_inches": 8.8
+      },
+      "maximum_media_roll_size": "8.0 in. (203 mm) outside diameter on a 3 in. (76 mm) core",
+      "thickness": "0.003 in. (0.076 mm) to 0.012 in. (0.305 mm)",
+      "media_types": [
+        "Continuous",
+        "Die-cut gap",
+        "Black mark",
+        "Notch",
+        "Hole"
+      ],
+      "minimum_non_continuous_label_length": {
+        "rewind_mode": "0.25 in./6 mm",
+        "peel_mode": "0.5 in./13 mm",
+        "tear_off_mode": "0.7 in./18 mm",
+        "cutter_mode": "1.5 in./38 mm"
+      }
+    },
+    "ribbon": {
+      "outside_diameter": "3.2 in./81.3 mm",
+      "standard_length": [
+        "1476 ft./450 m",
+        "984 ft./300 m"
+      ],
+      "width": "4.25 in. (108 mm) to 8.6 in. (220 mm)",
+      "core_id": "1.0 in./25.4 mm"
+    },
+    "operating_conditions": {
+      "operating_temperature": {
+        "raw": "32°–105°F (0°–40°C) direct thermal, 40°–105°F (5°–40°C) thermal transfer",
+        "direct_thermal": {"min_f": 32, "max_f": 105, "min_c": 0, "max_c": 40},
+        "thermal_transfer": {"min_f": 40, "max_f": 105, "min_c": 5, "max_c": 40}
+      },
+      "operating_humidity": {
+        "raw": "20% to 85% non-condensing",
+        "min_percent": 20,
+        "max_percent": 85
+      },
+      "storage_temperature": {
+        "raw": "-40°F to 140°F / -40°C to 60°C",
+        "min_f": -40,
+        "max_f": 140,
+        "min_c": -40,
+        "max_c": 60
+      },
+      "storage_humidity": {
+        "raw": "5% to 85% non-condensing",
+        "min_percent": 5,
+        "max_percent": 85
+      },
+      "electrical": "90–264VAC; 48–62Hz; ENERGY STAR qualified"
+    },
+    "physical": {
+      "height": "15.5 in./393.7 mm",
+      "width": "15.81 in./401.6 mm",
+      "depth": "20.38 in./517.5 mm",
+      "weight": "72 lbs./32.7 kg"
+    }
+  },
+  "features": {
+    "standard": [
+      "Print methods: Thermal transfer or direct thermal",
+      "Full-function front panel with large multilingual back-lit LCD display and password protection",
+      "Clear media side door for supplies monitoring",
+      "32-bit 133 MHz RISC processor",
+      "64 MB on-board Flash memory",
+      "16 MB SDRAM",
+      "Internal real-time clock",
+      "Advanced label/media counters",
+      "Dual media sensors (transmissive and reflective)",
+      "Auto calibration at startup or printhead close",
+      "Early warning systems for low label, low ribbon, and clean printhead alerts",
+      "Thin film printhead with E3 Element Energy Equalizer for superior print quality",
+      "Communications: USB 2.0, RS-232 Serial, bi-directional Parallel port, auto-detect",
+      "Internal ZebraNet 10/100 Print Server (Ethernet)",
+      "ENERGY STAR qualified"
+    ],
+    "optional": [
+      "Clear media side bi-fold door",
+      "Full-width rotary knife cutter and catch tray",
+      "Internal media rewind spindle (3 in./76 mm core)",
+      "Applicator interface for control signals",
+      "Media supply spindle for 3 in. or 40 mm core",
+      "Additional fonts"
+    ]
+  },
+  "fonts_and_barcodes": {
+    "fonts": [
+      "Bitmap fonts A–H and GS symbols (expandable up to 10x height/width)",
+      "Smooth scalable font Ø (CG Triumvirate Bold Condensed)",
+      "IBM Code Page 850 International Characters",
+      "Supports user-defined fonts and graphics",
+      "61 MB user-available non-volatile memory",
+      "12 MB user-available SDRAM"
+    ],
+    "barcodes_1d": [
+      "Code 11",
+      "Code 39",
+      "Code 93",
+      "Code 128 (subsets A/B/C)",
+      "ISBT-128",
+      "UPC-A",
+      "UPC-E",
+      "EAN-8",
+      "EAN-13",
+      "UPC and EAN 2- or 5-digit extensions",
+      "Plessey",
+      "Postnet",
+      "Standard 2-of-5",
+      "Industrial 2-of-5",
+      "Interleaved 2-of-5",
+      "Logmars",
+      "MSI",
+      "Codabar",
+      "Planet Code"
+    ],
+    "barcodes_2d": [
+      "Codablock",
+      "PDF417",
+      "Code 49",
+      "DataMatrix",
+      "MaxiCode",
+      "QR Code",
+      "TLC 39",
+      "GS1 DataBar (RSS)",
+      "Aztec"
+    ]
+  },
+  "software": {
+    "tools": [
+      "ZebraLink Solutions",
+      "Zebra Setup Utilities",
+      "ZebraDesigner",
+      "ZebraDesigner Pro",
+      "ZBI-Developer",
+      "ZebraNet Bridge Enterprise",
+      "ZebraNet Utilities v7.0",
+      "Zebra Enterprise Connector",
+      "ZDesigner Windows Driver"
+    ],
+    "web_features": [
+      "Web View for browser-based printer management",
+      "Alert system for email notifications via ZebraNet"
+    ]
+  },
+  "connectivity": [
+    "USB 2.0",
+    "RS-232 Serial",
+    "Parallel port",
+    "Ethernet (ZebraNet 10/100)"
+  ],
+  "compliance": {
+    "regulatory_standards": [
+      "IEC 60950-1",
+      "EN55022 Class B",
+      "EN55024",
+      "EN61000-3-2",
+      "EN61000-3-3"
+    ],
+    "product_markings": [
+      "cTUVus",
+      "CE",
+      "FCC-B",
+      "ICES-003",
+      "VCCI",
+      "C-Tick",
+      "NOM",
+      "S-Mark (Argentina)",
+      "CCC",
+      "GOST-R",
+      "BSMI",
+      "KCC",
+      "STB",
+      "UkrSEPRO"
+    ],
+    "energy_star": true
+  },
+  "markets_and_applications": {
+    "manufacturing": [
+      "Drum labeling",
+      "Shipping and receiving",
+      "Work-in-process",
+      "Put-away labeling"
+    ]
+  },
+  "warranty": {
+    "note": "For optimum print quality and printer performance, use Genuine Zebra supplies. Specifications subject to change without notice."
+  },
+  "additional_information": {
+    "Zebra OneCare": "Maintenance plans to increase uptime and reduce repair costs, with multiple service levels and certified Zebra technicians.",
+    "supplies": "Genuine Zebra supplies ensure consistent print quality, reduce downtime, and maintain reliability.",
+    "document_date": "10/2018",
+    "copyright": "©2025 Zebra Technologies Corp. and/or its affiliates."
+  },
+  "metadata": {
+    "source_file": "220xi4-spec-sheet-en-us.pdf",
+    "extraction_date": "2025-10-16T00:00:00Z",
+    "schema_version": "1.1.0",
+    "total_pages": 2
+  }
+}

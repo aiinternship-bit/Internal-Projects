@@ -15,7 +15,6 @@ __pycache__/
 
 # Large archives
 *.zip
-
 # Distribution / packaging
 .Python
 build/
@@ -215,6 +214,3 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
-
-
-
