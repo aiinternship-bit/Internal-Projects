@@ -1,0 +1,27 @@
+# Core dependencies
+pymilvus==2.6.2
+milvus-lite==2.5.1
+sentence-transformers==5.1.1
+pandas==2.3.3
+openpyxl==3.1.5
+torch==2.8.0
+
+# Environment and configuration
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# LangSmith for tracing and diagnostics
+langsmith>=0.1.0
+
+# Optional LLM backends (install as needed)
+openai>=1.0.0  # For OpenAI GPT models
+anthropic>=0.18.0  # For Claude models
+
+# Development and testing
+jupyter>=1.0.0
+ipykernel>=6.30.0
+
+langchain[openai]
+langchain[anthropic]
+langgraph
+requests
