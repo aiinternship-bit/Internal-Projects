@@ -6,51 +6,74 @@ import json
 from pathlib import Path
 from dotenv import load_dotenv
 import anthropic
+import time
 
 # Load environment variables from centralized .env file at AI-Practice root
 # Path: /Users/pranoy/Desktop/AI-Practice/.env
 env_path = Path(__file__).resolve().parents[1] / '.env'
 load_dotenv(dotenv_path=env_path)
 
+# Clean up any stale milvus processes on startup
+print("Cleaning up stale processes...")
+subprocess.run(['killall', '-9', 'milvus'], stderr=subprocess.DEVNULL)
+time.sleep(1)
+print("✓ Cleanup complete")
+
 # Add Archive to Python path for importing query engine
 archive_path = Path(__file__).resolve().parents[1] / 'GEN AI Agent' / 'Archive'
 sys.path.insert(0, str(archive_path))
-
-# Import Archive query engine
-try:
-    from src.query_engine import QueryEngine
-    from src.llm_layer import LLMLayer
-    from src import config as archive_config
-
-    # Initialize Archive components with absolute database path
-    archive_db_path = str(archive_path / 'milvus_edelivery.db')
-    archive_query_engine = QueryEngine(db_path=archive_db_path)
-    archive_llm = LLMLayer(model_name=archive_config.LLM_MODEL)
-    archive_enabled = True
-    print(f"✓ Archive query engine initialized successfully (DB: {archive_db_path})")
-except Exception as e:
-    print(f"✗ Could not initialize Archive query engine: {e}")
-    archive_enabled = False
-    archive_query_engine = None
-    archive_llm = None
 
 # Add Zebra Project to Python path for importing RAG system
 zebra_path = Path(__file__).resolve().parents[1] / 'Zebra Project'
 sys.path.insert(0, str(zebra_path / 'src'))
 
-# Import Zebra Project RAG
-try:
-    from printer_rag import PrinterRAG
+# Global variables to hold initialized instances (lazy loading)
+archive_query_engine = None
+archive_llm = None
+zebra_rag = None
 
-    # Initialize Zebra RAG with ChromaDB path
-    zebra_db_path = str(zebra_path / 'chroma_db')
-    zebra_rag = PrinterRAG(db_path=zebra_db_path, collection_name='printer_specs')
-    zebra_enabled = True
-    print(f"✓ Zebra Project RAG initialized successfully (DB: {zebra_db_path})")
-except Exception as e:
-    print(f"✗ Could not initialize Zebra Project RAG: {e}")
-    zebra_enabled = False
-    zebra_rag = None
+def get_archive_engine():
+    """Lazy initialization of Archive query engine - only loads when first used"""
+    global archive_query_engine, archive_llm
+
+    if archive_query_engine is not None:
+        return archive_query_engine, archive_llm
+
+    print("Initializing Archive query engine...")
+    try:
+        from src.query_engine import QueryEngine
+        from src.llm_layer import LLMLayer
+        from src import config as archive_config
+
+        # Initialize Archive components with absolute database path
+        archive_db_path = str(archive_path / 'milvus_edelivery.db')
+        archive_query_engine = QueryEngine(db_path=archive_db_path)
+        archive_llm = LLMLayer(model_name=archive_config.LLM_MODEL)
+        print(f"✓ Archive query engine initialized successfully (DB: {archive_db_path})")
+        return archive_query_engine, archive_llm
+    except Exception as e:
+        print(f"✗ Could not initialize Archive query engine: {e}")
+        raise
+
+def get_zebra_rag():
+    """Lazy initialization of Zebra Project RAG - only loads when first used"""
+    global zebra_rag
+
+    if zebra_rag is not None:
+        return zebra_rag
+
+    print("Initializing Zebra Project RAG...")
+    try:
+        from printer_rag import PrinterRAG
+
+        # Initialize Zebra RAG with ChromaDB path
+        zebra_db_path = str(zebra_path / 'chroma_db')
+        zebra_rag = PrinterRAG(db_path=zebra_db_path, collection_name='printer_specs')
+        print(f"✓ Zebra Project RAG initialized successfully (DB: {zebra_db_path})")
+        return zebra_rag
+    except Exception as e:
+        print(f"✗ Could not initialize Zebra Project RAG: {e}")
+        raise
 
 app = Flask(__name__)
 
@@ -80,7 +103,7 @@ PROJECTS = [
         'name': 'Solution #2',
         'description': 'Generative AI agent projects and implementations',
         'icon': '🤖',
-        'path': '../GEN AI Agent/Internal-Projects/Archive',
+        'path': '../GEN AI Agent/Archive',
         'color': '#7B68EE'
     },
     {
@@ -243,18 +266,16 @@ def chat():
                 'response': 'Project not found. Please select a valid project.'
             })
 
-        # Check if this is the Zebra Project and RAG is available
+        # Check if this is the Zebra Project and initialize RAG lazily
         if project_id == 'zebra-project':
-            if not zebra_enabled:
-                return jsonify({
-                    'response': 'Zebra Project RAG system is not available. Please check the server logs for initialization errors.'
-                }), 500
-
             try:
                 print(f"Using Zebra RAG for query: {message}")
 
+                # Lazy load Zebra RAG
+                rag = get_zebra_rag()
+
                 # Query the Zebra RAG system
-                recommendation = zebra_rag.recommend_printer(
+                recommendation = rag.recommend_printer(
                     requirements=message,
                     n_results=5
                 )
@@ -292,23 +313,19 @@ def chat():
                     'response': f'Error querying Zebra printer database: {str(e)}'
                 }), 500
 
-        # Check if this is the Archive project and query engine is available
-        print(f"[DEBUG] project_id={project_id}, archive_enabled={archive_enabled}")
-
+        # Check if this is the Archive project and initialize lazily
         if project_id == 'gen-ai-agent':
-            if not archive_enabled:
-                return jsonify({
-                    'response': 'Archive query engine is not available. Please check the server logs for initialization errors.'
-                }), 500
-
             try:
                 print(f"Using Archive query engine for query: {message}")
 
+                # Lazy load Archive query engine
+                query_engine, llm = get_archive_engine()
+
                 # Query the Archive vector database
-                results = archive_query_engine.query(message)
+                results = query_engine.query(message)
 
                 # Generate answer using Archive LLM
-                response = archive_llm.generate_answer(results["context"], message)
+                response = llm.generate_answer(results["context"], message)
 
                 # Return only the answer (matching interactive mode behavior)
                 return jsonify({

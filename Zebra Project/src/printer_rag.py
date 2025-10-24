@@ -475,25 +475,38 @@ class PrinterRAG:
         full_context = "\n".join(context_parts)
 
         # Create comprehensive prompt for Claude
-        prompt = f"""You are a helpful Zebra printer specialist assistant. Answer the user's question in a natural, conversational way like ChatGPT or Claude would.
+        prompt = f"""You are an expert Zebra printer specialist helping customers choose the right printer for their needs.
 
 USER'S QUESTION:
 {user_query}
 
-PRINTER DATA:
+COMPLETE PRINTER INFORMATION:
 {full_context}
 
 INSTRUCTIONS:
-- Write in a natural, conversational tone - like you're having a helpful conversation
-- Start directly with your answer - no "Based on the information..." preambles
-- Use simple paragraphs instead of heavy formatting (avoid ### headers, bullet lists, or formal structure)
-- Weave in specific details naturally as you explain
-- If recommending multiple printers, discuss them conversationally and explain the differences
-- IMPORTANT: Include clickable product page links in your text. If a URL is provided (like "www.zebra.com/zt400"), add https:// and format it as: "The [ZT400](https://www.zebra.com/zt400) is a great choice because..."
-- Make sure ALL URLs start with https:// for proper linking
-- Keep it clear but conversational - imagine explaining this to a colleague
+1. Analyze ALL the provided information thoroughly
+2. Provide a detailed, comprehensive recommendation based on the user's specific requirements
+3. Explain WHY each printer is suitable, referencing specific features and specifications from the data
+4. Compare printers if multiple are recommended - highlight key differences in capabilities, use cases, and features
+5. Reference specific technical details from the provided sections (specifications, features, performance, etc.)
+6. If the user asked about specific features or requirements, directly address them with evidence from the data
+7. Be thorough but well-organized - use markdown headers (###) and bullet points to structure your response
+8. Maintain a professional, knowledgeable, and helpful tone
+9. Include relevant technical specifications to support your recommendations
+10. If there are trade-offs between options, explain them clearly
 
-Your response:"""
+CRITICAL - URL EMBEDDING:
+11. For each printer you recommend, you MUST include clickable markdown links to:
+    - Product Page URL (if provided)
+    - Warranty Information URL (if provided)
+12. Format links as markdown: [Link Text](https://url)
+13. Add "https://" prefix to URLs that don't already have it (e.g., "www.zebra.com/zd200" becomes "https://www.zebra.com/zd200")
+14. Place the product page link prominently near the printer name/model in your recommendation
+15. Include the warranty link in a relevant section about warranty or support
+
+IMPORTANT: Use the COMPLETE information provided above. Reference specific details from the matching sections to give authoritative, detailed answers. Use Markdown formatting (###, -, **bold**) in your response for clarity.
+
+Your comprehensive recommendation:"""
 
         try:
             if self.llm_provider == "claude" and self.anthropic_client:

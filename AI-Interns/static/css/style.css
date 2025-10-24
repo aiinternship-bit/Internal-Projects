@@ -648,6 +648,39 @@ body {
     color: #0040A8;
 }
 
+.message-content .chat-heading {
+    font-weight: 600;
+    margin: 16px 0 8px 0;
+    color: #000000;
+}
+
+.message-content h1.chat-heading {
+    font-size: 20px;
+}
+
+.message-content h2.chat-heading {
+    font-size: 18px;
+}
+
+.message-content h3.chat-heading {
+    font-size: 16px;
+}
+
+.message-content .chat-list {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.message-content .chat-bullet {
+    margin: 4px 0;
+    line-height: 1.6;
+}
+
+.message-content strong {
+    font-weight: 600;
+    color: #000000;
+}
+
 .typing-indicator {
     display: flex;
     gap: 4px;
