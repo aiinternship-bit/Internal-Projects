@@ -1,0 +1,70 @@
+graph TB
+    %% Simplified high-level architecture
+
+    %% Stage 0 & 1: ETL / Knowledge Extraction
+    ETL["Legacy CodeKnowledge Extraction ETL Pipeline <br> (Discovery, Ingestion, Static Analysis, Doc Mining, Knowledge Synthesis)"]
+    DataStores["Vector DB + Oracle DB"]
+
+    %% Stage 2: Orchestration & Oversight
+    Orchestrator["Orchestrator <br> Task Routing • Context Injection • Deadlock Detection"]
+    Telemetry["Telemetry & Audit"]
+    Escalation["Escalation Manager"]
+    Oversight["Human Oversight"]
+
+    %% Architecture Track
+    ArchTrack["Architecture Track <br> (Architect + Architecture Validator)"]
+
+    %% Development Track
+    DevTrack["Development Track <br> (Developer + Code Validator + Quality Agent)"]
+
+    %% Build Track
+    BuildTrack["Build Track <br> (Build Agent + Supply Chain + Build Validator)"]
+
+    %% QA Track
+    QATrack["QA Track <br> (QA Agent + Validator)"]
+
+    %% Integration Track
+    IntTrack["Integration Validation <br> (Integration Validator + Multi-Service Coordinator)"]
+
+    %% Deployment Track
+    DeployTrack["Deployment Pipeline <br> (Blue-Green, Canary, Validator)"]
+
+    %% Monitoring & Feedback
+    Monitoring["Monitoring & Root Cause Analysis"]
+
+    %% Core Data Flow
+    ETL --> DataStores
+    DataStores --> Orchestrator
+
+    %% Orchestration dispatches to each track
+    Orchestrator --> ArchTrack
+    Orchestrator --> DevTrack
+    Orchestrator --> BuildTrack
+    Orchestrator --> QATrack
+    Orchestrator --> IntTrack
+    Orchestrator --> DeployTrack
+
+    %% Downstream flow
+    ArchTrack --> DevTrack --> BuildTrack --> QATrack --> IntTrack --> DeployTrack --> Monitoring
+
+    %% Feedback loops
+    Monitoring --> Orchestrator
+    Orchestrator <--> Telemetry
+    Telemetry <--> Oversight
+    Escalation --> Orchestrator
+    Escalation -.-> Oversight
+    Oversight -->|Approvals / Policy Adjustments| Orchestrator
+
+    %% Styling
+    classDef etl fill:#a29bfe,stroke:#6c5ce7,stroke-width:2px,color:#fff
+    classDef orchestrator fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    classDef track fill:#4ecdc4,stroke:#1098ad,stroke-width:2px,color:#fff
+    classDef monitor fill:#95e1d3,stroke:#38ada9,stroke-width:2px,color:#fff
+    classDef oversight fill:#f9ca24,stroke:#f0932b,stroke-width:2px,color:#000
+
+    class ETL etl
+    class DataStores etl
+    class Orchestrator orchestrator
+    class ArchTrack,DevTrack,BuildTrack,QATrack,IntTrack,DeployTrack track
+    class Monitoring monitor
+    class Telemetry,Escalation,Oversight oversight

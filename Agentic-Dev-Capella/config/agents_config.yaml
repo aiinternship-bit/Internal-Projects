@@ -11,6 +11,9 @@ global:
 
 # Orchestration Layer
 orchestration:
+  # Orchestration mode: "static" (legacy pipeline) or "dynamic" (capability-based)
+  mode: "static"  # Change to "dynamic" to enable AI-powered agent selection
+
   orchestrator:
     name: "orchestrator_agent"
     model: "gemini-2.0-flash"
@@ -21,7 +24,29 @@ orchestration:
       high: 0.7
       medium: 0.4
       low: 0.2
-    
+
+  # Dynamic orchestration settings (used when mode="dynamic")
+  dynamic_orchestration:
+    enabled: false  # Set to true to activate dynamic mode
+    max_parallel_agents: 20
+    agent_registry_path: "./config/agent_registry.json"
+    task_analyzer_model: "gemini-2.0-flash-thinking-exp-1219"
+    multimodal_model: "gemini-2.0-flash-exp"
+    enable_critical_path_tracking: true
+    enable_plan_optimization: true
+
+    # Agent selection scoring weights
+    selection_weights:
+      capability_match: 0.40  # Most important
+      performance: 0.30
+      availability: 0.20
+      cost: 0.10
+
+    # Capability matching preferences
+    prefer_specialists: true  # Prefer specialized agents over generalists
+    allow_multi_agent_tasks: true  # Allow multiple agents for complex tasks
+    availability_threshold: 0.7  # Minimum availability score (0-1)
+
   escalation:
     name: "escalation_agent"
     model: "gemini-2.0-flash"
@@ -257,11 +282,47 @@ human_oversight:
     - "slack"
   approval_timeout_hours: 24
 
-# Vector DB Configuration
-vector_db:
-  provider: "chroma"  # or pinecone, weaviate
-  host: "localhost"
-  port: 6333
-  collection_name: "legacy_modernization"
-  embedding_model: "text-embedding-004"
-  similarity_metric: "cosine"
+# Knowledge Base (KB) Configuration
+knowledge_base:
+  # Vector DB settings
+  vector_db:
+    provider: "chroma"  # or pinecone, weaviate
+    host: "localhost"
+    port: 6333
+    collection_name: "legacy_modernization"
+    embedding_model: "text-embedding-004"
+    similarity_metric: "cosine"
+    enable_cache: true
+    cache_ttl_seconds: 300  # 5 minutes
+
+  # Global KB query strategy
+  # Options: "never", "once", "minimal", "adaptive", "aggressive"
+  default_query_strategy: "adaptive"
+
+  # Per-agent KB strategy overrides
+  agent_kb_strategies:
+    developer_agent: "adaptive"  # Query periodically during implementation
+    technical_architect_agent: "aggressive"  # Query frequently for best practices
+    code_validator_agent: "minimal"  # Query only for pattern validation
+    qa_agent: "minimal"  # Query mainly for test patterns
+    deployment_agent: "once"  # Query once at start
+
+  # KB query configuration
+  query_settings:
+    max_queries_per_task: 50
+    query_frequency: 10  # Query every N operations (for adaptive/aggressive)
+    auto_query_on_error: true
+    auto_query_on_validation_fail: true
+    query_timeout_seconds: 10
+
+  # KB query triggers
+  checkpoint_triggers:
+    - "task_start"
+    - "validation_failure"
+    - "error_occurred"
+    - "complexity_threshold_reached"
+    - "periodic_checkpoint"
+
+  # KB effectiveness tracking
+  track_effectiveness: true
+  min_cache_hit_rate: 0.6  # Alert if cache hit rate falls below 60%

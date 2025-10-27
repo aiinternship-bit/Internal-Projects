@@ -1,0 +1,179 @@
+graph TB
+    %% Stage 0 & 1
+    Discovery[Discovery Agent]
+    DomainExpert[Domain Expert Agent]
+    Ingest[Code Ingestion Agent]
+    StaticAnalysis[Static Analysis Agent]
+    DocMining[Documentation Mining Agent]
+    KnowledgeSynth[Knowledge Synthesis Agent]
+    DeltaMonitor[Delta Monitoring Agent]
+
+    VectorDB[(Enhanced Vector DB<br/>Schemas, NFRs, Compliance)]
+    OracleDB[(Oracle DB<br/>Production Data)]
+    
+    %% Stage 2: Orchestration
+    Orch[Orchestrator<br/>Hierarchical Assignment<br/>Deadlock Detection]
+    Telemetry[Telemetry & Audit Agent]
+    Escalation[Escalation Agent]
+    HumanOversight[Human Oversight]
+    
+    %% Architecture Track
+    Arch[Technical Architect<br/>NFRs + Cross-cutting]
+    ArchVal[Architecture Validator]
+    
+    %% Development Track
+    Dev[Developer Agent<br/>New Code + Refactor]
+    CodeVal[Code Validator]
+    QualityAttr[Quality Attribute Agent]
+    
+    %% Build Track
+    Build[Build Agent]
+    BuildVal[Build Validator]
+    
+    %% QA Track
+    QA[QA Agent<br/>Fuzz + Security + Data-driven]
+    QAVal[QA Validator]
+    
+    %% Integration
+    IntVal[Integration Validator<br/>Runs against Oracle DB]
+    MultiServiceCoord[Multi-Service Coordinator]
+    
+    %% Deployment
+    Deploy[Deployment Agent<br/>Blue-Green + Canary]
+    DeployVal[Deployment Validator]
+    
+    %% Monitoring
+    Monitor[Monitoring Agent]
+    RootCause[Root Cause Analysis Agent]
+    
+    %%Supply Chain
+    SupplyChain[Supply Chain Security Agent<br/>---<br/>Input: Build Artifacts, Dependency Manifests<br/>Build Logs, Pipeline Config<br/>Output: SBOM, Security Report<br/>Artifact Signatures, Provenance Attestation]
+
+    %% Stage 0 & 1 Flow
+    Discovery --> Ingest
+    Discovery --> StaticAnalysis
+    Ingest --> StaticAnalysis
+    Ingest --> DocMining
+    DocMining -.->|If sparse| DomainExpert
+    DomainExpert -.-> KnowledgeSynth
+    StaticAnalysis --> KnowledgeSynth
+    DocMining --> KnowledgeSynth
+    KnowledgeSynth --> VectorDB
+    DeltaMonitor --> VectorDB
+    
+    %% Orchestration
+    VectorDB -->|Context| Orch
+    Orch <--> Telemetry
+    Orch <--> Escalation
+    Orch <--> HumanOversight
+    
+    %% Architecture
+    Orch -->|Task| Arch
+    VectorDB -.-> Arch
+    Arch --> ArchVal
+    ArchVal -->|Approval| Orch
+    ArchVal -.->|Rejection| Arch
+    ArchVal -.->|Escalation| Orch
+    
+    %% Development
+    Orch -->|Task| Dev
+    VectorDB -.-> Dev
+    Dev --> CodeVal
+    CodeVal -->|Approval| QualityAttr
+    CodeVal -.->|Rejection| Dev
+    QualityAttr -->|Approval| Orch
+    QualityAttr -.->|Issues| Dev
+    
+    %% Build
+    Orch -->|Merge| Build
+    Build --> SupplyChain
+    SupplyChain --> BuildVal
+    BuildVal -.->|Rejection| Orch
+    BuildVal -->|Approval| Orch
+    
+    %% QA
+    ArchVal -->|Spec| QA
+    QualityAttr -->|Code| QA
+    BuildVal -->|Build| QA
+    VectorDB -.-> QA
+    OracleDB -.-> QA
+    QA --> QAVal
+    QAVal -->|Approval| IntVal
+    QAVal -.->|Rejection| QA
+    
+    %% Integration
+    VectorDB -.-> IntVal
+    OracleDB -.-> IntVal
+    IntVal <--> MultiServiceCoord
+    IntVal -->|Approval| Deploy
+    IntVal -.->|Rejection| Orch
+    
+    %% Deployment
+    Deploy --> DeployVal
+    DeployVal -->|Success| Monitor
+    DeployVal -.->|Rollback| Deploy
+    
+    %% Monitoring
+    Monitor --> RootCause
+    RootCause --> Orch
+    Monitor --> Orch
+
+    %% Telemetry receives from ALL validators and key agents
+    ArchVal -->|Decision Logs| Telemetry
+    CodeVal -->|Decision Logs| Telemetry
+    QualityAttr -->|Decision Logs| Telemetry
+    BuildVal -->|Decision Logs| Telemetry
+    SupplyChain -->|Decision Logs| Telemetry
+    QAVal -->|Decision Logs| Telemetry
+    IntVal -->|Decision Logs| Telemetry
+    DeployVal -->|Decision Logs| Telemetry
+
+    %% Also from primary agents
+    Arch -->|Actions| Telemetry
+    Dev -->|Actions| Telemetry
+    Build -->|Actions| Telemetry
+    QA -->|Actions| Telemetry
+    Deploy -->|Actions| Telemetry
+    Monitor -->|Actions| Telemetry
+
+    %% Orchestrator bidirectional
+    Orch <-->|State & Decisions| Telemetry
+    
+    %% Escalation receives rejection loops from ALL validators
+    ArchVal -.->|Rejection Loop - Triggered if Over 3| Escalation
+    CodeVal -.->|Rejection Loop - Triggered if Over 3| Escalation
+    QualityAttr -.->|Rejection Loop - Triggered if Over 3| Escalation
+    BuildVal -.->|Rejection Loop - Triggered if Over 3| Escalation
+    SupplyChain -.->|Rejection Loop - Triggered if Over 3| Escalation
+    QAVal -.->|Rejection Loop - Triggered if Over 3| Escalation
+    IntVal -.->|Rejection Loop - Triggered if Over 3| Escalation
+    DeployVal -.->|Rollback Loop| Escalation
+
+    %% Escalation reports to Orchestrator
+    Escalation -->|Resolution Strategy| Orch
+    Escalation -.->|Human Intervention Request| HumanOversight
+
+    %% Human Oversight receives from multiple sources
+    Orch -.->|Critical Decisions| HumanOversight
+    Escalation -.->|Intervention Requests| HumanOversight
+    Telemetry -.->|Audit Reports & Alerts| HumanOversight
+
+    %% Human Oversight can override
+    HumanOversight -->|Approvals & Overrides| Orch
+    HumanOversight -->|Policy Adjustments| Escalation
+
+    %% Styling
+    classDef new fill:#e17055,stroke:#d63031,stroke-width:2px,color:#fff
+    classDef etl fill:#a29bfe,stroke:#6c5ce7,stroke-width:2px,color:#fff
+    classDef orchestrator fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    classDef validator fill:#4ecdc4,stroke:#1098ad,stroke-width:2px,color:#fff
+    classDef agent fill:#95e1d3,stroke:#38ada9,stroke-width:2px
+    classDef storage fill:#f9ca24,stroke:#f0932b,stroke-width:2px
+    
+    class DomainExpert,DeltaMonitor,Telemetry,Escalation,HumanOversight,QualityAttr,MultiServiceCoord,RootCause new
+    class Discovery,Ingest,StaticAnalysis,DocMining,KnowledgeSynth etl
+    class Orch orchestrator
+    class ArchVal,CodeVal,QualityAttr,BuildVal,QAVal,IntVal,DeployVal validator
+    class Arch,Dev,Build,QA,Deploy,Monitor agent
+    class VectorDB,OracleDB storage
+    class SupplyChain new

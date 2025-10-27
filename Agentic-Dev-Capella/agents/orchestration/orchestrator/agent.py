@@ -2,7 +2,7 @@
 agents/orchestration/orchestrator/agent.py
 
 Vertex AI Agent Engine orchestrator with A2A communication.
-Uses Vertex AI's native agent-to-agent protocol.
+Supports both static (legacy modernization) and dynamic (capability-based) modes.
 """
 
 from vertexai.preview import reasoning_engines
@@ -10,55 +10,121 @@ from vertexai.preview.reasoning_engines import LangchainAgent
 from google.cloud import aiplatform
 from typing import Dict, List, Any, Optional
 import json
+import os
 
 
 class OrchestratorAgent:
     """
     Central orchestrator using Vertex AI Agent Engine.
-    Manages A2A communication between specialized agents.
+
+    Supports two modes:
+    - Static mode: Hardcoded routing for legacy modernization pipeline
+    - Dynamic mode: AI-powered capability-based agent selection
+
+    Mode is configured via ORCHESTRATOR_MODE env var or initialization parameter.
     """
-    
+
     def __init__(
         self,
         project_id: str,
         location: str = "us-central1",
-        staging_bucket: str = None
+        staging_bucket: str = None,
+        mode: str = "static",
+        agent_registry_path: str = None,
+        max_parallel_agents: int = 20
     ):
         """
         Initialize Vertex AI orchestrator.
-        
+
         Args:
             project_id: GCP project ID
             location: Vertex AI location
             staging_bucket: GCS bucket for staging
+            mode: "static" or "dynamic" orchestration mode
+            agent_registry_path: Path to agent registry JSON (for dynamic mode)
+            max_parallel_agents: Max concurrent agents (for dynamic mode)
         """
         aiplatform.init(
             project=project_id,
             location=location,
             staging_bucket=staging_bucket
         )
-        
+
         self.project_id = project_id
         self.location = location
         self.agent_registry: Dict[str, str] = {}  # agent_name -> agent_id
         self.task_state: Dict[str, Dict] = {}
+
+        # Orchestration mode
+        self.mode = mode or os.getenv("ORCHESTRATOR_MODE", "static")
+
+        # Dynamic orchestrator (lazy initialization)
+        self._dynamic_orchestrator = None
+        self._agent_registry_path = agent_registry_path or "./config/agent_registry.json"
+        self._max_parallel_agents = max_parallel_agents
+
+        print(f"[Orchestrator] Initialized in {self.mode} mode")
         
     def route_task(
+        self,
+        task_id: str,
+        task_type: str = None,
+        component_context: Dict[str, Any] = None,
+        task_description: str = None,
+        input_files: List[Dict[str, Any]] = None,
+        context: Dict[str, Any] = None,
+        constraints: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """
+        Routes tasks to appropriate agents using A2A protocol.
+
+        Supports both static and dynamic routing based on orchestrator mode.
+
+        Static mode (legacy):
+            Requires: task_type, component_context
+            Uses hardcoded routing map
+
+        Dynamic mode (new):
+            Requires: task_description, optional input_files
+            Uses AI-powered capability matching
+
+        Args:
+            task_id: Unique identifier for the task
+            task_type: Type of task (for static mode)
+            component_context: Context about component (for static mode)
+            task_description: Natural language description (for dynamic mode)
+            input_files: Multimodal inputs (for dynamic mode)
+            context: Additional context (for dynamic mode)
+            constraints: Constraints (for dynamic mode)
+
+        Returns:
+            dict: Routing decision with target agent(s)
+        """
+        if self.mode == "dynamic":
+            return self._route_task_dynamic(
+                task_id=task_id,
+                task_description=task_description or task_type,
+                input_files=input_files or [],
+                context=context or component_context or {},
+                constraints=constraints or {}
+            )
+        else:
+            return self._route_task_static(
+                task_id=task_id,
+                task_type=task_type,
+                component_context=component_context or {}
+            )
+
+    def _route_task_static(
         self,
         task_id: str,
         task_type: str,
         component_context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        Routes tasks to appropriate agents using A2A protocol.
-        
-        Args:
-            task_id: Unique identifier for the task
-            task_type: Type of task (architecture, development, qa, etc.)
-            component_context: Context about the component being modernized
-            
-        Returns:
-            dict: Routing decision with target agent
+        Static routing for legacy modernization pipeline.
+
+        Uses hardcoded task_type -> agent mapping.
         """
         routing_map = {
             "discovery": "discovery_agent",
@@ -69,15 +135,15 @@ class OrchestratorAgent:
             "integration": "integration_validator_agent",
             "deployment": "deployment_agent"
         }
-        
+
         target_agent = routing_map.get(task_type, "unknown")
-        
+
         if target_agent not in self.agent_registry:
             return {
                 "status": "error",
                 "message": f"Agent {target_agent} not registered"
             }
-        
+
         # Send A2A message to target agent
         result = self._send_a2a_message(
             target_agent_id=self.agent_registry[target_agent],
@@ -89,8 +155,60 @@ class OrchestratorAgent:
                 "priority": component_context.get("priority", "medium")
             }
         )
-        
+
         return result
+
+    def _route_task_dynamic(
+        self,
+        task_id: str,
+        task_description: str,
+        input_files: List[Dict[str, Any]],
+        context: Dict[str, Any],
+        constraints: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Dynamic routing using AI-powered capability matching.
+
+        Uses DynamicOrchestrator for task analysis and agent selection.
+        """
+        # Lazy initialization of dynamic orchestrator
+        if self._dynamic_orchestrator is None:
+            from agents.orchestration.dynamic_orchestrator import DynamicOrchestrator
+
+            self._dynamic_orchestrator = DynamicOrchestrator(
+                context={
+                    "project_id": self.project_id,
+                    "location": self.location,
+                    "agent_id": "dynamic_orchestrator"
+                },
+                message_bus=None,  # TODO: Integrate with actual message bus
+                agent_registry_path=self._agent_registry_path,
+                max_parallel_agents=self._max_parallel_agents
+            )
+
+        # Orchestrate using dynamic orchestrator
+        try:
+            result = self._dynamic_orchestrator.orchestrate_task(
+                task_description=task_description,
+                input_files=input_files,
+                context=context,
+                constraints=constraints,
+                task_id=task_id
+            )
+
+            return {
+                "status": "success",
+                "mode": "dynamic",
+                "plan_id": result.get("plan_id"),
+                "selected_agents": result.get("agent_assignments", {}),
+                "execution_plan": result.get("execution_plan", {})
+            }
+
+        except Exception as e:
+            return {
+                "status": "error",
+                "message": f"Dynamic routing failed: {str(e)}"
+            }
     
     def check_deadlock(
         self,
