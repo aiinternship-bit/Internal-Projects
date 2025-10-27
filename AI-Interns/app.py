@@ -92,24 +92,24 @@ conversation_histories = {}
 PROJECTS = [
     {
         'id': 'ai-initiatives',
-        'name': 'Solution #1',
-        'description': 'React Native mobile apps and AI-powered solutions',
+        'name': 'AppDevReport',
+        'description': 'AI-powered solutions for React Native mobile apps',
         'icon': '🚀',
         'path': '../AI Initiatives',
         'color': '#4A90E2'
     },
     {
         'id': 'gen-ai-agent',
-        'name': 'Solution #2',
-        'description': 'Generative AI agent projects and implementations',
+        'name': 'ACLVectorNexus',
+        'description': 'Reusable AI RAG System',
         'icon': '🤖',
         'path': '../GEN AI Agent/Archive',
         'color': '#7B68EE'
     },
     {
         'id': 'zebra-project',
-        'name': 'Solution #3',
-        'description': 'Zebra printer specifications RAG system with PDF processing',
+        'name': 'ZPrinterScout',
+        'description': 'Search Zebra Printers Specifications',
         'icon': '🖨️',
         'path': '../Zebra Project',
         'color': '#E74C3C'

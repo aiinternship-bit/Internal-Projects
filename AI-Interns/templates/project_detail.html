@@ -7,69 +7,148 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <meta name="color-scheme" content="light dark">
 </head>
-<body>
+<body class="chat-page">
+    <!-- Navigation Bar -->
     <nav class="nav-bar">
         <div class="nav-content">
             <a href="/" class="back-link">← Projects</a>
-            <a href="/" class="nav-logo">AI-Interns</a>
+            <div class="nav-project-info">
+                <span class="nav-project-icon">{{ project.icon }}</span>
+                <span class="nav-project-name">{{ project.name }}</span>
+            </div>
             <div style="width: 80px;"></div>
         </div>
     </nav>
 
-    <section class="detail-hero">
-        <div class="detail-icon">{{ project.icon }}</div>
-        <h1 class="detail-title">{{ project.name }}</h1>
-        <p class="detail-subtitle">{{ project.description }}</p>
-    </section>
+    <!-- Full Page Chat Interface -->
+    <div class="chat-page-container">
+        <!-- Sidebar -->
+        <aside class="chat-sidebar" id="chat-sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">{{ project.icon }} {{ project.name }}</h2>
+                <button class="new-chat-btn" id="new-chat-btn" title="Start new conversation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    New Chat
+                </button>
+            </div>
 
-    <div class="detail-content">
-        <div class="detail-section">
-            <h2 class="section-title">Project Information</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <span class="info-label">Project ID</span>
-                    <span class="info-value">{{ project.id }}</span>
-                </div>
-                <div class="info-card">
-                    <span class="info-label">Location</span>
-                    <span class="info-value">{{ project.path }}</span>
+            <div class="sidebar-conversations" id="sidebar-conversations">
+                <div class="conversation-item active" data-session-id="current">
+                    <div class="conversation-icon">💬</div>
+                    <div class="conversation-details">
+                        <div class="conversation-title">Current Conversation</div>
+                        <div class="conversation-preview">Start chatting to see history</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </aside>
 
-        {% if project.items %}
-        <div class="detail-section">
-            <h2 class="section-title">Project Contents</h2>
-            <div class="items-grid">
-                {% for item in project.items %}
-                <div class="item-card">
-                    <span class="item-icon">
-                        {% if item.is_dir %}
-                            📁
-                        {% else %}
-                            📄
-                        {% endif %}
-                    </span>
-                    <span class="item-name">{{ item.name }}</span>
+        <!-- Main Chat Area -->
+        <div class="chat-main">
+            <!-- Toggle Sidebar Button (Mobile) -->
+            <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- Sticky Context Header -->
+            <div class="context-header" id="context-header">
+                <div class="context-icon">💬</div>
+                <div class="context-content">
+                    <div class="context-question">Scroll down to see conversation context...</div>
+                    <div class="context-response">The current Q&A will appear here as you scroll</div>
                 </div>
-                {% endfor %}
+            </div>
+
+            <!-- Messages Area -->
+            <div class="chat-page-messages" id="chatbot-messages">
+            <div class="welcome-message-container">
+                <div class="welcome-project-icon">{{ project.icon }}</div>
+                <h1 class="welcome-project-title">{{ project.name }}</h1>
+                <p class="welcome-project-description">{{ project.description }}</p>
+                <div class="welcome-divider"></div>
+
+                {% if project.id == 'zebra-project' %}
+                <p class="welcome-instructions">
+                    I'm your AI agent to help you find the perfect Zebra printer. You can ask me to:
+                </p>
+                <ul class="welcome-features">
+                    <li>Browse and search Zebra printer specifications</li>
+                    <li>Recommend printers based on your needs</li>
+                    <li>Compare different printer models</li>
+                    <li>Answer questions about printer features and capabilities</li>
+                </ul>
+                {% elif project.id == 'gen-ai-agent' %}
+                <p class="welcome-instructions">
+                    I'm your AI assistant for the ACL Vector Nexus. You can ask me to:
+                </p>
+                <ul class="welcome-features">
+                    <li>Query the Archive vector database</li>
+                    <li>Search through structured data and content</li>
+                    <li>Retrieve information from Excel sheets</li>
+                    <li>Answer questions about the RAG system</li>
+                </ul>
+                {% elif project.id == 'ai-initiatives' %}
+                <p class="welcome-instructions">
+                    I'm your AI assistant for React Native development. You can ask me to:
+                </p>
+                <ul class="welcome-features">
+                    <li>Analyze and explain mobile app code</li>
+                    <li>Help with React Native development</li>
+                    <li>Debug mobile app issues</li>
+                    <li>Suggest improvements and best practices</li>
+                </ul>
+                {% else %}
+                <p class="welcome-instructions">
+                    I'm your AI assistant for this project. You can ask me to:
+                </p>
+                <ul class="welcome-features">
+                    <li>Analyze and explain code</li>
+                    <li>Run Python scripts</li>
+                    <li>Answer questions about the project</li>
+                    <li>Debug issues and suggest improvements</li>
+                </ul>
+                {% endif %}
+            </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="chat-page-input-container">
+            <div class="chat-page-input-wrapper">
+                <div class="chat-input-inner">
+                    <textarea
+                        id="chatbot-input"
+                        class="chat-page-input"
+                        placeholder="Message {{ project.name }}..."
+                        rows="1"
+                    ></textarea>
+                    <button id="chatbot-send" class="chat-page-send" aria-label="Send message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
             </div>
         </div>
-        {% endif %}
-
-        {% if project.error %}
-        <div class="error-message">
-            <strong>Error:</strong> {{ project.error }}
-        </div>
-        {% endif %}
     </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="footer-text"> AI-Interns Platform</p>
-        </div>
-    </footer>
-
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Pass project data to JavaScript
+        window.projectData = {
+            id: "{{ project.id }}",
+            name: "{{ project.name }}",
+            description: "{{ project.description }}",
+            icon: "{{ project.icon }}"
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
 </body>
 </html>

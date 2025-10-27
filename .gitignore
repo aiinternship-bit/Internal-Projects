@@ -23,6 +23,10 @@ milvus_edelivery.db
 **/*.db
 .milvus_edelivery.db.lock
 
+# Database backups
+*.db.backup*
+milvus_edelivery.db.backup*
+
 # Large archives
 *.zip
 # Distribution / packaging
