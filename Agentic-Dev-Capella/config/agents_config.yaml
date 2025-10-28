@@ -282,6 +282,79 @@ human_oversight:
     - "slack"
   approval_timeout_hours: 24
 
+# Multimodal Input Processing
+multimodal:
+  enabled: true
+  default_model: "gemini-2.0-flash-exp"
+
+  vision:
+    name: "vision_agent"
+    model: "gemini-2.0-flash-exp"
+    supported_formats:
+      - "jpg"
+      - "jpeg"
+      - "png"
+      - "gif"
+      - "webp"
+      - "bmp"
+    max_file_size_mb: 20
+    analysis_types:
+      - "ui_mockup"
+      - "screenshot"
+      - "diagram"
+      - "wireframe"
+      - "design_system"
+    batch_size: 5  # Max images to process in parallel
+
+  pdf_parser:
+    name: "pdf_parser_agent"
+    model: "gemini-2.0-flash-exp"
+    max_file_size_mb: 50
+    max_pages: 100
+    document_types:
+      - "requirements"
+      - "specification"
+      - "documentation"
+      - "design_doc"
+    extraction_focus:
+      - "functional_requirements"
+      - "nfrs"
+      - "technical_specs"
+      - "apis"
+      - "constraints"
+
+  video_processor:
+    name: "video_processor_agent"
+    model: "gemini-2.0-flash-exp"
+    supported_formats:
+      - "mp4"
+      - "mov"
+      - "avi"
+      - "webm"
+    max_file_size_mb: 200
+    max_duration_minutes: 30
+    analysis_types:
+      - "product_demo"
+      - "ui_flow"
+      - "tutorial"
+      - "walkthrough"
+
+  audio_transcriber:
+    name: "audio_transcriber_agent"
+    model: "gemini-2.0-flash-exp"
+    supported_formats:
+      - "mp3"
+      - "wav"
+      - "m4a"
+      - "ogg"
+    max_file_size_mb: 100
+    max_duration_minutes: 60
+    audio_types:
+      - "meeting"
+      - "interview"
+      - "discussion"
+      - "presentation"
+
 # Knowledge Base (KB) Configuration
 knowledge_base:
   # Vector DB settings
