@@ -477,3 +477,160 @@ knowledge_base:
   # KB effectiveness tracking
   track_effectiveness: true
   min_cache_hit_rate: 0.6  # Alert if cache hit rate falls below 60%
+
+# Backend Engineering Agents
+backend:
+  enabled: true
+  default_language: "typescript"
+  kb_integration_enabled: true
+
+  api_developer:
+    name: "api_developer_agent"
+    model: "gemini-2.0-flash"
+    description: "Generates REST, GraphQL, and gRPC APIs with documentation"
+    supported_api_types:
+      - "rest"
+      - "graphql"
+      - "grpc"
+    supported_languages:
+      - "typescript"
+      - "python"
+      - "go"
+      - "java"
+    supported_frameworks:
+      rest: ["express", "fastapi", "gin", "spring-boot"]
+      graphql: ["apollo-server", "strawberry", "gqlgen"]
+      grpc: ["grpc-node", "grpcio", "grpc-go"]
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 3
+
+  database_engineer:
+    name: "database_engineer_agent"
+    model: "gemini-2.0-flash"
+    description: "Designs database schemas, generates migrations, optimizes queries"
+    supported_databases:
+      - "postgresql"
+      - "mysql"
+      - "mongodb"
+      - "redis"
+    features:
+      - "schema_design"
+      - "migration_generation"
+      - "query_optimization"
+      - "er_diagram_generation"
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 3
+
+  microservices_architect:
+    name: "microservices_architect_agent"
+    model: "gemini-2.0-flash-thinking-exp-1219"  # Reasoning model
+    description: "Decomposes monoliths, designs microservices architecture"
+    supported_patterns:
+      - "cqrs"
+      - "event_sourcing"
+      - "saga"
+      - "circuit_breaker"
+      - "service_mesh"
+    capabilities:
+      - "service_decomposition"
+      - "api_gateway_design"
+      - "event_driven_architecture"
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 2  # Lower due to reasoning model
+
+  data_engineer:
+    name: "data_engineer_agent"
+    model: "gemini-2.0-flash"
+    description: "Creates ETL pipelines, designs data warehouses"
+    supported_tools:
+      - "airflow"
+      - "dbt"
+      - "bigquery"
+      - "apache_spark"
+      - "redshift"
+      - "snowflake"
+    capabilities:
+      - "etl_pipeline_development"
+      - "data_warehouse_design"
+      - "batch_processing"
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 3
+
+  message_queue:
+    name: "message_queue_agent"
+    model: "gemini-2.0-flash"
+    description: "Sets up message brokers and event schemas"
+    supported_technologies:
+      - "kafka"
+      - "rabbitmq"
+      - "google_pubsub"
+      - "amazon_sqs_sns"
+    schema_formats:
+      - "avro"
+      - "protobuf"
+      - "json_schema"
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 3
+
+# Infrastructure Agents
+infrastructure:
+  enabled: true
+  kb_integration_enabled: true
+
+  cloud_infrastructure:
+    name: "cloud_infrastructure_agent"
+    model: "gemini-2.0-flash"
+    description: "Generates IaC for multi-cloud deployments"
+    supported_iac_tools:
+      - "terraform"
+      - "cloudformation"
+      - "gcp_deployment_manager"
+    supported_cloud_providers:
+      - "gcp"
+      - "aws"
+      - "azure"
+    capabilities:
+      - "terraform_development"
+      - "cloudformation_development"
+      - "gcp_deployment_manager"
+      - "multi_cloud_setup"
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 3
+
+  kubernetes:
+    name: "kubernetes_agent"
+    model: "gemini-2.0-flash"
+    description: "Generates Kubernetes manifests and Helm charts"
+    k8s_version: "1.28+"
+    helm_version: "3"
+    supported_service_mesh:
+      - "istio"
+      - "linkerd"
+    deployment_strategies:
+      - "blue_green"
+      - "canary"
+      - "rolling_update"
+    capabilities:
+      - "manifest_creation"
+      - "helm_charts"
+      - "service_mesh_config"
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 3
+
+  observability:
+    name: "observability_agent"
+    model: "gemini-2.0-flash"
+    description: "Sets up monitoring, alerting, and distributed tracing"
+    supported_tools:
+      - "prometheus"
+      - "grafana"
+      - "jaeger"
+      - "google_cloud_monitoring"
+      - "opentelemetry"
+    capabilities:
+      - "prometheus_setup"
+      - "grafana_dashboards"
+      - "distributed_tracing"
+      - "slo_sli_definition"
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 3
