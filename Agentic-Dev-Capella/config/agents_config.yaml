@@ -355,6 +355,84 @@ multimodal:
       - "discussion"
       - "presentation"
 
+# Frontend Engineering Agents
+frontend:
+  enabled: true
+  default_framework: "react"
+  default_styling: "tailwind"
+
+  ui_developer:
+    name: "ui_developer_agent"
+    model: "gemini-2.0-flash"
+    supported_frameworks:
+      - "react"
+      - "vue"
+      - "angular"
+      - "svelte"
+      - "vanilla"
+    supported_styling:
+      - "css_modules"
+      - "tailwind"
+      - "styled_components"
+      - "emotion"
+      - "css"
+      - "scss"
+    kb_query_strategy: "adaptive"
+
+  react_specialist:
+    name: "react_specialist_agent"
+    model: "gemini-2.0-flash"
+    expertise:
+      - "performance_optimization"
+      - "advanced_patterns"
+      - "state_management"
+      - "server_components"
+      - "nextjs"
+    kb_query_strategy: "aggressive"
+
+  mobile_developer:
+    name: "mobile_developer_agent"
+    model: "gemini-2.0-flash"
+    supported_platforms:
+      - "react-native"
+      - "flutter"
+    features:
+      - "native_modules"
+      - "navigation"
+      - "offline_support"
+      - "push_notifications"
+    kb_query_strategy: "adaptive"
+
+  css_specialist:
+    name: "css_specialist_agent"
+    model: "gemini-2.0-flash"
+    expertise:
+      - "responsive_design"
+      - "animations"
+      - "design_systems"
+      - "performance_optimization"
+    approaches:
+      - "css_grid"
+      - "flexbox"
+      - "container_queries"
+      - "tailwind"
+    kb_query_strategy: "adaptive"
+
+  accessibility_specialist:
+    name: "accessibility_specialist_agent"
+    model: "gemini-2.0-flash"
+    wcag_level: "AA"  # A, AA, or AAA
+    audit_tools:
+      - "axe"
+      - "lighthouse"
+      - "wave"
+    focus_areas:
+      - "keyboard_navigation"
+      - "screen_readers"
+      - "color_contrast"
+      - "aria_attributes"
+    kb_query_strategy: "minimal"
+
 # Knowledge Base (KB) Configuration
 knowledge_base:
   # Vector DB settings
