@@ -376,7 +376,7 @@ def create_react_specialist_tests() -> AgentTestSuite:
     # Test 2: Build Infinite Scroll Feed with Virtualization
     suite.add_test(
         test_id="react_002",
-        test_name": "Infinite Scroll Feed with Virtual Scrolling",
+        test_name="Infinite Scroll Feed with Virtual Scrolling",
         description="Create performant infinite scroll feed with react-window",
         input_prompt="Build an infinite scroll social media feed with virtualization",
         input_data={
