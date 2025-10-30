@@ -39,32 +39,32 @@ python scripts/view_test_results.py file1.json --compare file2.json
 
 ## Features
 
-### ✅ Prompt-Based Testing
+### Prompt-Based Testing
 Test agents with natural language prompts:
 ```python
 input_prompt="Implement a payment processor in Python with fraud detection"
 ```
 
-### ✅ Automatic Validation
+### Automatic Validation
 Built-in validation for:
 - Expected status codes
 - Required output fields
 - Custom validation functions
 
-### ✅ Interactive Mode
+### Interactive Mode
 Guided testing experience:
 - Select agent from menu
 - Choose tool to test
 - Step-by-step input prompts
 - Immediate results
 
-### ✅ Results Tracking
+### Results Tracking
 - JSON output for all tests
 - Execution time tracking
 - Detailed failure information
 - Comparison between test runs
 
-### ✅ Extensible Framework
+### Extensible Framework
 Easy to add new tests:
 ```python
 suite.add_test(
