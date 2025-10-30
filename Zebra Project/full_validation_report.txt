@@ -1,0 +1,1065 @@
+
+================================================================================
+OVERALL VALIDATION SUMMARY
+================================================================================
+Total files: 27
+Passed: 23
+Failed: 4
+Success rate: 85.2%
+================================================================================
+
+
+DETAILED REPORTS:
+
+================================================================================
+Validation Report: 220xi4-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 16
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 15
+  optional_features: 0
+  connectivity_options: 3
+  additional_info_items: 2
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 2 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zc100-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 4
+Info: 18
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 13
+  optional_features: 0
+  connectivity_options: 3
+  additional_info_items: 4
+  data_richness_score: 45
+
+WARNINGS:
+  ⚠️  Specification category 'printer' is empty
+  ⚠️  Specification category 'media' is empty
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 4 items
+  ℹ️  Empty collection at: specifications.printer
+  ℹ️  Empty collection at: specifications.media
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zc10l-spec-sheet-en-us.json
+Status: FAIL
+================================================================================
+Errors: 1
+Warnings: 3
+Info: 17
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 8
+  optional_features: 0
+  connectivity_options: 2
+  additional_info_items: 5
+  data_richness_score: 55
+
+ERRORS:
+  ❌ Missing required product_info key: 'model'
+
+WARNINGS:
+  ⚠️  Specification category 'printer' is empty
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 5 items
+  ℹ️  Empty collection at: specifications.printer
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zc300-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 4
+Info: 18
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 15
+  optional_features: 0
+  connectivity_options: 3
+  additional_info_items: 4
+  data_richness_score: 45
+
+WARNINGS:
+  ⚠️  Specification category 'printer' is empty
+  ⚠️  Specification category 'media' is empty
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 4 items
+  ℹ️  Empty collection at: specifications.printer
+  ℹ️  Empty collection at: specifications.media
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd220-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 0
+Info: 7
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 9
+  optional_features: 2
+  connectivity_options: 1
+  additional_info_items: 10
+  data_richness_score: 75
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 10 items
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd400-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 1
+Info: 10
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 10
+  optional_features: 8
+  connectivity_options: 4
+  additional_info_items: 8
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 8 items
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd421-healthcare-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 2
+Info: 8
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 10
+  optional_features: 0
+  connectivity_options: 4
+  additional_info_items: 10
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 10 items
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd510-hc-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 4
+Info: 17
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 21
+  optional_features: 0
+  connectivity_options: 3
+  additional_info_items: 7
+  data_richness_score: 65
+
+WARNINGS:
+  ⚠️  Specification category 'media' is empty
+  ⚠️  Printer specs missing 'memory'
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 7 items
+  ℹ️  Empty collection at: specifications.media
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: additional_information.Print DNA Components
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd600-rfid-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 0
+Info: 10
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 10
+  optional_features: 4
+  connectivity_options: 4
+  additional_info_items: 8
+  data_richness_score: 75
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 8 items
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd600-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 0
+Info: 10
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 12
+  optional_features: 12
+  connectivity_options: 4
+  additional_info_items: 8
+  data_richness_score: 75
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 8 items
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd611-healthcare-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 0
+Info: 11
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 12
+  optional_features: 6
+  connectivity_options: 4
+  additional_info_items: 10
+  data_richness_score: 75
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 10 items
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zd621-healthcare-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 2
+Info: 7
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 1
+  optional_features: 7
+  connectivity_options: 4
+  additional_info_items: 9
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 9 items
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: ze511-ze521-rfid-spec-sheet-en-us.json
+Status: FAIL
+================================================================================
+Errors: 1
+Warnings: 3
+Info: 16
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 12
+  optional_features: 2
+  connectivity_options: 5
+  additional_info_items: 8
+  data_richness_score: 70
+
+ERRORS:
+  ❌ Missing required product_info key: 'title'
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 8 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Empty collection at: additional_information.Print DNA Components
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: ze511-ze521-spec-sheet-en-us.json
+Status: FAIL
+================================================================================
+Errors: 1
+Warnings: 3
+Info: 16
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 12
+  optional_features: 3
+  connectivity_options: 5
+  additional_info_items: 8
+  data_richness_score: 70
+
+ERRORS:
+  ❌ Missing required product_info key: 'title'
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 8 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Empty collection at: additional_information.Print DNA Components
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zq511-zq521-rfid-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 15
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 28
+  optional_features: 0
+  connectivity_options: 2
+  additional_info_items: 7
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Specification category 'operating_conditions' is empty
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 7 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: specifications.operating_conditions
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zq511-zq521-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 16
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 29
+  optional_features: 0
+  connectivity_options: 2
+  additional_info_items: 6
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Specification category 'operating_conditions' is empty
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 6 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: specifications.operating_conditions
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zq600-series-hc-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 17
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 30
+  optional_features: 0
+  connectivity_options: 4
+  additional_info_items: 8
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Specification category 'operating_conditions' is empty
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 8 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: specifications.operating_conditions
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: additional_information.Print DNA Components
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zq600-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 2
+Info: 17
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 30
+  optional_features: 0
+  connectivity_options: 4
+  additional_info_items: 7
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Specification category 'operating_conditions' is empty
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 7 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: specifications.operating_conditions
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: additional_information.Print DNA Components
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zq630-series-rfid-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 17
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 29
+  optional_features: 0
+  connectivity_options: 4
+  additional_info_items: 9
+  data_richness_score: 75
+
+WARNINGS:
+  ⚠️  Specification category 'operating_conditions' is empty
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 9 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: specifications.operating_conditions
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: additional_information.Print DNA Components
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zt111-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 16
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 11
+  optional_features: 0
+  connectivity_options: 4
+  additional_info_items: 3
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 3 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zt231-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 17
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 12
+  optional_features: 0
+  connectivity_options: 4
+  additional_info_items: 5
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 5 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Empty collection at: additional_information.Print DNA Components
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zt400-rfid-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 15
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 8
+  optional_features: 5
+  connectivity_options: 5
+  additional_info_items: 5
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 5 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zt400-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 15
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 9
+  optional_features: 6
+  connectivity_options: 5
+  additional_info_items: 7
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 7 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zt510-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 16
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 5
+  optional_features: 0
+  connectivity_options: 4
+  additional_info_items: 3
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 3 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zt600-rfid-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 2
+Info: 15
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 6
+  optional_features: 3
+  connectivity_options: 5
+  additional_info_items: 6
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 6 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zt600-series-spec-sheet-en-us.json
+Status: PASS
+================================================================================
+Errors: 0
+Warnings: 3
+Info: 15
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 6
+  optional_features: 4
+  connectivity_options: 5
+  additional_info_items: 6
+  data_richness_score: 70
+
+WARNINGS:
+  ⚠️  Printer specs missing 'print_speed'
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+  ⚠️  Optional section 'warranty' is present but empty
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 6 items
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Empty collection at: warranty
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
+
+================================================================================
+Validation Report: zxp-series-7-spec-sheet-en-us.json
+Status: FAIL
+================================================================================
+Errors: 1
+Warnings: 3
+Info: 17
+
+Statistics:
+  total_top_level_keys: 9
+  specification_categories: 5
+  standard_features: 12
+  optional_features: 0
+  connectivity_options: 2
+  additional_info_items: 6
+  data_richness_score: 50
+
+ERRORS:
+  ❌ Missing required product_info key: 'model'
+
+WARNINGS:
+  ⚠️  Specification category 'printer' is empty
+  ⚠️  Specification category 'media' is empty
+  ⚠️  Empty string at: fonts_and_barcodes.graphics_memory
+
+INFO:
+  ℹ️  Product info missing optional field: 'series'
+  ℹ️  Product info missing optional field: 'category'
+  ℹ️  Additional information captured: 6 items
+  ℹ️  Empty collection at: specifications.printer
+  ℹ️  Empty collection at: specifications.media
+  ℹ️  Empty collection at: specifications.ribbon
+  ℹ️  Empty collection at: features.optional
+  ℹ️  Empty collection at: fonts_and_barcodes.fonts
+  ℹ️  Empty collection at: fonts_and_barcodes.barcode_ratios
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_1d
+  ℹ️  Empty collection at: fonts_and_barcodes.barcodes_2d
+  ℹ️  Empty collection at: compliance.regulatory_standards
+  ℹ️  Empty collection at: compliance.certifications
+  ℹ️  Optional section not present: 'fonts_graphics_symbologies'
+  ℹ️  Optional section not present: 'software'
+  ℹ️  Optional section not present: 'support_services'
+  ℹ️  Optional section not present: 'supplies'
+================================================================================
