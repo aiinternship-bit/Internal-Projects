@@ -49,12 +49,13 @@ class APIDevAgent(A2AEnabledAgent, DynamicKnowledgeBaseIntegration):
 
         # Initialize A2A integration
         self.a2a = A2AIntegration(
-            context=context,
+            agent_context=context,
             message_bus=message_bus,
             orchestrator_id=orchestrator_id
         )
 
         # Initialize KB integration if vector_db_client provided
+        self._kb_query_strategy = "never"  # Default
         if vector_db_client:
             self.initialize_kb_integration(
                 vector_db_client=vector_db_client,
@@ -110,7 +111,7 @@ class APIDevAgent(A2AEnabledAgent, DynamicKnowledgeBaseIntegration):
                 stack_trace=""
             )
 
-    @A2AIntegration.with_task_tracking
+    
     def generate_rest_api(
         self,
         language: str,
@@ -187,6 +188,7 @@ class APIDevAgent(A2AEnabledAgent, DynamicKnowledgeBaseIntegration):
         # Add metadata
         duration = (datetime.utcnow() - start_time).total_seconds() / 60
         result.update({
+            "status": "success",
             "api_type": "rest",
             "language": language,
             "framework": framework,
@@ -207,7 +209,7 @@ class APIDevAgent(A2AEnabledAgent, DynamicKnowledgeBaseIntegration):
 
         return result
 
-    @A2AIntegration.with_task_tracking
+    
     def generate_graphql_api(
         self,
         language: str,
@@ -283,7 +285,7 @@ class APIDevAgent(A2AEnabledAgent, DynamicKnowledgeBaseIntegration):
 
         return result
 
-    @A2AIntegration.with_task_tracking
+    
     def generate_grpc_service(
         self,
         language: str,
@@ -356,7 +358,7 @@ class APIDevAgent(A2AEnabledAgent, DynamicKnowledgeBaseIntegration):
 
         return result
 
-    @A2AIntegration.with_task_tracking
+    
     def generate_api_documentation(
         self,
         api_code: str,
