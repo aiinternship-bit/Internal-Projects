@@ -634,3 +634,123 @@ infrastructure:
       - "slo_sli_definition"
     kb_query_strategy: "adaptive"
     max_concurrent_tasks: 3
+
+# Quality & Security Agents (Milestone 5)
+quality:
+  enabled: true
+  kb_integration_enabled: true
+
+  performance_testing:
+    name: "performance_testing_agent"
+    model: "gemini-2.0-flash"
+    description: "Generates and executes performance tests, identifies bottlenecks, provides optimization recommendations"
+    supported_tools:
+      - "k6"
+      - "jmeter"
+      - "gatling"
+      - "locust"
+      - "artillery"
+    capabilities:
+      - "load_testing"
+      - "stress_testing"
+      - "performance_profiling"
+      - "bottleneck_analysis"
+      - "benchmark_generation"
+      - "sla_validation"
+      - "optimization_recommendations"
+    sla_thresholds:
+      response_time_p95_ms: 500
+      response_time_p99_ms: 1000
+      error_rate_percent: 1.0
+      success_rate_percent: 99.0
+    test_duration_minutes: 10
+    max_virtual_users: 500
+    kb_query_strategy: "minimal"
+    max_concurrent_tasks: 3
+    timeout_seconds: 1800  # 30 minutes for long tests
+
+  security_auditor:
+    name: "security_auditor_agent"
+    model: "gemini-2.0-flash"
+    description: "Performs security vulnerability scanning, penetration testing, and generates security audit reports"
+    supported_tools:
+      - "owasp_zap"
+      - "snyk"
+      - "bandit"
+      - "eslint_security"
+      - "semgrep"
+    capabilities:
+      - "vulnerability_scanning"
+      - "penetration_testing"
+      - "sast_analysis"
+      - "dependency_scanning"
+      - "security_auditing"
+      - "owasp_top_10_testing"
+      - "cwe_analysis"
+    security_standards:
+      - "OWASP Top 10"
+      - "CWE Top 25"
+      - "PCI-DSS"
+      - "NIST"
+    scan_types:
+      - "quick"
+      - "comprehensive"
+      - "deep"
+    default_scan_type: "comprehensive"
+    cvss_threshold_critical: 9.0
+    cvss_threshold_high: 7.0
+    auto_scan_dependencies: true
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 2
+    timeout_seconds: 3600  # 60 minutes for comprehensive scans
+
+  compliance:
+    name: "compliance_agent"
+    model: "gemini-2.0-flash"
+    description: "Validates compliance with regulatory standards including GDPR, HIPAA, SOC 2, and PCI-DSS"
+    supported_standards:
+      - "GDPR"
+      - "HIPAA"
+      - "SOC 2"
+      - "PCI-DSS"
+      - "CCPA"
+      - "ISO 27001"
+    capabilities:
+      - "gdpr_compliance"
+      - "hipaa_compliance"
+      - "soc2_compliance"
+      - "pci_dss_compliance"
+      - "compliance_auditing"
+      - "gap_analysis"
+      - "remediation_planning"
+    compliance_thresholds:
+      minimum_score: 80  # Minimum compliance score for approval
+      critical_gap_tolerance: 0  # No critical gaps allowed
+    assessment_depth: "comprehensive"  # quick, comprehensive, thorough
+    generate_audit_trail: true
+    kb_query_strategy: "adaptive"
+    max_concurrent_tasks: 2
+    timeout_seconds: 2400  # 40 minutes for comprehensive assessments
+
+  # Quality gate configuration
+  quality_gates:
+    enabled: true
+    enforce_all_checks: false  # If true, all quality checks must pass
+
+    performance:
+      enabled: true
+      required: false
+      block_on_failure: false
+
+    security:
+      enabled: true
+      required: true
+      block_on_failure: true  # Block deployment if critical vulnerabilities found
+      max_critical_vulnerabilities: 0
+      max_high_vulnerabilities: 3
+
+    compliance:
+      enabled: true
+      required: false  # Optional by default
+      block_on_failure: false
+      required_standards: []  # List standards if required (e.g., ["GDPR", "SOC 2"])
