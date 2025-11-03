@@ -4,8 +4,14 @@ agents/stage1_etl/static_analysis/agent.py
 Static analysis agent performs deep code analysis for quality, security, and complexity metrics.
 """
 
-from typing import Dict, List, Any
-from google.adk.agents import Agent
+from typing import Dict, List, Any, Optional
+import re
+
+from vertexai.generative_models import GenerativeModel
+from google.cloud import aiplatform
+
+from shared.utils.agent_base import A2AEnabledAgent
+from shared.utils.a2a_integration import A2AIntegration
 
 
 def analyze_code_quality(
@@ -783,90 +789,342 @@ def generate_analysis_report(
     }
 
 
-# Create the static analysis agent
-static_analysis_agent = Agent(
-    name="static_analysis_agent",
-    model="gemini-2.0-flash",
-    description=(
-        "Performs deep static code analysis for quality, security, and complexity. "
-        "Uses SAST techniques to identify vulnerabilities, code smells, and refactoring opportunities."
-    ),
-    instruction=(
-        "You are a static analysis agent responsible for performing comprehensive code analysis "
-        "on legacy systems to identify quality, security, and complexity issues.\n\n"
+class StaticAnalysisAgentLLM(A2AEnabledAgent):
+    """
+    Enhanced Static Analysis Agent with LLM-powered code analysis.
 
-        "Your key responsibilities:\n"
-        "1. Analyze code quality metrics (maintainability, complexity, duplication)\n"
-        "2. Perform security vulnerability scanning using SAST techniques\n"
-        "3. Analyze data flow to track tainted data and sensitive information\n"
-        "4. Calculate complexity metrics (cyclomatic, cognitive, coupling, cohesion)\n"
-        "5. Generate comprehensive analysis reports with actionable recommendations\n\n"
+    Combines traditional static analysis with LLM intelligence for deeper insights.
+    """
 
-        "Code Quality Analysis:\n"
-        "- Maintainability index (0-100 scale)\n"
-        "- Cyclomatic complexity (control flow complexity)\n"
-        "- Cognitive complexity (human understandability)\n"
-        "- Code duplication percentage\n"
-        "- Comment density and documentation coverage\n"
-        "- Coding standards compliance\n\n"
+    def __init__(
+        self,
+        context: Dict[str, Any],
+        message_bus,
+        orchestrator_id: str,
+        model_name: str = "gemini-2.0-flash"
+    ):
+        """Initialize Static Analysis Agent with LLM."""
+        A2AEnabledAgent.__init__(self, context, message_bus)
 
-        "Security Analysis (SAST):\n"
-        "- Buffer overflow vulnerabilities (CWE-120)\n"
-        "- SQL injection risks (CWE-89)\n"
-        "- Cross-site scripting (CWE-79)\n"
-        "- Hardcoded credentials (CWE-798)\n"
-        "- Insecure cryptography (CWE-327)\n"
-        "- Path traversal (CWE-22)\n"
-        "- Use-after-free (CWE-416)\n"
-        "- Map to OWASP Top 10 and compliance requirements (PCI-DSS, HIPAA)\n\n"
+        self.context = context
+        self.orchestrator_id = orchestrator_id
+        self.model_name = model_name
 
-        "Data Flow Analysis:\n"
-        "- Taint tracking from sources (user input, files, network)\n"
-        "- Follow data transformations and sanitization\n"
-        "- Identify unsafe sinks (database, file system, command execution)\n"
-        "- Track sensitive data (PII, credentials, financial data)\n"
-        "- Detect information disclosure risks\n\n"
+        # Initialize A2A integration
+        self.a2a = A2AIntegration(
+            agent_context=context,
+            message_bus=message_bus,
+            orchestrator_id=orchestrator_id
+        )
 
-        "Complexity Metrics:\n"
-        "- Cyclomatic complexity (McCabe)\n"
-        "- Cognitive complexity (SonarQube)\n"
-        "- Nesting depth\n"
-        "- Function length and parameter count\n"
-        "- Module coupling (fan-in, fan-out)\n"
-        "- Cohesion analysis\n"
-        "- Architectural metrics (instability, abstractness)\n\n"
+        # Initialize Vertex AI
+        aiplatform.init(
+            project=context.get("project_id") if hasattr(context, 'get') else getattr(context, 'project_id', None),
+            location=context.get("location", "us-central1") if hasattr(context, 'get') else getattr(context, 'location', "us-central1")
+        )
 
-        "Analysis Thresholds:\n"
-        "- Cyclomatic complexity > 15: Flag for refactoring\n"
-        "- Maintainability index < 65: Needs improvement\n"
-        "- Code duplication > 10%: Extract common logic\n"
-        "- Function length > 100 lines: Consider splitting\n"
-        "- Nesting depth > 4: Simplify control flow\n\n"
+        self.model = GenerativeModel(model_name)
 
-        "Prioritization:\n"
-        "- Critical: Security vulnerabilities that allow exploitation\n"
-        "- High: Quality issues that impact reliability or maintainability\n"
-        "- Medium: Code smells that should be addressed during refactoring\n"
-        "- Low: Style and convention violations\n\n"
+    def analyze_codebase_comprehensive(
+        self,
+        source_files: List[Dict[str, Any]],
+        task_id: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Comprehensive analysis combining traditional + LLM analysis."""
+        print(f"[Static Analysis] Starting comprehensive analysis")
 
-        "Reporting:\n"
-        "- Generate executive summary with overall health scores\n"
-        "- Categorize issues by severity and impact\n"
-        "- Provide specific remediation recommendations\n"
-        "- Estimate effort required for fixes\n"
-        "- Identify must-fix vs. can-defer items\n\n"
+        # Step 1: Traditional static analysis
+        quality_analysis = analyze_code_quality(source_files)
+        security_analysis = perform_security_scan(source_files)
+        complexity_analysis = calculate_complexity_metrics(source_files)
 
-        "Integration:\n"
-        "- Store findings in Vector DB for semantic queries\n"
-        "- Send security alerts to escalation agent for critical issues\n"
-        "- Provide quality metrics to knowledge synthesis agent\n"
-        "- Generate reports for human review"
-    ),
-    tools=[
-        analyze_code_quality,
-        perform_security_scan,
-        analyze_data_flow,
-        calculate_complexity_metrics,
-        generate_analysis_report
-    ]
-)
+        # Step 2: LLM-enhanced vulnerability detection
+        enhanced_security = self.detect_vulnerabilities_llm(
+            source_files=source_files,
+            basic_scan=security_analysis,
+            task_id=task_id
+        )
+
+        # Step 3: LLM-powered code smell detection
+        code_smells = self.detect_code_smells_llm(
+            source_files=source_files,
+            complexity_data=complexity_analysis,
+            task_id=task_id
+        )
+
+        # Step 4: Generate comprehensive report
+        report = generate_analysis_report(
+            quality_analysis,
+            enhanced_security,
+            complexity_analysis
+        )
+
+        return {
+            "status": "success",
+            "quality_analysis": quality_analysis,
+            "security_analysis": enhanced_security,
+            "complexity_analysis": complexity_analysis,
+            "code_smells": code_smells,
+            "comprehensive_report": report
+        }
+
+    def detect_vulnerabilities_llm(
+        self,
+        source_files: List[Dict[str, Any]],
+        basic_scan: Dict[str, Any],
+        task_id: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Use LLM to detect complex security vulnerabilities."""
+        print(f"[Static Analysis] Detecting vulnerabilities with LLM")
+
+        # Sample high-risk code patterns
+        risky_code = self._extract_risky_code_samples(source_files)
+
+        prompt = self._build_vulnerability_detection_prompt(risky_code, basic_scan)
+
+        response = self.model.generate_content(
+            prompt,
+            generation_config=self._get_generation_config(temperature=0.2)
+        )
+
+        vulnerabilities = self._parse_vulnerability_response(response.text)
+
+        # Combine with basic scan results
+        all_vulnerabilities = basic_scan.get("vulnerabilities", []) + vulnerabilities
+
+        return {
+            "status": "success",
+            "vulnerabilities": all_vulnerabilities,
+            "critical_count": len([v for v in all_vulnerabilities if v.get("severity") == "critical"]),
+            "high_count": len([v for v in all_vulnerabilities if v.get("severity") == "high"])
+        }
+
+    def detect_code_smells_llm(
+        self,
+        source_files: List[Dict[str, Any]],
+        complexity_data: Dict[str, Any],
+        task_id: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Use LLM to detect code smells and anti-patterns."""
+        print(f"[Static Analysis] Detecting code smells with LLM")
+
+        # Sample complex code sections
+        complex_code = self._extract_complex_code_samples(source_files)
+
+        prompt = self._build_code_smell_prompt(complex_code, complexity_data)
+
+        response = self.model.generate_content(
+            prompt,
+            generation_config=self._get_generation_config(temperature=0.3)
+        )
+
+        smells = self._parse_code_smell_response(response.text)
+
+        return {
+            "status": "success",
+            "code_smells": smells,
+            "smell_count": len(smells)
+        }
+
+    def _extract_risky_code_samples(self, source_files: List[Dict], max_samples: int = 5) -> List[Dict]:
+        """Extract potentially risky code for LLM analysis."""
+        risky_samples = []
+
+        for file_data in source_files[:max_samples]:
+            file_path = file_data.get("file_path", "")
+            ast_data = file_data.get("ast", {})
+
+            # Focus on functions with external dependencies
+            for func in ast_data.get("functions", [])[:3]:
+                func_name = func.get("name", "")
+                if any(keyword in func_name.lower() for keyword in ["auth", "login", "query", "exec", "sql", "cmd"]):
+                    risky_samples.append({
+                        "file": file_path,
+                        "function": func_name,
+                        "complexity": func.get("complexity", 0),
+                        "calls": func.get("calls", [])
+                    })
+
+        return risky_samples[:max_samples]
+
+    def _extract_complex_code_samples(self, source_files: List[Dict], max_samples: int = 5) -> List[Dict]:
+        """Extract complex code sections for smell detection."""
+        complex_samples = []
+
+        for file_data in source_files[:max_samples]:
+            ast_data = file_data.get("ast", {})
+
+            # Get high-complexity functions
+            for func in ast_data.get("functions", []):
+                if func.get("complexity", 0) > 10:
+                    complex_samples.append({
+                        "function": func.get("name", ""),
+                        "complexity": func.get("complexity", 0),
+                        "parameters": len(func.get("parameters", [])),
+                        "line_count": func.get("line_end", 0) - func.get("line_start", 0)
+                    })
+
+        return sorted(complex_samples, key=lambda x: x.get("complexity", 0), reverse=True)[:max_samples]
+
+    def _build_vulnerability_detection_prompt(self, risky_code: List[Dict], basic_scan: Dict) -> str:
+        """Build prompt for vulnerability detection."""
+
+        risky_text = "\n".join([
+            f"- {sample.get('function', '')} (complexity: {sample.get('complexity', 0)})"
+            for sample in risky_code
+        ])
+
+        basic_findings = f"Basic scan found {len(basic_scan.get('vulnerabilities', []))} issues"
+
+        prompt = f"""You are a security expert analyzing code for vulnerabilities.
+
+**Risky Code Patterns Found:**
+{risky_text}
+
+**Basic Scan Results:**
+{basic_findings}
+
+**Analyze for:**
+1. SQL Injection vulnerabilities
+2. Command Injection risks
+3. Authentication/Authorization flaws
+4. Sensitive data exposure
+5. Input validation gaps
+6. Race conditions
+7. Insecure cryptography
+
+**Response Format:**
+
+**Vulnerabilities:**
+- Vulnerability 1: [Type] in [function] - Severity: [critical/high/medium]
+- Vulnerability 2: [Type] in [function] - Severity: [critical/high/medium]
+
+**CWE IDs:** [List relevant CWE identifiers]
+
+**Remediation:** [Specific fixes]
+
+Be specific and actionable.
+"""
+
+        return prompt
+
+    def _build_code_smell_prompt(self, complex_code: List[Dict], complexity_data: Dict) -> str:
+        """Build prompt for code smell detection."""
+
+        complex_text = "\n".join([
+            f"- {sample.get('function', '')} (complexity: {sample.get('complexity', 0)}, params: {sample.get('parameters', 0)}, lines: {sample.get('line_count', 0)})"
+            for sample in complex_code
+        ])
+
+        avg_complexity = complexity_data.get("average_complexity", 0)
+
+        prompt = f"""You are analyzing code for smells and anti-patterns.
+
+**Complex Functions:**
+{complex_text}
+
+**Average Complexity:** {avg_complexity}
+
+**Detect:**
+1. God Object / God Method
+2. Long Parameter List
+3. Feature Envy
+4. Primitive Obsession
+5. Duplicate Code
+6. Dead Code
+7. Inappropriate Intimacy
+
+**Response Format:**
+
+**Code Smells:**
+- Smell 1: [Type] in [function] - Severity: [high/medium/low]
+- Smell 2: [Type] in [function] - Severity: [high/medium/low]
+
+**Refactoring Recommendations:**
+1. [Specific recommendation]
+2. [Specific recommendation]
+
+Focus on actionable improvements.
+"""
+
+        return prompt
+
+    def _parse_vulnerability_response(self, response_text: str) -> List[Dict]:
+        """Parse vulnerability detection response."""
+        vulnerabilities = []
+
+        # Extract vulnerabilities section
+        if "**Vulnerabilities:**" in response_text:
+            vuln_section = response_text.split("**Vulnerabilities:**")[1]
+            if "**CWE IDs:**" in vuln_section:
+                vuln_section = vuln_section.split("**CWE IDs:**")[0]
+
+            # Parse each vulnerability
+            for line in vuln_section.split("\n"):
+                line = line.strip()
+                if line.startswith("-"):
+                    # Extract severity
+                    severity = "medium"
+                    if "critical" in line.lower():
+                        severity = "critical"
+                    elif "high" in line.lower():
+                        severity = "high"
+
+                    vulnerabilities.append({
+                        "description": line[1:].strip(),
+                        "severity": severity,
+                        "source": "llm_analysis"
+                    })
+
+        return vulnerabilities[:10]
+
+    def _parse_code_smell_response(self, response_text: str) -> List[Dict]:
+        """Parse code smell detection response."""
+        smells = []
+
+        # Extract code smells section
+        if "**Code Smells:**" in response_text:
+            smell_section = response_text.split("**Code Smells:**")[1]
+            if "**Refactoring Recommendations:**" in smell_section:
+                smell_section = smell_section.split("**Refactoring Recommendations:**")[0]
+
+            # Parse each smell
+            for line in smell_section.split("\n"):
+                line = line.strip()
+                if line.startswith("-"):
+                    # Extract severity
+                    severity = "medium"
+                    if "high" in line.lower():
+                        severity = "high"
+                    elif "low" in line.lower():
+                        severity = "low"
+
+                    smells.append({
+                        "description": line[1:].strip(),
+                        "severity": severity,
+                        "category": "code_smell"
+                    })
+
+        return smells[:10]
+
+    def _get_generation_config(self, temperature: float = 0.3) -> Dict[str, Any]:
+        """Get LLM generation configuration."""
+        return {
+            "temperature": temperature,
+            "max_output_tokens": 4096,
+            "top_p": 0.95,
+            "top_k": 40
+        }
+
+
+# Factory function
+def create_static_analysis_agent(context: Dict[str, Any], message_bus, orchestrator_id: str):
+    """Factory function to create LLM-enhanced static analysis agent."""
+    return StaticAnalysisAgentLLM(
+        context=context,
+        message_bus=message_bus,
+        orchestrator_id=orchestrator_id
+    )
+
+# Backward compatibility
+static_analysis_agent = None

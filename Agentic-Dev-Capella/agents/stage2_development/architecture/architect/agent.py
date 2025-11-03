@@ -270,11 +270,15 @@ Design a comprehensive, production-ready architecture for the following componen
 2. **[Next Layer]**
    - ...
 
+...
+
 **Design Patterns:**
 1. **[Pattern Name]**
    - Purpose: [Why use this pattern]
    - Implementation: [How to implement]
    - Components: [Which components use it]
+
+...
 
 **Data Model:**
 - Entities: [List main entities]

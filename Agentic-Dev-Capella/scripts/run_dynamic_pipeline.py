@@ -438,7 +438,7 @@ class DynamicMultiAgentPipeline:
                 "constraints": constraints
             },
             "agent_selection": {
-                "total_agents_available": len(self.agent_registry.get_all_agents()),
+                "total_agents_available": len(self.agent_registry.list_all_agents()),
                 "selected_agents": selected_agents,
                 "selection_criteria": {
                     "capability_match": "40%",

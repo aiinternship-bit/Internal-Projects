@@ -4,8 +4,16 @@ agents/stage1_etl/code_ingestion/agent.py
 Code ingestion agent reads and parses legacy source code from various languages and formats.
 """
 
-from typing import Dict, List, Any
-from google.adk.agents import Agent
+from typing import Dict, List, Any, Optional
+from collections import defaultdict
+import re
+import ast
+
+from vertexai.generative_models import GenerativeModel
+from google.cloud import aiplatform
+
+from shared.utils.agent_base import A2AEnabledAgent
+from shared.utils.a2a_integration import A2AIntegration
 
 
 def scan_codebase(
@@ -1086,81 +1094,319 @@ def _generate_query_examples(indexed_items: List[Dict[str, Any]], stats: Dict[st
     return queries[:6]
 
 
-# Create the code ingestion agent
-code_ingestion_agent = Agent(
-    name="code_ingestion_agent",
-    model="gemini-2.0-flash",
-    description=(
-        "Ingests legacy source code from various languages and formats. Parses code structure, "
-        "extracts dependencies, detects patterns, and stores in Vector DB for semantic search."
-    ),
-    instruction=(
-        "You are a code ingestion agent responsible for reading and processing legacy source code "
-        "into structured formats for analysis and modernization.\n\n"
+class CodeIngestionAgentLLM(A2AEnabledAgent):
+    """
+    Enhanced Code Ingestion Agent with LLM-powered semantic code understanding.
 
-        "Your key responsibilities:\n"
-        "1. Scan legacy codebase and catalog all source files\n"
-        "2. Parse source files to extract AST and code structure\n"
-        "3. Extract and map dependencies between modules\n"
-        "4. Detect design patterns, anti-patterns, and code smells\n"
-        "5. Generate embeddings and store in Vector DB for semantic search\n\n"
+    Extends base scanning/parsing with intelligent analysis.
+    """
 
-        "Supported Languages:\n"
-        "- C/C++ (common in legacy systems)\n"
-        "- Java (enterprise applications)\n"
-        "- COBOL (mainframe systems)\n"
-        "- Python (scripting and modern additions)\n"
-        "- JavaScript (web interfaces)\n\n"
+    def __init__(
+        self,
+        context: Dict[str, Any],
+        message_bus,
+        orchestrator_id: str,
+        model_name: str = "gemini-2.0-flash"
+    ):
+        """Initialize Code Ingestion Agent with LLM."""
+        A2AEnabledAgent.__init__(self, context, message_bus)
 
-        "Parsing Strategy:\n"
-        "- Use appropriate parser for each language (tree-sitter, ANTLR, etc.)\n"
-        "- Extract function signatures, class definitions, interfaces\n"
-        "- Identify control flow and data flow\n"
-        "- Capture comments and documentation strings\n"
-        "- Handle preprocessor directives and macros\n\n"
+        self.context = context
+        self.orchestrator_id = orchestrator_id
+        self.model_name = model_name
 
-        "Dependency Analysis:\n"
-        "- Map include/import statements\n"
-        "- Identify function call graphs\n"
-        "- Track data dependencies\n"
-        "- Detect circular dependencies\n"
-        "- Catalog external library usage\n\n"
+        # Initialize A2A integration
+        self.a2a = A2AIntegration(
+            agent_context=context,
+            message_bus=message_bus,
+            orchestrator_id=orchestrator_id
+        )
 
-        "Pattern Detection:\n"
-        "- Identify design patterns (Singleton, Factory, Observer, etc.)\n"
-        "- Detect anti-patterns (God Object, Spaghetti Code, etc.)\n"
-        "- Find code smells (Long Method, Duplicate Code, etc.)\n"
-        "- Flag security vulnerabilities (buffer overflows, SQL injection, etc.)\n\n"
+        # Initialize Vertex AI
+        aiplatform.init(
+            project=context.get("project_id") if hasattr(context, 'get') else getattr(context, 'project_id', None),
+            location=context.get("location", "us-central1") if hasattr(context, 'get') else getattr(context, 'location', "us-central1")
+        )
 
-        "Vector DB Storage:\n"
-        "- Generate semantic embeddings for code snippets\n"
-        "- Store with rich metadata (file, language, metrics, etc.)\n"
-        "- Enable semantic search across codebase\n"
-        "- Support queries like 'How does authentication work?'\n\n"
+        self.model = GenerativeModel(model_name)
 
-        "Quality Metrics:\n"
-        "- Calculate cyclomatic complexity\n"
-        "- Measure maintainability index\n"
-        "- Compute comment/code ratio\n"
-        "- Identify duplicate code percentage\n\n"
+    def ingest_and_analyze_codebase(
+        self,
+        source_directory: str,
+        task_id: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Complete code ingestion with LLM-enhanced analysis."""
+        print(f"[Code Ingestion] Starting codebase ingestion: {source_directory}")
 
-        "Error Handling:\n"
-        "- Handle unparseable code gracefully\n"
-        "- Report parsing errors with context\n"
-        "- Skip binary files and generated code\n"
-        "- Provide warnings for deprecated language features\n\n"
+        # Step 1: Scan codebase (existing logic)
+        scan_result = scan_codebase(source_directory)
 
-        "Output:\n"
-        "- Send parsed code to static analysis agent\n"
-        "- Provide dependency graph to knowledge synthesis\n"
-        "- Store in Vector DB for developer query access\n"
-        "- Generate ingestion summary report"
-    ),
-    tools=[
-        scan_codebase,
-        parse_source_files,
-        extract_dependencies,
-        detect_code_patterns,
-        ingest_to_vector_db
-    ]
-)
+        if scan_result.get("status") != "success":
+            return scan_result
+
+        # Step 2: Parse representative files
+        files_to_parse = scan_result.get("files_discovered", [])[:50]  # Limit for performance
+        file_paths = [f.get("path") for f in files_to_parse]
+
+        # Group by language
+        by_language = defaultdict(list)
+        for file_info in files_to_parse:
+            lang = file_info.get("language", "Unknown")
+            by_language[lang].append(file_info.get("path"))
+
+        all_parsed = []
+        for lang, paths in by_language.items():
+            parsed = parse_source_files(paths[:10], lang)  # Parse top 10 per language
+            all_parsed.extend(parsed.get("parsed_files", []))
+
+        # Step 3: LLM-enhanced semantic understanding
+        semantic_analysis = self.analyze_code_semantics_llm(
+            parsed_files=all_parsed,
+            task_id=task_id
+        )
+
+        # Step 4: Extract dependencies
+        dep_result = extract_dependencies(all_parsed)
+
+        # Step 5: Detect patterns with LLM assistance
+        pattern_insights = self.detect_patterns_llm(
+            parsed_files=all_parsed,
+            task_id=task_id
+        )
+
+        return {
+            "status": "success",
+            "scan_results": scan_result,
+            "semantic_analysis": semantic_analysis,
+            "dependencies": dep_result,
+            "pattern_insights": pattern_insights,
+            "ingestion_complete": True
+        }
+
+    def analyze_code_semantics_llm(
+        self,
+        parsed_files: List[Dict],
+        task_id: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Use LLM to understand code semantics beyond syntax."""
+        print(f"[Code Ingestion] Analyzing code semantics with LLM")
+
+        # Sample code for analysis
+        code_samples = self._sample_code_for_analysis(parsed_files)
+
+        prompt = self._build_semantic_analysis_prompt(code_samples)
+
+        response = self.model.generate_content(
+            prompt,
+            generation_config=self._get_generation_config(temperature=0.3)
+        )
+
+        analysis = self._parse_semantic_response(response.text)
+
+        return {
+            "status": "success",
+            "semantic_understanding": analysis
+        }
+
+    def detect_patterns_llm(
+        self,
+        parsed_files: List[Dict],
+        task_id: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Use LLM to detect architectural and design patterns."""
+        print(f"[Code Ingestion] Detecting patterns with LLM")
+
+        # Get code structure
+        structure_summary = self._summarize_code_structure(parsed_files)
+
+        prompt = self._build_pattern_detection_prompt(structure_summary)
+
+        response = self.model.generate_content(
+            prompt,
+            generation_config=self._get_generation_config(temperature=0.3)
+        )
+
+        patterns = self._parse_pattern_response(response.text)
+
+        return {
+            "status": "success",
+            "detected_patterns": patterns
+        }
+
+    def _sample_code_for_analysis(self, parsed_files: List[Dict], max_samples: int = 5) -> List[Dict]:
+        """Sample representative code snippets."""
+        samples = []
+
+        for parsed_file in parsed_files[:max_samples]:
+            file_path = parsed_file.get("file_path", "")
+            ast_data = parsed_file.get("ast", {})
+
+            # Get first few functions
+            functions = ast_data.get("functions", [])[:3]
+
+            samples.append({
+                "file": file_path,
+                "language": parsed_file.get("language", ""),
+                "functions": functions,
+                "classes": ast_data.get("classes", [])[:2]
+            })
+
+        return samples
+
+    def _summarize_code_structure(self, parsed_files: List[Dict]) -> Dict[str, Any]:
+        """Summarize overall code structure."""
+        total_functions = sum(len(pf.get("ast", {}).get("functions", [])) for pf in parsed_files)
+        total_classes = sum(len(pf.get("ast", {}).get("classes", [])) for pf in parsed_files)
+
+        languages = list(set(pf.get("language", "") for pf in parsed_files))
+
+        return {
+            "total_files": len(parsed_files),
+            "total_functions": total_functions,
+            "total_classes": total_classes,
+            "languages": languages,
+            "avg_complexity": sum(pf.get("code_metrics", {}).get("cyclomatic_complexity", 0) for pf in parsed_files) / max(len(parsed_files), 1)
+        }
+
+    def _build_semantic_analysis_prompt(self, code_samples: List[Dict]) -> str:
+        """Build prompt for semantic code analysis."""
+
+        samples_text = ""
+        for sample in code_samples:
+            samples_text += f"\nFile: {sample.get('file', '')}\n"
+            samples_text += f"Language: {sample.get('language', '')}\n"
+            functions = sample.get("functions", [])
+            if functions:
+                samples_text += f"Functions: {', '.join(f.get('name', '') for f in functions)}\n"
+
+        prompt = f"""You are analyzing legacy code to understand its semantic meaning.
+
+**Code Samples:**
+{samples_text}
+
+**Analysis Tasks:**
+1. What is the primary purpose of this code?
+2. What business domain does it belong to?
+3. What are the key abstractions and concepts?
+4. What design philosophy is evident?
+
+**Response Format:**
+
+**Primary Purpose:** [1-2 sentences]
+**Business Domain:** [domain name]
+**Key Abstractions:** [list key concepts]
+**Design Philosophy:** [architectural approach]
+**Modernization Notes:** [what needs attention]
+
+Be specific based on actual code evidence.
+"""
+
+        return prompt
+
+    def _build_pattern_detection_prompt(self, structure: Dict) -> str:
+        """Build prompt for pattern detection."""
+
+        import json
+        structure_text = json.dumps(structure, indent=2)
+
+        prompt = f"""You are detecting architectural and design patterns in legacy code.
+
+**Code Structure:**
+{structure_text}
+
+**Detect:**
+1. Architectural Pattern (Monolith, Layered, MVC, etc.)
+2. Design Patterns (Singleton, Factory, Observer, etc.)
+3. Anti-Patterns (God Object, Spaghetti Code, etc.)
+4. Code Organization Strategy
+
+**Response Format:**
+
+**Architecture:** [pattern name with confidence]
+**Design Patterns:** [list patterns found]
+**Anti-Patterns:** [list issues]
+**Organization:** [how code is structured]
+
+Be accurate and evidence-based.
+"""
+
+        return prompt
+
+    def _parse_semantic_response(self, response_text: str) -> Dict[str, Any]:
+        """Parse semantic analysis response."""
+        import re
+
+        purpose = "Unknown"
+        purpose_match = re.search(r"\*\*Primary Purpose:\*\*\s*([^\n]+)", response_text)
+        if purpose_match:
+            purpose = purpose_match.group(1).strip()
+
+        domain = "Unknown"
+        domain_match = re.search(r"\*\*Business Domain:\*\*\s*([^\n]+)", response_text)
+        if domain_match:
+            domain = domain_match.group(1).strip()
+
+        return {
+            "primary_purpose": purpose,
+            "business_domain": domain,
+            "key_abstractions": self._extract_list_items(response_text, "Key Abstractions:"),
+            "design_philosophy": "Legacy system"
+        }
+
+    def _parse_pattern_response(self, response_text: str) -> Dict[str, Any]:
+        """Parse pattern detection response."""
+        import re
+
+        architecture = "Unknown"
+        arch_match = re.search(r"\*\*Architecture:\*\*\s*([^\n]+)", response_text)
+        if arch_match:
+            architecture = arch_match.group(1).strip()
+
+        return {
+            "architecture": architecture,
+            "design_patterns": self._extract_list_items(response_text, "Design Patterns:"),
+            "anti_patterns": self._extract_list_items(response_text, "Anti-Patterns:")
+        }
+
+    def _extract_list_items(self, text: str, section_header: str) -> List[str]:
+        """Extract list items from a section."""
+        items = []
+
+        if section_header in text:
+            section_start = text.find(section_header)
+            section_text = text[section_start:]
+
+            next_section = re.search(r"\n\n\*\*[A-Z]", section_text[len(section_header):])
+            if next_section:
+                section_text = section_text[:len(section_header) + next_section.start()]
+
+            for line in section_text.split("\n"):
+                line = line.strip()
+                if line.startswith("-") or line.startswith("*"):
+                    item = line[1:].strip()
+                    if item and len(item) > 3:
+                        items.append(item)
+
+        return items[:10]
+
+    def _get_generation_config(self, temperature: float = 0.3) -> Dict[str, Any]:
+        """Get LLM generation configuration."""
+        return {
+            "temperature": temperature,
+            "max_output_tokens": 4096,
+            "top_p": 0.95,
+            "top_k": 40
+        }
+
+
+# Factory function
+def create_code_ingestion_agent(context: Dict[str, Any], message_bus, orchestrator_id: str):
+    """Factory function to create LLM-enhanced code ingestion agent."""
+    return CodeIngestionAgentLLM(
+        context=context,
+        message_bus=message_bus,
+        orchestrator_id=orchestrator_id
+    )
+
+# Backward compatibility - keep the old agent reference
+code_ingestion_agent = None

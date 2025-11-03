@@ -433,6 +433,40 @@ frontend:
       - "aria_attributes"
     kb_query_strategy: "minimal"
 
+  vue_specialist:
+    name: "vue_specialist_agent"
+    model: "gemini-2.0-flash"
+    expertise:
+      - "vue3_composition_api"
+      - "nuxt3_development"
+      - "pinia_state_management"
+      - "vue_router"
+      - "composables"
+      - "server_side_rendering"
+    supported_frameworks:
+      - "vue3"
+      - "nuxt3"
+      - "pinia"
+      - "vite"
+    kb_query_strategy: "adaptive"
+
+  component_library:
+    name: "component_library_agent"
+    model: "gemini-2.0-flash"
+    expertise:
+      - "design_system_components"
+      - "storybook_documentation"
+      - "design_tokens"
+      - "component_variants"
+      - "accessibility_standards"
+    supported_frameworks:
+      - "react"
+      - "vue"
+      - "storybook"
+      - "styled-components"
+      - "emotion"
+    kb_query_strategy: "adaptive"
+
 # Knowledge Base (KB) Configuration
 knowledge_base:
   # Vector DB settings
