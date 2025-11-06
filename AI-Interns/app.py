@@ -8,8 +8,7 @@ from dotenv import load_dotenv
 import anthropic
 import time
 
-# Load environment variables from centralized .env file at AI-Practice root
-# Path: /Users/pranoy/Desktop/AI-Practice/.env
+# Load environment variables from centralized .env file at parent directory
 env_path = Path(__file__).resolve().parents[1] / '.env'
 load_dotenv(dotenv_path=env_path)
 

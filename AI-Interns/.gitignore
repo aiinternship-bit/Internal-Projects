@@ -1,5 +1,5 @@
-# All gitignore patterns have been consolidated to the main AI-Practice/.gitignore file
-# Please refer to /Users/pranoy/Desktop/AI-Practice/.gitignore for all ignore patterns
+# All gitignore patterns have been consolidated to the parent project's .gitignore file
+# Please refer to ../../../.gitignore or the root .gitignore for all ignore patterns
 
 # # Byte-compiled / optimized / DLL files
 # __pycache__/
