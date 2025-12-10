@@ -87,6 +87,7 @@ python src/printer_rag.py
 # Make sure .env file exists with your API keys
 docker-compose up -d
 
+# First build takes 15-25 minutes (includes vector DB initialization)
 # View logs
 docker-compose logs -f
 
@@ -96,8 +97,12 @@ docker-compose down
 
 **Using Docker directly:**
 ```bash
-# Build the image
+# Build the image (15-25 minutes first time)
 docker build -t ai-interns .
+
+# During build, vector databases are automatically initialized:
+# ✅ Zebra Project ChromaDB - 32 printer specification files
+# ✅ GEN AI Agent Milvus - Excel data embeddings
 
 # Run the container
 docker run -d \
@@ -115,6 +120,11 @@ docker stop ai-interns-app
 docker rm ai-interns-app
 ```
 
+**What gets initialized automatically during Docker build:**
+- **Zebra Project**: ChromaDB populated with 32 printer specifications for RAG
+- **GEN AI Agent**: Milvus populated with Excel embeddings for semantic search
+- **AI-Interns**: SQLite database created on first run for conversations
+
 **Access the application:**
 - Open your browser to `http://localhost:5001`
 
@@ -128,6 +138,9 @@ Internal-Projects/
 ├── Dockerfile             # Docker configuration
 ├── docker-compose.yml     # Docker Compose orchestration
 ├── .dockerignore          # Docker build exclusions
+├── init_vector_dbs.py     # Vector database initialization script (auto-run in Docker)
+├── build-test.sh          # Docker build test script
+├── BUILD_CHECKLIST.md     # Comprehensive build guide
 ├── venv/                  # Shared virtual environment
 ├── AI-Interns/            # Flask chatbot application
 │   ├── app.py            # Main Flask app
@@ -135,9 +148,14 @@ Internal-Projects/
 │   ├── static/           # CSS, JS, images
 │   └── templates/        # HTML templates
 ├── GEN AI Agent/          # RAG system
-│   └── Archive/          # Milvus vector database
+│   └── Archive/
+│       ├── src/          # Source code including gcs_utils.py
+│       ├── milvus_edelivery.db  # Milvus vector database (auto-created in Docker)
+│       └── eDelivery_AIeDelivery_Database_V1.xlsx  # Source data
 ├── Zebra Project/         # Printer recommendation
-│   └── chroma_db/        # ChromaDB vector database
+│   ├── chroma_db/        # ChromaDB vector database (auto-created in Docker)
+│   ├── output/           # 32 JSON printer specification files
+│   └── src/              # Source code
 └── AI Initiatives/        # Mobile app development
 ```
 

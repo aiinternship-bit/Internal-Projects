@@ -24,8 +24,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the entire Internal-Projects directory
 COPY . .
 
-# Create directory for SQLite database
-RUN mkdir -p /app/AI-Interns
+# Create directories for databases
+RUN mkdir -p /app/AI-Interns \
+    && mkdir -p "/app/Zebra Project/chroma_db" \
+    && mkdir -p "/app/GEN AI Agent/Archive"
+
+# Initialize vector databases (if data files exist)
+# This will set up ChromaDB for Zebra Project and Milvus for GEN AI Agent
+RUN python init_vector_dbs.py || echo "Warning: Vector DB initialization had issues, continuing..."
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1

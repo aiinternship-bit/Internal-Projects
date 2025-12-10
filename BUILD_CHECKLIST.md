@@ -56,10 +56,49 @@ docker-compose build
 
 ## Expected Build Time
 
-- **First build**: 10-15 minutes (downloading base images and dependencies)
-- **Subsequent builds**: 2-5 minutes (using cached layers)
+- **First build**: 15-25 minutes (downloading base images, dependencies, and initializing vector databases)
+  - Base image download: 1-2 minutes
+  - Python dependencies: 5-10 minutes
+  - **Vector database initialization: 5-10 minutes**
+    - Zebra Project ChromaDB: ~2-3 minutes (32 JSON files)
+    - GEN AI Agent Milvus: ~3-7 minutes (Excel file processing and embeddings)
+- **Subsequent builds**: 2-5 minutes (using cached layers, vector DBs already initialized)
 
 ## Build Output Verification
+
+### What Happens During Build
+
+During the Docker build, the following happens automatically:
+
+1. **System dependencies installed** (gcc, g++, git, curl, etc.)
+2. **Python packages installed** from requirements.txt
+3. **Vector databases initialized**:
+   - **Zebra Project ChromaDB**: Processes 32 JSON printer specification files
+   - **GEN AI Agent Milvus**: Processes Excel file and generates embeddings
+
+You'll see output like this during vector DB initialization:
+
+```
+Step X/Y : RUN python init_vector_dbs.py || echo "Warning: Vector DB initialization had issues, continuing..."
+ ---> Running in abc123def456
+================================================================================
+VECTOR DATABASE INITIALIZATION
+================================================================================
+
+================================================================================
+Initializing Zebra Project ChromaDB...
+================================================================================
+Found 32 JSON files to process
+...
+✅ Zebra ChromaDB initialized successfully!
+
+================================================================================
+Initializing GEN AI Agent Milvus...
+================================================================================
+Building content database from: /app/GEN AI Agent/Archive/eDelivery_AIeDelivery_Database_V1.xlsx
+...
+✅ GEN AI Milvus initialized successfully!
+```
 
 ### Successful Build Indicators
 
@@ -68,14 +107,19 @@ docker-compose build
 docker images | grep ai-interns
 
 # Should output something like:
-# ai-interns    latest    abc123def456    2 minutes ago    2.5GB
+# ai-interns    latest    abc123def456    20 minutes ago    3.5GB
 ```
+
+Note: Image size will be larger (~3.5GB) due to vector databases and ML models.
 
 ### Test the Built Image
 
 ```bash
-# Run a quick test
+# Test basic imports
 docker run --rm ai-interns python -c "import flask; import anthropic; print('✓ All imports successful')"
+
+# Test vector databases exist
+docker run --rm ai-interns python -c "import os; print('Zebra ChromaDB:', os.path.exists('/app/Zebra Project/chroma_db')); print('GEN AI Milvus:', os.path.exists('/app/GEN AI Agent/Archive/milvus_edelivery.db'))"
 ```
 
 ## Common Build Issues & Fixes
@@ -121,6 +165,45 @@ docker build --no-cache -t ai-interns .
 ```bash
 # Use a larger timeout
 docker build --network=host -t ai-interns .
+```
+
+### Issue 6: Vector database initialization warnings
+
+**Problem:** You see warnings during vector DB initialization but build continues
+
+**Solution:**
+This is expected behavior. The build will continue even if vector DB initialization has issues. The warning means:
+- Data files may be missing (JSON files or Excel file)
+- Vector DBs will be empty but the container will still work
+- You can initialize them later manually or with GCS
+
+To verify what initialized successfully, check the build logs for:
+```
+✅ Zebra ChromaDB initialized successfully!
+✅ GEN AI Milvus initialized successfully!
+```
+
+### Issue 7: "failed to read dockerfile" error
+
+**Problem:**
+```
+ERROR: failed to solve: failed to read dockerfile: open Dockerfile: no such file or directory
+```
+
+**Solution:**
+You're in the wrong directory. Navigate to the Internal-Projects directory:
+```bash
+# Find your project
+pwd
+
+# Navigate to Internal-Projects
+cd /path/to/Internal-Projects
+
+# Verify Dockerfile exists
+ls Dockerfile
+
+# Then build
+docker build -t ai-interns .
 ```
 
 ## Post-Build: Running the Container
