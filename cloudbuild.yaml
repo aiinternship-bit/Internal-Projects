@@ -1,0 +1,40 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/ai-interns:latest'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/ai-interns:$BUILD_ID'
+      - '.'
+    timeout: 1800s  # 30 minutes for vector DB initialization
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/ai-interns:latest']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/ai-interns:$BUILD_ID']
+
+# Store both latest and build-specific tags
+images:
+  - 'gcr.io/$PROJECT_ID/ai-interns:latest'
+  - 'gcr.io/$PROJECT_ID/ai-interns:$BUILD_ID'
+
+# Timeout for entire build
+timeout: 2400s  # 40 minutes total
+
+# Build options
+options:
+  # Use more powerful machine for faster builds
+  machineType: 'E2_HIGHCPU_8'  # 8 vCPU, 8GB RAM
+
+  # Allocate more disk space for build
+  diskSizeGb: 100
+
+  # Enable logging
+  logging: CLOUD_LOGGING_ONLY
+
+  # Substitute project ID
+  substitution_option: 'ALLOW_LOOSE'

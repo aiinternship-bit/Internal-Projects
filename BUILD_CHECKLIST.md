@@ -4,7 +4,12 @@
 
 ### ✅ System Requirements
 - [ ] Docker Desktop installed and running
-- [ ] At least 10GB free disk space
+- [ ] At least 10GB free disk space (recommended: 15-20GB for build cache)
+  - Base image: ~200MB
+  - Python dependencies: ~2GB
+  - Vector databases + ML models: ~1-1.5GB
+  - Build cache: ~500MB
+  - **Total image size: ~3.5GB**
 - [ ] Stable internet connection (for downloading dependencies)
 
 ### ✅ Configuration Files

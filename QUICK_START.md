@@ -35,6 +35,8 @@ ANTHROPIC_API_KEY=sk-ant-api03-xxxxx
 
 ## Step 3: Build the Docker Image
 
+### For Local Development (Docker Desktop)
+
 ```bash
 # Build (takes 15-25 minutes first time)
 docker build -t ai-interns .
@@ -44,6 +46,21 @@ docker build -t ai-interns .
 # ✅ GEN AI Milvus initialized successfully!
 ```
 
+### For Cloud Shell / GCP (Recommended)
+
+**If you get "no space left on device" error in Cloud Shell, use Cloud Build:**
+
+```bash
+# Enable Cloud Build API (first time only)
+gcloud services enable cloudbuild.googleapis.com
+
+# Submit build to Cloud Build (runs in Google's infrastructure)
+gcloud builds submit --config cloudbuild.yaml .
+
+# This takes 15-25 minutes and runs in the cloud with more resources
+# You'll see all the vector DB initialization in the build logs
+```
+
 **What happens during build:**
 - ✓ System dependencies installed
 - ✓ Python packages installed (Flask, Anthropic, PyTorch, etc.)
@@ -51,6 +68,8 @@ docker build -t ai-interns .
 - ✓ **GEN AI Agent Milvus created** (Excel embeddings)
 
 ## Step 4: Run the Container
+
+### For Local Development
 
 **Option A: Docker Compose (Recommended)**
 ```bash
@@ -67,16 +86,43 @@ docker run -d \
   ai-interns
 ```
 
+### For Cloud Shell / GCP - Deploy to Cloud Run
+
+**After Cloud Build completes, deploy to Cloud Run:**
+
+```bash
+# Deploy the built image to Cloud Run
+gcloud run deploy ai-interns \
+  --image gcr.io/$(gcloud config get-value project)/ai-interns:latest \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --set-env-vars ANTHROPIC_API_KEY=sk-ant-api03-your-key-here \
+  --memory 2Gi \
+  --cpu 2 \
+  --timeout 300 \
+  --max-instances 10
+
+# Get your public URL
+gcloud run services describe ai-interns \
+  --region us-central1 \
+  --format='value(status.url)'
+```
+
+**Your app will be live at:** `https://ai-interns-xxxxx-uc.a.run.app`
+
 ## Step 5: Access the Application
 
+### Local Development
 Open in your browser:
 ```
 http://localhost:5001
 ```
 
-Or for Cloud Shell:
-```bash
-# Use Web Preview on port 5001
+### Cloud Run Deployment
+Use the URL from the deploy command:
+```
+https://ai-interns-xxxxx-uc.a.run.app
 ```
 
 ## Step 6: Verify Everything Works
