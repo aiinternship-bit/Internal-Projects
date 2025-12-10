@@ -16,14 +16,14 @@ __pycache__/
 *.sqlite3
 *.xlsx
 *.xls
-chroma_db/
-**/chroma_db/
+#chroma_db/
+#**/chroma_db/
 milvus_edelivery.db
-**/*.db
+#**/*.db
 .milvus_edelivery.db.lock
 
 # Database backups
-*.db.backup*
+#*.db.backup*
 milvus_edelivery.db.backup*
 
 # Large archives
