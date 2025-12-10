@@ -82,12 +82,18 @@ def get_zebra_rag():
 app = Flask(__name__)
 
 # Initialize Anthropic client
-ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')
-if not ANTHROPIC_API_KEY:
-    print("Warning: ANTHROPIC_API_KEY not found in environment variables")
-    client = None
-else:
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+# Retrieve the Anthropic API key from the environment variable
+anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
+
+if anthropic_api_key is None:
+    print("Error: ANTHROPIC_API_KEY environment variable not set.")
+    print("Please set the ANTHROPIC_API_KEY in your .env file or environment variables.")
+    exit(1)
+
+# Initialize the Anthropic client
+# The client library automatically picks up from ANTHROPIC_API_KEY
+# but we explicitly pass it for clarity
+client = anthropic.Anthropic(api_key=anthropic_api_key)
 
 # Database path for conversations (SQLite for local, will work with Cloud SQL too)
 DB_PATH = Path(__file__).parent / 'conversations.db'
