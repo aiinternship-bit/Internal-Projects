@@ -41,9 +41,9 @@ Thumbs.db
 */chroma_db/
 */milvus_edelivery.db
 
-# Documentation
-README.md
-*.md
+# Documentation (keep build-related docs)
+# README.md
+# *.md
 
 # Testing
 .pytest_cache/

@@ -13,6 +13,10 @@ A collection of AI-powered projects and tools for various applications.
   - Auto-generated conversation titles from AI responses
 
 - **GEN AI Agent / Archive** - RAG system using Milvus vector database
+  - Reads and processes XLSX files for knowledge base
+  - Supports both local files and Google Cloud Storage buckets
+  - Cloud Run ready with GCS integration
+
 - **Zebra Project** - Printer recommendation system with ChromaDB
 - **AI Initiatives** - React Native mobile app development
 
