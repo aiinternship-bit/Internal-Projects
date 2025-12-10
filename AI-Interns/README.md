@@ -1,16 +1,37 @@
 # AI-Interns Dashboard
 
-A Flask-based web application that provides a beautiful tile-based interface to navigate between different AI projects with an AI-powered chatbot assistant.
+A modern Flask-based web application that provides a beautiful tile-based interface to navigate between different AI projects with an AI-powered chatbot assistant featuring persistent conversations and intelligent conversation management.
 
 ## Features
 
+### Interface & Design
 - **Modern, responsive tile-based interface** (3 tiles per row on desktop, square-shaped)
-- **AI Chatbot**: Powered by Claude AI (Anthropic) for intelligent project assistance
-- **Add New Projects**: Easy-to-use modal form for adding new projects dynamically
-- **Conversation History**: Maintains context across chat sessions
-- **Dark theme** with smooth animations and glassmorphism effects
-- **Project detail pages** showing directory contents
-- **Mobile-friendly design**
+- **ACL Digital branding** with custom logo and gradient theme
+- **Adaptive theme**: White header on homepage, gradient header in chat windows
+- **Apple-inspired UI** with smooth animations and glassmorphism effects
+- **Mobile-friendly responsive design**
+
+### AI Chatbot
+- **Powered by Claude AI** (Anthropic Claude 3.5 Sonnet) for intelligent project assistance
+- **Persistent conversation history** with SQLite database storage
+- **Multi-project support**: Separate conversations for each AI project
+- **Conversation sidebar** with conversation management
+- **Auto-generated titles**: Conversations automatically named from first AI response
+- **Markdown rendering** support for rich text responses
+- **Message bubbles** for user messages with proper formatting
+
+### Conversation Management
+- **Create unlimited conversations** per project
+- **Switch between conversations** seamlessly
+- **Delete conversations** with custom confirmation modal
+- **Conversation preview** showing last message
+- **Auto-save**: All messages automatically saved to database
+- **Persistent storage**: Conversations survive server restarts
+
+### Project Integration
+- **RAG Integration**: Connects to GEN AI Agent and Zebra Project
+- **Context-aware responses**: AI has knowledge of project files and structure
+- **Multiple project types**: AppDevReport, Archive, and Z Printer Scout
 
 ## Prerequisites
 

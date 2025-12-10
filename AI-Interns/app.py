@@ -7,8 +7,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 import anthropic
 import time
+import sqlite3
+from datetime import datetime
 
 # Load environment variables from centralized .env file at parent directory
+# This resolves to Internal-Projects/.env dynamically based on the script location
 env_path = Path(__file__).resolve().parents[1] / '.env'
 load_dotenv(dotenv_path=env_path)
 
@@ -19,10 +22,12 @@ time.sleep(1)
 print("✓ Cleanup complete")
 
 # Add Archive to Python path for importing query engine
+# Dynamically resolves to Internal-Projects/GEN AI Agent/Archive
 archive_path = Path(__file__).resolve().parents[1] / 'GEN AI Agent' / 'Archive'
 sys.path.insert(0, str(archive_path))
 
 # Add Zebra Project to Python path for importing RAG system
+# Dynamically resolves to Internal-Projects/Zebra Project
 zebra_path = Path(__file__).resolve().parents[1] / 'Zebra Project'
 sys.path.insert(0, str(zebra_path / 'src'))
 
@@ -44,7 +49,7 @@ def get_archive_engine():
         from src.llm_layer import LLMLayer
         from src import config as archive_config
 
-        # Initialize Archive components with absolute database path
+        # Initialize Archive components with database path (resolved dynamically)
         archive_db_path = str(archive_path / 'milvus_edelivery.db')
         archive_query_engine = QueryEngine(db_path=archive_db_path)
         archive_llm = LLMLayer(model_name=archive_config.LLM_MODEL)
@@ -83,6 +88,45 @@ if not ANTHROPIC_API_KEY:
     client = None
 else:
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+
+# Database path for conversations (SQLite for local, will work with Cloud SQL too)
+DB_PATH = Path(__file__).parent / 'conversations.db'
+
+# Initialize database
+def init_db():
+    """Initialize the conversations database"""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    # Create conversations table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS conversations (
+            id TEXT PRIMARY KEY,
+            project_id TEXT NOT NULL,
+            title TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # Create messages table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            conversation_id TEXT NOT NULL,
+            role TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (conversation_id) REFERENCES conversations (id) ON DELETE CASCADE
+        )
+    ''')
+
+    conn.commit()
+    conn.close()
+    print(f"✓ Database initialized at {DB_PATH}")
+
+# Initialize database on startup
+init_db()
 
 # Store conversation history per session (in-memory, will reset on server restart)
 conversation_histories = {}
@@ -247,6 +291,164 @@ def run_script():
 
     except Exception as e:
         print(f"Error in run-script endpoint: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/conversations/<project_id>', methods=['GET'])
+def get_conversations(project_id):
+    """Get all conversations for a project"""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT c.id, c.title, c.created_at, c.updated_at,
+                   (SELECT content FROM messages WHERE conversation_id = c.id ORDER BY created_at DESC LIMIT 1) as last_message
+            FROM conversations c
+            WHERE c.project_id = ?
+            ORDER BY c.updated_at DESC
+        ''', (project_id,))
+
+        conversations = []
+        for row in cursor.fetchall():
+            conversations.append({
+                'id': row[0],
+                'title': row[1] or 'Untitled Conversation',
+                'created_at': row[2],
+                'updated_at': row[3],
+                'preview': (row[4] or 'No messages yet')[:50]
+            })
+
+        conn.close()
+        return jsonify(conversations)
+    except Exception as e:
+        print(f"Error getting conversations: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/conversations/<conversation_id>/messages', methods=['GET'])
+def get_conversation_messages(conversation_id):
+    """Get all messages for a conversation"""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT role, content, created_at
+            FROM messages
+            WHERE conversation_id = ?
+            ORDER BY created_at ASC
+        ''', (conversation_id,))
+
+        messages = []
+        for row in cursor.fetchall():
+            messages.append({
+                'role': row[0],
+                'content': row[1],
+                'created_at': row[2]
+            })
+
+        conn.close()
+        return jsonify(messages)
+    except Exception as e:
+        print(f"Error getting messages: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/conversations', methods=['POST'])
+def create_conversation():
+    """Create a new conversation"""
+    try:
+        data = request.get_json()
+        conversation_id = data.get('id')
+        project_id = data.get('project_id')
+        title = data.get('title', 'New Conversation')
+
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            INSERT INTO conversations (id, project_id, title)
+            VALUES (?, ?, ?)
+        ''', (conversation_id, project_id, title))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'success': True, 'id': conversation_id})
+    except Exception as e:
+        print(f"Error creating conversation: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/conversations/<conversation_id>/title', methods=['PUT'])
+def update_conversation_title(conversation_id):
+    """Update a conversation's title"""
+    try:
+        data = request.get_json()
+        title = data.get('title')
+
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            UPDATE conversations
+            SET title = ?, updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+        ''', (title, conversation_id))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error updating conversation title: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/conversations/<conversation_id>/messages', methods=['POST'])
+def save_message(conversation_id):
+    """Save a message to a conversation"""
+    try:
+        data = request.get_json()
+        role = data.get('role')
+        content = data.get('content')
+
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        # Save message
+        cursor.execute('''
+            INSERT INTO messages (conversation_id, role, content)
+            VALUES (?, ?, ?)
+        ''', (conversation_id, role, content))
+
+        # Update conversation timestamp
+        cursor.execute('''
+            UPDATE conversations
+            SET updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+        ''', (conversation_id,))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error saving message: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/conversations/<conversation_id>', methods=['DELETE'])
+def delete_conversation(conversation_id):
+    """Delete a conversation and all its messages"""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        # Delete conversation (CASCADE will delete messages automatically)
+        cursor.execute('DELETE FROM conversations WHERE id = ?', (conversation_id,))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error deleting conversation: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/chat', methods=['POST'])
