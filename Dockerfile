@@ -36,13 +36,14 @@ RUN python init_vector_dbs.py || echo "Warning: Vector DB initialization had iss
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV FLASK_APP=AI-Interns/app.py
+ENV PORT=8080
 
-# Expose port 5001 for AI-Interns Flask app
-EXPOSE 5001
+# Expose port 8080 (Cloud Run default) but app will use PORT env var
+EXPOSE 8080
 
-# Health check
+# Health check uses PORT environment variable
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:5001', timeout=5)" || exit 1
+    CMD python -c "import requests, os; requests.get(f'http://localhost:{os.environ.get(\"PORT\", 8080)}', timeout=5)" || exit 1
 
 # Default command runs AI-Interns app
 CMD ["python", "AI-Interns/app.py"]
