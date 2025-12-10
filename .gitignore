@@ -5,7 +5,6 @@
 __pycache__/
 *.py[codz]
 *$py.class
-*.js
 # C extensions
 *.so
 

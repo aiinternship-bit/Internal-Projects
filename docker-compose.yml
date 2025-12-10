@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  ai-interns:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-interns-app
+    ports:
+      - "5001:5001"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount database directory for persistence
+      - ./AI-Interns/conversations.db:/app/AI-Interns/conversations.db
+      # Mount vector databases if needed
+      - ./GEN AI Agent/Archive/milvus_edelivery.db:/app/GEN AI Agent/Archive/milvus_edelivery.db
+      - ./Zebra Project/chroma_db:/app/Zebra Project/chroma_db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:5001', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - ai-network
+
+networks:
+  ai-network:
+    driver: bridge

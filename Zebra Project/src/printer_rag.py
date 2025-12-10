@@ -15,7 +15,9 @@ import ollama
 import time
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load environment variables from centralized .env file in Internal-Projects directory
+env_path = Path(__file__).resolve().parents[2] / '.env'
+load_dotenv(dotenv_path=env_path)
 
 class PrinterRAG:
     """

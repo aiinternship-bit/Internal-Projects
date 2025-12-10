@@ -3,10 +3,13 @@
 Quick test to validate OpenAI API key
 """
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 import requests
 
-load_dotenv()
+# Load environment variables from centralized .env file in Internal-Projects directory
+env_path = Path(__file__).resolve().parents[2] / '.env'
+load_dotenv(dotenv_path=env_path)
 
 api_key = os.getenv("OPENAI_API_KEY")
 
