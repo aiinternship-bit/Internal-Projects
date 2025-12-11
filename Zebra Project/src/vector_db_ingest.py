@@ -7,6 +7,7 @@ import chromadb
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 import json
+import os
 from pathlib import Path
 from typing import List, Dict, Any
 from vector_db_schema import PrinterVectorSchema, PrinterDocument
@@ -31,8 +32,10 @@ class VectorDBIngestion:
         self.client = chromadb.PersistentClient(path=db_path)
 
         # Use sentence transformers for embeddings (free, local)
+        # Uses HF_TOKEN environment variable if available
         self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name="all-MiniLM-L6-v2"  # Fast, efficient, 384-dimensional embeddings
+            model_name="all-MiniLM-L6-v2",  # Fast, efficient, 384-dimensional embeddings
+            model_kwargs={'token': os.environ.get('HF_TOKEN')}
         )
 
         # Get or create collection

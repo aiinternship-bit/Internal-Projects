@@ -2,6 +2,7 @@
 Structure Vector DB Module
 Handles encoding and storage of Excel schema (sheets, columns, descriptions)
 """
+import os
 import pandas as pd
 from typing import List, Dict, Any
 from sentence_transformers import SentenceTransformer
@@ -24,7 +25,11 @@ class StructureVectorDB:
         self.db_path = db_path
         self.client = MilvusClient(db_path)
         self.collection_name = config.STRUCTURE_COLLECTION
-        self.model = SentenceTransformer(config.EMBEDDING_MODEL)
+        # Uses HF_TOKEN environment variable if available
+        self.model = SentenceTransformer(
+            config.EMBEDDING_MODEL,
+            token=os.environ.get('HF_TOKEN')
+        )
 
     def create_collection(self, drop_existing: bool = False):
         """

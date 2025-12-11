@@ -55,8 +55,10 @@ class PrinterRAG:
         self.client = chromadb.PersistentClient(path=db_path)
 
         # Use same embedding function as ingestion
+        # Uses HF_TOKEN environment variable if available
         self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name="all-MiniLM-L6-v2"
+            model_name="all-MiniLM-L6-v2",
+            model_kwargs={'token': os.environ.get('HF_TOKEN')}
         )
 
         # Get collection

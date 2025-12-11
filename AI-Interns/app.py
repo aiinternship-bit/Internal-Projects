@@ -120,6 +120,15 @@ app = Flask(__name__)
 # Try to fetch API key from Google Secret Manager first, fallback to environment variable
 print("Fetching Anthropic API key...")
 anthropic_api_key = get_secret('anthropickey', 'acl-ai-projects')
+huggingface_key = get_secret('huggingfacekey', 'acl-ai-projects')
+
+# Set HuggingFace token as environment variable for use throughout the application
+if huggingface_key:
+    os.environ['HF_TOKEN'] = huggingface_key
+    os.environ['HUGGINGFACE_TOKEN'] = huggingface_key  # Some libraries use this name
+    print("✓ HuggingFace token set successfully")
+else:
+    print("⚠ HuggingFace token not found - SentenceTransformers may have rate limits")
 
 if anthropic_api_key is None:
     print("Error: ANTHROPIC_API_KEY not found in Secret Manager or environment variables.")
