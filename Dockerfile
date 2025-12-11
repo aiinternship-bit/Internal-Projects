@@ -1,6 +1,11 @@
 # Use Python 3.11 slim image as base
 FROM python:3.11-slim
 
+# Accept build arguments for GCS configuration
+ARG USE_GCS=true
+ARG GCS_BUCKET_NAME
+ARG GCS_FILE_PATH=edeliverydata/eDelivery_AIeDelivery_Database_V1.xlsx
+
 # Set working directory
 WORKDIR /app
 
@@ -22,6 +27,9 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Pre-download sentence-transformers model to avoid rate limits
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+
 # Copy the entire Internal-Projects directory
 COPY . .
 
@@ -29,6 +37,11 @@ COPY . .
 RUN mkdir -p /app/AI-Interns \
     && mkdir -p "/app/Zebra Project/chroma_db" \
     && mkdir -p "/app/GEN AI Agent/Archive"
+
+# Set GCS environment variables for vector DB initialization
+ENV USE_GCS=${USE_GCS}
+ENV GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
+ENV GCS_FILE_PATH=${GCS_FILE_PATH}
 
 # Initialize vector databases (if data files exist)
 # This will set up ChromaDB for Zebra Project and Milvus for GEN AI Agent

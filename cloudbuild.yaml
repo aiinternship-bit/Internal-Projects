@@ -3,6 +3,12 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
+      - '--build-arg'
+      - 'USE_GCS=true'
+      - '--build-arg'
+      - 'GCS_BUCKET_NAME=${_GCS_BUCKET_NAME}'
+      - '--build-arg'
+      - 'GCS_FILE_PATH=${_GCS_FILE_PATH}'
       - '-t'
       - 'gcr.io/$PROJECT_ID/ai-interns:latest'
       - '-t'
@@ -38,3 +44,8 @@ options:
 
   # Substitute project ID
   substitution_option: 'ALLOW_LOOSE'
+
+# Substitution variables (set these when running gcloud builds submit)
+substitutions:
+  _GCS_BUCKET_NAME: 'your-bucket-name'  # Override with --substitutions flag
+  _GCS_FILE_PATH: 'edeliverydata/eDelivery_AIeDelivery_Database_V1.xlsx'
