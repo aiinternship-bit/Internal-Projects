@@ -753,4 +753,6 @@ Be conversational, helpful, and concise. Format code with proper markdown when n
 if __name__ == '__main__':
     # Use PORT environment variable for Cloud Run compatibility
     port = int(os.environ.get('PORT', 5001))
-    app.run(debug=True, host='0.0.0.0', port=port)
+    print(f"🚀 Starting Flask app on host 0.0.0.0, port {port}")
+    print(f"   PORT environment variable: {os.environ.get('PORT', 'not set')}")
+    app.run(debug=False, host='0.0.0.0', port=port)
