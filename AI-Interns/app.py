@@ -9,11 +9,46 @@ import anthropic
 import time
 import sqlite3
 from datetime import datetime
+from google.cloud import secretmanager
 
-# Load environment variables from centralized .env file at parent directory
-# This resolves to Internal-Projects/.env dynamically based on the script location
-env_path = Path(__file__).resolve().parents[1] / '.env'
-load_dotenv(dotenv_path=env_path)
+
+def get_secret(secret_name, project_id=None):
+    """
+    Fetch secret from Google Secret Manager.
+    Falls back to environment variable if Secret Manager is not available (local development).
+
+    Args:
+        secret_name: Name of the secret to fetch
+        project_id: GCP project ID (optional, will use default if not provided)
+
+    Returns:
+        Secret value as string, or None if not found
+    """
+    try:
+        # Try to get from Google Secret Manager first (for Cloud Run)
+        client = secretmanager.SecretManagerServiceClient()
+
+        # If project_id not provided, try to get it from environment
+        if not project_id:
+            project_id = os.environ.get('GCP_PROJECT') or os.environ.get('GOOGLE_CLOUD_PROJECT')
+
+        if not project_id:
+            print(f"⚠ No GCP project ID found, falling back to environment variable for {secret_name}")
+            return os.environ.get(secret_name.upper())
+
+        # Build the resource name of the secret version
+        name = f"projects/{project_id}/secrets/{secret_name}/versions/latest"
+
+        # Access the secret version
+        response = client.access_secret_version(request={"name": name})
+        secret_value = response.payload.data.decode('UTF-8')
+        print(f"✓ Successfully fetched '{secret_name}' from Google Secret Manager")
+        return secret_value
+
+    except Exception as e:
+        # Fallback to environment variable (for local development)
+        print(f"⚠ Could not fetch from Secret Manager ({e}), falling back to environment variable")
+        return os.environ.get(secret_name.upper())
 
 # Clean up any stale milvus processes on startup
 print("Cleaning up stale processes...")
@@ -82,18 +117,18 @@ def get_zebra_rag():
 app = Flask(__name__)
 
 # Initialize Anthropic client
-# Retrieve the Anthropic API key from the environment variable
-anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
+# Try to fetch API key from Google Secret Manager first, fallback to environment variable
+print("Fetching Anthropic API key...")
+anthropic_api_key = get_secret('anthropickey', 'acl-ai-projects')
 
 if anthropic_api_key is None:
-    print("Error: ANTHROPIC_API_KEY environment variable not set.")
-    print("Please set the ANTHROPIC_API_KEY in your .env file or environment variables.")
+    print("Error: ANTHROPIC_API_KEY not found in Secret Manager or environment variables.")
+    print("Please set the 'anthropickey' secret in Google Secret Manager or ANTHROPIC_API_KEY environment variable.")
     exit(1)
 
 # Initialize the Anthropic client
-# The client library automatically picks up from ANTHROPIC_API_KEY
-# but we explicitly pass it for clarity
 client = anthropic.Anthropic(api_key=anthropic_api_key)
+print("✓ Anthropic client initialized successfully")
 
 # Database path for conversations (SQLite for local, will work with Cloud SQL too)
 DB_PATH = Path(__file__).parent / 'conversations.db'
