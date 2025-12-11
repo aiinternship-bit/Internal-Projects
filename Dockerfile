@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     git \
     curl \
+    psmisc \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
