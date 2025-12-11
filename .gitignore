@@ -11,8 +11,8 @@ __pycache__/
 # Vector databases and all database files
 *.xlsx
 *.xls
-#chroma_db/
-#**/chroma_db/
+chroma_db/
+**/chroma_db/
 milvus_edelivery.db
 #**/*.db
 .milvus_edelivery.db.lock

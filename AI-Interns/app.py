@@ -103,10 +103,24 @@ def get_zebra_rag():
 
     print("Initializing Zebra Project RAG...")
     try:
-        from printer_rag import PrinterRAG
+        # Ensure ChromaDB is available (download from GCS if needed)
+        from chromadb_gcs_utils import ensure_chromadb_available
+
+        zebra_db_path = str(zebra_path / 'chroma_db')
+
+        # Download ChromaDB from GCS if not available locally
+        chromadb_ready = ensure_chromadb_available(
+            local_db_path=zebra_db_path,
+            bucket_name=os.environ.get('ZEBRA_CHROMADB_BUCKET', 'zebra-chromadb-storage'),
+            gcs_folder=os.environ.get('ZEBRA_CHROMADB_FOLDER', 'chroma_db'),
+            force_download=False  # Only download if not exists locally
+        )
+
+        if not chromadb_ready:
+            raise Exception("ChromaDB could not be loaded from GCS or local storage")
 
         # Initialize Zebra RAG with ChromaDB path
-        zebra_db_path = str(zebra_path / 'chroma_db')
+        from printer_rag import PrinterRAG
         zebra_rag = PrinterRAG(db_path=zebra_db_path, collection_name='printer_specs')
         print(f"✓ Zebra Project RAG initialized successfully (DB: {zebra_db_path})")
         return zebra_rag
