@@ -143,6 +143,37 @@ def milvus_exists_locally(local_db_path: str) -> bool:
         return False
 
 
+def milvus_exists_in_gcs(bucket_name: str, gcs_file_path: str) -> bool:
+    """
+    Check if Milvus database exists in GCS bucket.
+
+    Args:
+        bucket_name: GCS bucket name
+        gcs_file_path: File path in GCS
+
+    Returns:
+        bool: True if database exists in GCS
+    """
+    try:
+        client = storage.Client()
+        bucket = client.bucket(bucket_name)
+        blob = bucket.blob(gcs_file_path)
+
+        if blob.exists():
+            # Get file size
+            blob.reload()
+            file_size = blob.size
+            print(f"✓ Milvus database found in GCS: gs://{bucket_name}/{gcs_file_path}")
+            print(f"  Size: {file_size:,} bytes ({file_size / (1024*1024):.2f} MB)")
+            return True
+        else:
+            print(f"✗ Milvus database not found in GCS: gs://{bucket_name}/{gcs_file_path}")
+            return False
+    except Exception as e:
+        print(f"✗ Error checking GCS: {e}")
+        return False
+
+
 def ensure_milvus_available(
     local_db_path: str,
     bucket_name: str = "edeliverydata",
@@ -152,6 +183,8 @@ def ensure_milvus_available(
     """
     Ensure Milvus database is available locally, downloading from GCS if necessary.
     This is the main function to call at runtime startup (e.g., in Cloud Run).
+
+    Checks if database exists in GCS bucket before attempting download.
 
     Args:
         local_db_path: Local path where Milvus DB should be stored
@@ -166,6 +199,19 @@ def ensure_milvus_available(
     if not force_download and milvus_exists_locally(local_db_path):
         print("Using existing local Milvus database")
         return True
+
+    # Check if database exists in GCS before attempting download
+    print(f"Checking if Milvus database exists in GCS...")
+    if not milvus_exists_in_gcs(bucket_name, gcs_file_path):
+        print(f"")
+        print(f"❌ Cannot proceed: Database does not exist in gs://{bucket_name}/{gcs_file_path}")
+        print(f"")
+        print(f"   Please ensure the database is uploaded to GCS:")
+        print(f"   1. Build the database locally, OR")
+        print(f"   2. Upload existing database using:")
+        print(f"      python3 -m src.milvus_gcs_utils upload --bucket {bucket_name} --gcs-path {gcs_file_path}")
+        print(f"")
+        return False
 
     # Download from GCS
     print(f"Downloading Milvus database from GCS...")
