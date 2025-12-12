@@ -1,0 +1,61 @@
+# Cloud Build Configuration - Build Milvus Database
+# This builds the vector database from Excel in GCS and uploads it back to GCS
+# Trigger: Manual or scheduled
+
+steps:
+  # Step 1: Install Python dependencies
+  - name: 'python:3.11-slim'
+    id: 'install-dependencies'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        apt-get update && apt-get install -y --no-install-recommends gcc g++
+        pip install --no-cache-dir \
+          google-cloud-storage==2.10.0 \
+          pandas==2.1.0 \
+          sentence-transformers==2.2.2 \
+          pymilvus==2.3.0 \
+          openpyxl==3.1.2
+        echo "✓ Dependencies installed"
+
+  # Step 2: Build Milvus database from GCS Excel file and upload to GCS
+  - name: 'python:3.11-slim'
+    id: 'build-and-upload-db'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Starting Milvus database build from GCS Excel file..."
+        python3 build_from_gcs.py \
+          --bucket edeliverydata \
+          --excel-path edeliverydata/eDelivery_AIeDelivery_Database_V1.xlsx \
+          --local-db /workspace/milvus_edelivery.db \
+          --gcs-db-path milvus_edelivery.db
+    dir: '/workspace'
+    env:
+      - 'PYTHONUNBUFFERED=1'
+
+  # Step 3: Verify the upload
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    id: 'verify-upload'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "========================================"
+        echo "Verifying Milvus database upload..."
+        gsutil ls -lh gs://edeliverydata/milvus_edelivery.db
+        echo "========================================"
+        echo "✅ Database build completed successfully!"
+        echo "Database location: gs://edeliverydata/milvus_edelivery.db"
+        echo "========================================"
+
+# Timeout: 2 hours for large Excel files
+timeout: 7200s
+
+# Use a more powerful machine for faster processing
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+  dynamicSubstitutions: true

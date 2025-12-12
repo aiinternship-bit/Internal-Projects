@@ -24,4 +24,11 @@ ipykernel>=6.30.0
 langchain[openai]
 langchain[anthropic]
 langgraph
-requests
+
+# Google Cloud Storage
+google-cloud-storage>=2.10.0
+
+# Web Framework for API
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
